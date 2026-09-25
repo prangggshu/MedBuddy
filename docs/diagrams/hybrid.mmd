@@ -1,0 +1,30 @@
+flowchart TB
+    P([Patient on WhatsApp]) <--> AG[LLM Agent<br/>conversational layer]
+
+    AG -->|"process_prescription(image)"| PIPE
+    AG -->|read-only queries| RO
+
+    subgraph PIPE["Deterministic Intake Pipeline &mdash; safety-critical"]
+        direction LR
+        O[OCR] --> E[Extract] --> N[Normalize] --> C[Interaction<br/>check] --> CF[Confirm] --> S[Schedule]
+    end
+
+    subgraph RO["Read-only lookup tools"]
+        T1[get_my_meds]
+        T2[check_interaction]
+        T3[lookup_drug_info]
+        T4[get_adherence]
+    end
+
+    PIPE --> DB[(Database)]
+    RO --> DB
+    RO --> DS[(Curated datasets)]
+
+    classDef io fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20;
+    classDef llm fill:#ede7f6,stroke:#5e35b1,color:#311b92;
+    classDef det fill:#e3f2fd,stroke:#1565c0,color:#0d47a1;
+    classDef store fill:#eceff1,stroke:#546e7a,color:#263238;
+    class P io;
+    class AG llm;
+    class O,E,N,C,CF,S,T1,T2,T3,T4 det;
+    class DB,DS store;

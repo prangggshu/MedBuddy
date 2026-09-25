@@ -1,0 +1,27 @@
+flowchart TB
+    P([Patient on WhatsApp]) <-->|message + history| AG[LLM Agent &mdash; tool-use loop<br/>decides which tools to call at runtime]
+
+    AG --> T1[run_ocr]
+    AG --> T2[extract_medications]
+    AG --> T3[normalize_drug]
+    AG --> T4[check_interactions]
+    AG --> T5[lookup_drug_info]
+    AG --> T6[schedule_reminder]
+    AG --> T7[get_my_meds]
+    AG --> T8[log_adherence]
+
+    T3 --> BG[(Brand &rarr; generic dataset)]
+    T4 --> DS[(Interaction dataset)]
+    T5 --> DS
+    T6 --> DB[(Database)]
+    T7 --> DB
+    T8 --> DB
+
+    classDef io fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20;
+    classDef llm fill:#ede7f6,stroke:#5e35b1,color:#311b92;
+    classDef det fill:#e3f2fd,stroke:#1565c0,color:#0d47a1;
+    classDef store fill:#eceff1,stroke:#546e7a,color:#263238;
+    class P io;
+    class AG llm;
+    class T1,T2,T3,T4,T5,T6,T7,T8 det;
+    class BG,DS,DB store;

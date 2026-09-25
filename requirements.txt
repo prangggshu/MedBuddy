@@ -1,0 +1,26 @@
+# ─── Web / API ───────────────────────────────────────────────
+fastapi
+uvicorn[standard]
+python-multipart            # form parsing for Twilio webhooks
+
+# ─── Config & validation ─────────────────────────────────────
+pydantic>=2
+pydantic-settings
+
+# ─── Agent graph and provider-agnostic LLM layer ─────────────
+langgraph
+langgraph-checkpoint-sqlite
+litellm                     # one interface: OpenAI · Anthropic · Groq · Gemini · OpenRouter
+
+# ─── Drug-name fuzzy matching ────────────────────────────────
+rapidfuzz
+
+# ─── Database ────────────────────────────────────────────────
+sqlalchemy>=2
+
+# ─── Messaging (optional Twilio adapter) ─────────────────────
+twilio
+
+# ─── Dev / test ──────────────────────────────────────────────
+pytest
+ruff

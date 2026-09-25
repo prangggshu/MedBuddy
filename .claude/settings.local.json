@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node _build-docx.js)",
+      "Bash(pandoc .build.md -o MedBuddy-Project-Document.docx --toc --toc-depth=2 --resource-path=.)",
+      "Bash(rm -f .build.md _build-docx.js)",
+      "Bash(unzip -l MedBuddy-Project-Document.docx)",
+      "Bash(unzip -p MedBuddy-Project-Document.docx word/document.xml)",
+      "Bash(pandoc MedBuddy-Project-Document.docx -t markdown)"
+    ]
+  }
+}

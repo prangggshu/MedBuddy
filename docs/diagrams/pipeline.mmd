@@ -1,0 +1,19 @@
+flowchart TB
+    IMG([Prescription photo]) --> OCR{OCR engine}
+    OCR -- "printed / high confidence" --> EX[Structured extraction<br/>+ Pydantic validation]
+    OCR -- "handwriting / low confidence" --> VLM[Vision-LLM fallback]
+    VLM --> EX
+    EX --> NM[Brand &rarr; generic normalization]
+    NM -- matched --> IC[Interaction check<br/>rule engine]
+    NM -- unmatched --> DIS[Flag + disclaimer]
+    IC --> EXP[Grounded plain-language<br/>explanation]
+    DIS --> EXP
+    EXP --> CF[Patient confirmation]
+    CF --> SCH([Schedule reminders])
+
+    classDef io fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20;
+    classDef llm fill:#ede7f6,stroke:#5e35b1,color:#311b92;
+    classDef det fill:#e3f2fd,stroke:#1565c0,color:#0d47a1;
+    class IMG,SCH io;
+    class VLM,EX,EXP llm;
+    class OCR,NM,IC,DIS,CF det;
