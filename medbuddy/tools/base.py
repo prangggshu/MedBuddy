@@ -20,6 +20,19 @@ if TYPE_CHECKING:
     from medbuddy.scheduler.clock import Clock
 
 
+def guess_image_mime(data: bytes) -> str:
+    """Sniff the image type from magic bytes (vision APIs reject a mislabelled image)."""
+    if data.startswith(bytes((0xFF, 0xD8, 0xFF))):
+        return "image/jpeg"
+    if data.startswith(bytes((0x89,)) + b"PNG"):
+        return "image/png"
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        return "image/webp"
+    if data[4:12] in (b"ftypheic", b"ftypheix", b"ftypmif1"):
+        return "image/heic"
+    return "image/jpeg"
+
+
 @dataclass
 class ToolContext:
     """Everything a tool might need, assembled once per inbound message by the loop."""

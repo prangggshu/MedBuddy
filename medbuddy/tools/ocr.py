@@ -2,18 +2,21 @@ from __future__ import annotations
 
 from typing import Any
 
-from medbuddy.tools.base import Tool, ToolContext
+from medbuddy.tools.base import Tool, ToolContext, guess_image_mime
 
 
 class RunOcrTool(Tool):
     name = "run_ocr"
-    description = "Extract raw text from a prescription image using vision AI. Call this when the patient sends a photo."
+    description = (
+        "Transcribe a prescription image to raw text. Usually NOT needed: extract_medications "
+        "reads the image directly. Use only if the patient asks what the prescription says."
+    )
     parameters = {"type": "object", "properties": {}}
 
     def run(self, args: dict[str, Any], ctx: ToolContext) -> dict[str, Any]:
         if ctx.pending_image is None:
             return {"error": "no image provided"}
-        result = run_ocr(ctx.pending_image, ctx=ctx)
+        result = run_ocr(ctx.pending_image, guess_image_mime(ctx.pending_image), ctx=ctx)
         return {"text": result}
 
 

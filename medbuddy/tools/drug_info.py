@@ -22,12 +22,24 @@ class LookupDrugInfoTool(Tool):
     )
     parameters = {
         "type": "object",
-        "properties": {"name": {"type": "string", "description": "Drug name (brand or generic)"}},
-        "required": ["name"],
+        "properties": {
+            "name": {"type": "string", "description": "One drug name (brand or generic)"},
+            "names": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Several drug names at once — prefer this to one call per drug",
+            },
+        },
     }
 
     def run(self, args: dict[str, Any], ctx: ToolContext) -> dict[str, Any]:
-        raw = str(args.get("name", "")).strip()
+        if args.get("names"):
+            return {"results": [self._lookup(str(n), ctx) for n in args["names"]]}
+        return self._lookup(str(args.get("name", "")), ctx)
+
+    @staticmethod
+    def _lookup(name: str, ctx: ToolContext) -> dict[str, Any]:
+        raw = name.strip()
         key = raw.lower()
         ds = ctx.datasets
 

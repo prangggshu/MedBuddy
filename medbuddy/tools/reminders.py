@@ -1,35 +1,41 @@
 """schedule_reminder — STATE-CHANGING. Propose -> confirm -> commit.
 
 Calling with confirm=false (the default) returns a *proposal* and writes nothing. Only
-confirm=true commits reminders to the DB. The system prompt forbids the agent from setting
-confirm=true unless the patient explicitly agreed — that's the structural guardrail against
-the agent silently changing state.
+confirm=true commits reminders to the DB, and only the agent loop sets it — after the
+patient answers YES to the interrupt() confirmation prompt. That's the structural
+guardrail against the agent silently changing state.
 """
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
+from medbuddy.config import get_settings
 from medbuddy.db.models import Reminder
 from medbuddy.db.repo import get_or_create_patient
 from medbuddy.tools.base import Tool, ToolContext
 
 
+def _patient_tz() -> timezone:
+    return timezone(timedelta(minutes=get_settings().tz_offset_minutes))
+
+
 def _next_occurrence(now: datetime, hhmm: str) -> datetime:
+    """Next time the patient's wall clock shows HH:MM, returned in UTC."""
     hh, mm = (int(x) for x in hhmm.split(":"))
-    cand = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
-    if cand <= now:
+    local_now = now.astimezone(_patient_tz())
+    cand = local_now.replace(hour=hh, minute=mm, second=0, microsecond=0)
+    if cand <= local_now:
         cand += timedelta(days=1)
-    return cand
+    return cand.astimezone(timezone.utc)
 
 
 class ScheduleReminderTool(Tool):
     name = "schedule_reminder"
     description = (
-        "Schedule daily dose reminders for a medication. STATE-CHANGING: call FIRST with "
-        "confirm=false to propose the times (nothing is saved), show them to the patient, and "
-        "only call again with confirm=true AFTER they explicitly agree. Never set confirm=true "
-        "on your own initiative."
+        "Schedule daily dose reminders for a medication. STATE-CHANGING: the system pauses and "
+        "asks the patient to confirm before anything is saved — just call it once with the "
+        "proposed times."
     )
     parameters = {
         "type": "object",
@@ -38,7 +44,7 @@ class ScheduleReminderTool(Tool):
             "times": {
                 "type": "array",
                 "items": {"type": "string"},
-                "description": "Daily times as HH:MM (24h), e.g. ['09:00','21:00']",
+                "description": "Daily times as HH:MM (24h, patient's local time), e.g. ['09:00','21:00']",
             },
             "confirm": {
                 "type": "boolean",

@@ -1,4 +1,4 @@
-"""log_adherence — STATE-CHANGING. Records taken / missed / snooze.
+"""log_adherence — STATE-CHANGING. Records taken / missed.
 
 Same propose->confirm->commit guardrail as schedule_reminder. The patient's own message
 ("took it", "missed it") is what justifies confirm=true — the agent should not fabricate an
@@ -12,15 +12,15 @@ from medbuddy.db.models import AdherenceLog
 from medbuddy.db.repo import get_or_create_patient
 from medbuddy.tools.base import Tool, ToolContext
 
-_VALID = {"taken", "missed", "snooze"}
+_VALID = {"taken", "missed"}
 
 
 class LogAdherenceTool(Tool):
     name = "log_adherence"
     description = (
         "Record whether the patient took a dose. STATE-CHANGING: response must be one of "
-        "'taken', 'missed', 'snooze'. Call with confirm=false to echo back what you understood, "
-        "then confirm=true to save it. Only log what the patient actually told you."
+        "'taken' or 'missed'. The system asks the patient to confirm before saving — call it "
+        "once. Only log what the patient actually told you."
     )
     parameters = {
         "type": "object",

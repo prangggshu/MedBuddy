@@ -14,12 +14,12 @@ See [`CLAUDE.md`](CLAUDE.md) for the full project context and design decisions, 
 
 ## Architecture at a glance
 
-- **Fully agentic** — each capability (OCR, extraction, normalization, interaction check,
-  explanation, reminders, adherence) is a **tool**; an LLM **tool-use loop** decides what to
-  call. No agent framework.
-- **Provider-agnostic LLM** via **LiteLLM** — OpenAI · Anthropic · Groq · Gemini · OpenRouter
-  (incl. free models). Models are chosen **per role** (`AGENT_MODEL`, `VISION_MODEL`,
-  `EXPLANATION_MODEL`) so the agent brain can be capable while sub-tasks stay cheap/free.
+- **Hybrid, on LangGraph** — a prescription photo runs a **fixed pipeline** (one Gemini vision
+  call → normalize → interaction check → lookup → templated reply). Everything else
+  (onboarding, questions, reminders, adherence) goes to an LLM **tool-use loop** where each
+  capability is a **tool**. State changes need a YES/NO confirmation via `interrupt()`.
+- **LLM: Google Gemini** via **LiteLLM**, configured **per role** (`AGENT_MODEL`,
+  `VISION_MODEL`, `EXPLANATION_MODEL`). OCR is a direct **Gemini vision** call — no Tesseract.
 - **Transport is abstracted** — a `MessagingChannel` interface with a `FakeChannel` lets the
   whole system run **end-to-end with zero Twilio credits**. Twilio is one adapter, added last.
 - **Grounding is structural** — the LLM never invents drug facts: it may only describe drugs a
@@ -38,11 +38,11 @@ docs/       faculty design document + diagrams
 ## Quickstart
 
 ```bash
-# 1. Install deps (Tesseract binary must also be installed on the OS for OCR)
+# 1. Install deps
 pip install -r requirements.txt
 
 # 2. Configure
-cp .env.example .env      # then fill in the provider key(s) for the models you chose
+cp .env.example .env      # then set GEMINI_API_KEY
 
 # 3. Run the agent locally with NO Twilio — talk to it in your terminal
 python -m scripts.cli

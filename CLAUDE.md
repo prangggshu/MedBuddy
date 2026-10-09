@@ -12,16 +12,19 @@ MedBuddy is a WhatsApp-based medication adherence & drug-interaction assistant. 
 
 > **Portable source of truth** for decisions made during development, so the project can be resumed from any account/IDE. Where this section conflicts with older framing below, **this section wins**. Keep it updated as decisions change.
 
-**Stage:** Scaffolding complete. Repo structure and module skeletons exist; core logic not yet implemented.
+**Stage (2026-10-09):** Core CLI flow works end-to-end in offline simulation (photo → meds + warnings → reminders with YES/NO confirm → adherence). Not yet verified against live Gemini. Remaining: reminder dispatch scheduler, Twilio adapter + webhook.
+**Implementation notes:** LLM calls go through **LiteLLM** (`medbuddy/llm/client.py`), not `init_chat_model` — deliberate; all three roles default to `gemini/gemini-3.8-flash`. Conversation checkpoints live in `checkpoints.db` (separate from app data); CLI `/reset` clears one. Reminder times use `TZ_OFFSET_MINUTES` (IST = 330).
 **Deadline:** 2 weeks from 2026-09-20. Prangshu starting solo; Arundhati joins in parallel once tools are unblocked.
 **Priority:** Working demo + evaluation numbers + report. Nothing else.
 
-### Architecture: FULLY AGENTIC with LangGraph — DECIDED
-We are building the **fully-agentic** design using **LangGraph** as the agent framework.
+### Architecture: HYBRID with LangGraph — DECIDED (revised 2026-10-09, was fully agentic)
+**LangGraph** graph with two entry routes (`medbuddy/agent/loop.py`, `route_entry`):
 
-- Every capability (OCR + extraction, normalization, interaction check, explanation, reminder scheduling, adherence logging, drug/interaction lookups) is exposed to the LLM as a **tool**. The LangGraph agent node decides which tools to call, and in what order.
-- **No fixed pipeline** — the flow is not OCR → extract → normalize → check. The agent orchestrates freely.
-- The **real design work is the tool set**: each tool's name, input/output schema, and whether it is state-changing.
+- **Photo → fixed pipeline** (`prescription_node`, logic in `medbuddy/agent/prescription.py`): vision extract (**1 LLM call**) → normalize → `check_interactions` → `lookup_drug_info` → reply rendered from a **template built only from tool results**. The extracted meds are saved. `PHOTO_REPLY_MODE=rephrase` adds one explanation-model call to rewrite the template warmly (falls back to the template if any medicine/warning is dropped).
+- **Everything else → agent** (`agent_node` ↔ `tool_node`): onboarding, follow-up questions, typed medicine lists, reminders, adherence. All capabilities stay exposed as **tools**; the agent decides which to call. Tools accept `names=[...]` lists so one call covers every drug.
+- **Why we changed:** the fully-agentic photo turn took ~12 Gemini calls and exhausted the free tier in one run; it now takes 1. It also makes grounding on the safety-critical path guaranteed by code instead of by prompt.
+- **Evaluation impact:** orchestration success (layer 2) is measured on text turns; the photo path is measured by extraction accuracy + interaction correctness.
+- The **real design work is still the tool set**: each tool's name, input/output schema, and whether it is state-changing.
 - **LangGraph chosen because:** the confirmation gate (agent proposes → patient confirms → tool commits) maps cleanly onto `interrupt()`, with the Postgres checkpointer holding state between WhatsApp turns. Per-patient conversation history is free via `thread_id = whatsapp_number`.
 
 > **Note:** `docs/MedBuddy-Project-Document.md` is the faculty proposal doc — it analyzes hybrid vs agentic and is not expected to match implementation decisions. Treat it as a design artefact, not a spec.
@@ -29,7 +32,8 @@ We are building the **fully-agentic** design using **LangGraph** as the agent fr
 ### Grounding guardrails — safety enforced structurally, not by pipeline order
 1. The **explanation tool may only describe drugs a lookup tool actually returned**; an unmatched drug → forced disclaimer path, never free-text drug info.
 2. **System-prompt hard rule:** no drug/interaction statement may exist without a tool result behind it.
-3. **State-changing tools** (`schedule_reminder`, `log_adherence`) use LangGraph `interrupt()` — agent proposes → patient replies on WhatsApp → graph resumes → tool commits.
+3. **State-changing tools** (`schedule_reminder`, `log_adherence`) use LangGraph `interrupt()` — agent proposes → the **code** (not the LLM) sends a YES/NO prompt → patient replies → graph resumes via `Command(resume=...)` → tool commits only on YES.
+4. **Photo replies are templated** from tool output; unmatched drugs get a fixed "not in MedBuddy's dataset" line.
 
 ### LLM strategy — Gemini, per-role, swappable — DECIDED
 - **Current provider: Google Gemini** for all roles (agent loop, vision/extraction, explanation).
@@ -187,7 +191,7 @@ DB tables: `patients`, `prescriptions`, `medications`, `interactions`, `reminder
 ---
 
 ## Notes for Claude Code
-- **Architecture is LangGraph-based fully agentic** — no fixed pipeline, no hardcoded step ordering.
+- **Architecture is LangGraph-based hybrid** — photos take the fixed pipeline in `agent/prescription.py` (1 LLM call); everything else is agentic. Keep the photo path deterministic and the LLM call count per photo at 1 (2 with rephrase).
 - **LLM layer uses `init_chat_model`** with Gemini currently. Do not hardcode Anthropic or OpenAI SDKs directly.
 - **No Tesseract** — `tools/ocr.py` is a Gemini vision call.
 - **Grounding is mandatory** — `tools/drug_info.py` result must gate any explanation. Never let the LLM invent drug information.

@@ -19,6 +19,31 @@ def _resolve(datasets, matched_key: str) -> str:
     return matched_key.title()
 
 
+def normalize_name(ds, raw: str) -> NormalizedDrug:
+    """Resolve one name against the curated dataset (exact brand, exact generic, then fuzzy)."""
+    raw = str(raw or "").strip()
+    if not raw:
+        return NormalizedDrug(input_name=raw, matched=False)
+
+    key = raw.lower()
+    if key in ds.brand_to_generic:
+        return NormalizedDrug(
+            input_name=raw, generic=ds.brand_to_generic[key], matched=True, score=100.0
+        )
+    if key in ds.generics:
+        return NormalizedDrug(input_name=raw, generic=_resolve(ds, key), matched=True, score=100.0)
+
+    candidates = ds.known_names()
+    if candidates:
+        best = process.extractOne(key, candidates, scorer=fuzz.WRatio)
+        if best and best[1] >= MATCH_THRESHOLD:
+            return NormalizedDrug(
+                input_name=raw, generic=_resolve(ds, best[0]), matched=True, score=float(best[1])
+            )
+
+    return NormalizedDrug(input_name=raw, matched=False)
+
+
 class NormalizeDrugTool(Tool):
     name = "normalize_drug"
     description = (
@@ -30,34 +55,18 @@ class NormalizeDrugTool(Tool):
     parameters = {
         "type": "object",
         "properties": {
-            "name": {"type": "string", "description": "Drug name as written on the prescription"}
+            "name": {"type": "string", "description": "One drug name as written"},
+            "names": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Several drug names at once — prefer this to one call per drug",
+            },
         },
-        "required": ["name"],
     }
 
     def run(self, args: dict[str, Any], ctx: ToolContext) -> dict[str, Any]:
-        raw = str(args.get("name", "")).strip()
-        if not raw:
-            return NormalizedDrug(input_name=raw, matched=False).model_dump()
-
-        ds = ctx.datasets
-        key = raw.lower()
-
-        if key in ds.brand_to_generic:
-            return NormalizedDrug(
-                input_name=raw, generic=ds.brand_to_generic[key], matched=True, score=100.0
-            ).model_dump()
-        if key in ds.generics:
-            return NormalizedDrug(
-                input_name=raw, generic=_resolve(ds, key), matched=True, score=100.0
-            ).model_dump()
-
-        candidates = ds.known_names()
-        if candidates:
-            best = process.extractOne(key, candidates, scorer=fuzz.WRatio)
-            if best and best[1] >= MATCH_THRESHOLD:
-                return NormalizedDrug(
-                    input_name=raw, generic=_resolve(ds, best[0]), matched=True, score=float(best[1])
-                ).model_dump()
-
-        return NormalizedDrug(input_name=raw, matched=False).model_dump()
+        if args.get("names"):
+            return {
+                "results": [normalize_name(ctx.datasets, n).model_dump() for n in args["names"]]
+            }
+        return normalize_name(ctx.datasets, args.get("name", "")).model_dump()

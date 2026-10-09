@@ -32,3 +32,6 @@ Thumbs.db
 # ─── Sample prescription images (keep the folder, ignore contents) ─
 data/sample_prescriptions/*
 !data/sample_prescriptions/.gitkeep
+
+# LangGraph conversation checkpoints
+checkpoints.db*

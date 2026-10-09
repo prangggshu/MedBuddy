@@ -10,6 +10,8 @@ the deterministic tools, run the test suite instead (pytest).
 """
 from __future__ import annotations
 
+import sys
+
 from medbuddy.agent import Agent
 from medbuddy.channels import FakeChannel, IncomingMessage
 from medbuddy.datasets.loaders import load_datasets
@@ -19,6 +21,9 @@ from medbuddy.scheduler.clock import RealClock
 
 
 def main() -> None:
+    # Windows consoles default to cp1252, which can't print the emoji in MedBuddy's replies.
+    for stream in (sys.stdout, sys.stderr):
+        stream.reconfigure(encoding="utf-8", errors="replace")
     init_db()
     agent = Agent(LLMClient())
     channel = FakeChannel(echo=True)  # prints MedBuddy's replies
@@ -27,7 +32,7 @@ def main() -> None:
     sender = "cli:local"
 
     print("MedBuddy CLI — FakeChannel, zero Twilio credits. Ctrl-C or 'quit' to exit.")
-    print("Attach an image with:  img:<path-to-file>\n")
+    print("Attach an image with:  img:<path-to-file>   |   /reset clears the chat\n")
     print("Proof-of-concept, not for clinical use.\n")
 
     while True:
@@ -40,6 +45,10 @@ def main() -> None:
             continue
         if line.lower() in {"quit", "exit"}:
             break
+        if line.lower() == "/reset":
+            agent.reset(sender)
+            print("(conversation cleared — saved meds/reminders are kept)\n")
+            continue
 
         text: str | None = line
         media: bytes | None = None

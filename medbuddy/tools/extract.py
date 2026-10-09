@@ -1,7 +1,8 @@
-"""extract_medications — OCR-text or image -> structured medications (LLM).
+"""extract_medications — prescription image (or OCR text) -> structured medications (LLM).
 
-Uses OCR text if the agent passes it; otherwise reads the pending image directly with the
-vision model. Output is validated against the ExtractionResult Pydantic schema.
+Reads the pending image directly with the vision model in ONE call (no separate OCR step),
+validates against the ExtractionResult schema, normalizes each name against the curated
+dataset, and saves the prescription so get_my_meds and reminders can use it.
 
 TODO(week2): switch to native structured outputs (response_format json_schema) per provider
 instead of prompt-and-parse, once the target models are pinned.
@@ -11,8 +12,10 @@ from __future__ import annotations
 import json
 from typing import Any
 
+from medbuddy.db.repo import get_or_create_patient, save_prescription
 from medbuddy.schemas import ExtractionResult
-from medbuddy.tools.base import Tool, ToolContext
+from medbuddy.tools.base import Tool, ToolContext, guess_image_mime
+from medbuddy.tools.normalize import normalize_name
 
 _SYSTEM = (
     "You extract medications from a prescription. Return ONLY minified JSON of the form "
@@ -38,16 +41,17 @@ def _loads_json(content: str) -> dict:
 class ExtractMedicationsTool(Tool):
     name = "extract_medications"
     description = (
-        "Extract structured medications (name, dosage, frequency, duration) from the prescription. "
-        "Pass raw_text if you already ran OCR; otherwise omit it and the tool reads the image "
-        "directly (vision). Returns validated JSON. Normalize each name afterward."
+        "Read the patient's prescription image and return its medications (name, dosage, "
+        "frequency, duration), each already normalized to a generic name with a matched flag, "
+        "and save them as the patient's current prescription. Call with no arguments when an "
+        "image was sent; pass raw_text only to extract from typed text."
     )
     parameters = {
         "type": "object",
         "properties": {
             "raw_text": {
                 "type": "string",
-                "description": "OCR text from run_ocr, if available (optional)",
+                "description": "Prescription text typed by the patient (optional)",
             }
         },
     }
@@ -65,6 +69,7 @@ class ExtractMedicationsTool(Tool):
                 msg = ctx.llm.image_message(
                     "Extract the medications from this prescription image as JSON.",
                     image_bytes=ctx.pending_image,
+                    mime=guess_image_mime(ctx.pending_image),
                 )
                 resp = ctx.llm.complete(
                     [{"role": "system", "content": _SYSTEM}, msg], role="vision"
@@ -74,6 +79,22 @@ class ExtractMedicationsTool(Tool):
                 return {"ok": False, "error": "no raw_text and no image to extract from"}
 
             result = ExtractionResult.model_validate(_loads_json(content))
-            return {"ok": True, **result.model_dump()}
         except Exception as err:  # noqa: BLE001 - surface extraction failure to the agent
             return {"ok": False, "error": f"extraction failed: {err}"}
+
+        medications = []
+        for med in result.medications:
+            norm = normalize_name(ctx.datasets, med.name)
+            medications.append({**med.model_dump(), "generic": norm.generic, "matched": norm.matched})
+
+        patient = get_or_create_patient(ctx.session, ctx.sender)
+        save_prescription(
+            ctx.session, patient.id, raw_text=result.raw_text or raw_text, medications=medications
+        )
+        ctx.session.commit()
+
+        return {
+            "ok": True,
+            "medications": medications,
+            "note": "matched=false drugs are NOT in MedBuddy's dataset — do not describe them.",
+        }

@@ -13,11 +13,14 @@ class Settings(BaseSettings):
 
     # ── Database ──────────────────────────────────────────────
     database_url: str = "sqlite:///./medbuddy.db"
+    # LangGraph conversation checkpoints live in their own file, so clearing chat state
+    # never touches patient data.
+    checkpoint_db: str = "./checkpoints.db"
 
     # ── LLM (LiteLLM model strings), chosen per role ──────────
-    agent_model: str = "groq/llama-3.3-70b-versatile"
-    vision_model: str = "gemini/gemini-2.0-flash"
-    explanation_model: str = "openrouter/meta-llama/llama-3.1-8b-instruct:free"
+    agent_model: str = "gemini/gemini-3.8-flash"
+    vision_model: str = "gemini/gemini-3.8-flash"
+    explanation_model: str = "gemini/gemini-3.8-flash"
     llm_fallbacks: str = ""  # comma-separated model strings
 
     # Provider API keys — pushed into os.environ for LiteLLM by the LLM client.
@@ -35,6 +38,16 @@ class Settings(BaseSettings):
 
     # ── Reminders ─────────────────────────────────────────────
     missed_dose_window_min: int = 60
+    # Patients' local time as a fixed UTC offset (IST = +330, no DST). Reminder times like
+    # "09:00" are interpreted in this zone.
+    tz_offset_minutes: int = 330
+
+    # ── Agent ─────────────────────────────────────────────────
+    # LangGraph steps per inbound message (each agent or tool node counts as one).
+    agent_recursion_limit: int = 25
+    # Photo replies: "template" = built purely from tool results (1 LLM call per photo);
+    # "rephrase" = template rewritten warmly by EXPLANATION_MODEL (2 calls per photo).
+    photo_reply_mode: str = "template"
 
     @property
     def fallback_models(self) -> list[str]:
