@@ -57,9 +57,9 @@ class LLMClient:
         """
         import litellm
 
-        MAX_ATTEMPTS = 4
+        MAX_ATTEMPTS = 2
         BASE_DELAY = 1.0
-        MAX_DELAY = 30.0
+        MAX_DELAY = 65.0
 
         def _is_retryable(err: Exception) -> bool:
             msg = str(err).lower()

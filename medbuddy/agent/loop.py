@@ -284,6 +284,8 @@ class Agent:
             channel.send_text(incoming.sender, reply)
             return reply
         except Exception:
+            import traceback
+            traceback.print_exc()
             fallback = "Sorry — I couldn't finish that just now. Could you try again?"
             channel.send_text(incoming.sender, fallback)
             return fallback
