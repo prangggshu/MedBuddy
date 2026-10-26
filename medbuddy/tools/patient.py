@@ -1,17 +1,20 @@
 """Patient profile + med-list tools (register_patient, get_my_meds)."""
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 from medbuddy.db.repo import get_or_create_patient, latest_medications, set_profile
 from medbuddy.tools.base import Tool, ToolContext
+
+logger = logging.getLogger(__name__)
 
 
 class RegisterPatientTool(Tool):
     name = "register_patient"
     description = (
         "Save or update the patient's name and age during onboarding, after they provide it. "
-        "One WhatsApp number is one patient."
+        "One phone identity is one patient."
     )
     parameters = {
         "type": "object",
@@ -27,6 +30,10 @@ class RegisterPatientTool(Tool):
         patient = get_or_create_patient(ctx.session, ctx.sender)
         set_profile(ctx.session, patient, name=name, age=age)
         ctx.session.commit()
+        logger.info(
+            "step=patient_profile_saved patient=…%s name_present=%s age_present=%s",
+            ctx.sender[-4:], bool(patient.name), patient.age is not None,
+        )
         return {"ok": True, "name": patient.name, "age": patient.age}
 
 

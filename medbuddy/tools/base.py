@@ -37,7 +37,7 @@ def guess_image_mime(data: bytes) -> str:
 class ToolContext:
     """Everything a tool might need, assembled once per inbound message by the loop."""
 
-    sender: str  # current patient's WhatsApp id
+    sender: str  # current patient's phone identity
     session: "Session"
     llm: "LLMClient"
     datasets: "Datasets"

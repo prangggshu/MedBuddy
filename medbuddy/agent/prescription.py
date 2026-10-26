@@ -23,7 +23,7 @@ _SEVERITY_ORDER = {"major": 0, "moderate": 1, "minor": 2}
 _SEVERITY_ICON = {"major": "🔴 MAJOR", "moderate": "🟠 Moderate", "minor": "🟡 Minor"}
 
 _REPHRASE_SYSTEM = (
-    "You rewrite a WhatsApp message from a medication assistant to sound warm and simple for "
+    "You rewrite a medication assistant message to sound warm and simple for "
     "a worried patient. Rules: keep EVERY medicine, generic name, interaction warning, "
     "severity and the disclaimer. Do NOT add any drug fact, effect, dose or advice that is "
     "not in the original. Keep it short. Return only the rewritten message."
@@ -43,7 +43,11 @@ def process_prescription(ctx: ToolContext) -> dict[str, Any]:
     """Run the fixed pipeline. Exactly one LLM call (vision extraction)."""
     extraction = ExtractMedicationsTool().run({}, ctx)
     if not extraction.get("ok"):
-        return {"ok": False, "error": extraction.get("error", "extraction failed")}
+        return {
+            "ok": False,
+            "reason": extraction.get("reason", "unreadable"),
+            "error": extraction.get("error", "extraction failed"),
+        }
 
     medications = extraction["medications"]
     generics = _generics_for_check(medications)
@@ -71,6 +75,12 @@ def _describe_med(med: dict) -> str:
 
 def render_reply(result: dict[str, Any]) -> str:
     """Build the patient reply purely from pipeline output."""
+    if result.get("reason") == "service":
+        return (
+            "Sorry, I'm having trouble reading prescriptions right now — the service is busy. "
+            "⏳ Please send the same photo again in a minute.\n\n"
+            f"_{DISCLAIMER}_"
+        )
     if not result.get("ok") or not result.get("medications"):
         return (
             "I couldn't read any medicines from that photo. 📷 Please send a clearer, "

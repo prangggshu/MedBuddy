@@ -1,6 +1,6 @@
 # MedBuddy
 
-A WhatsApp-based medication adherence & drug-interaction assistant. A patient photographs
+A web-based medication adherence & drug-interaction assistant. A patient photographs
 their prescription; MedBuddy extracts the medicines, explains them in plain language, flags
 dangerous drug–drug interactions, and sends dose reminders — with **no app install**.
 
@@ -20,8 +20,8 @@ See [`CLAUDE.md`](CLAUDE.md) for the full project context and design decisions, 
   capability is a **tool**. State changes need a YES/NO confirmation via `interrupt()`.
 - **LLM: Google Gemini** via **LiteLLM**, configured **per role** (`AGENT_MODEL`,
   `VISION_MODEL`, `EXPLANATION_MODEL`). OCR is a direct **Gemini vision** call — no Tesseract.
-- **Transport is abstracted** — a `MessagingChannel` interface with a `FakeChannel` lets the
-  whole system run **end-to-end with zero Twilio credits**. Twilio is one adapter, added last.
+- **Web chat is the application interface** — the React frontend talks to the FastAPI backend;
+  a `FakeChannel` remains available for tests and the local CLI.
 - **Grounding is structural** — the LLM never invents drug facts: it may only describe drugs a
   lookup tool returned; unmatched drugs hit a disclaimer path.
 
@@ -44,18 +44,25 @@ pip install -r requirements.txt
 # 2. Configure
 cp .env.example .env      # then set GEMINI_API_KEY
 
-# 3. Run the agent locally with NO Twilio — talk to it in your terminal
+# 3. Run the agent locally in your terminal (optional)
 python -m scripts.cli
 
-# 4. Run the API server (for the Twilio webhook, later)
-uvicorn medbuddy.main:app --reload
+# 4. Run the web-chat demo backend
+uvicorn medbuddy.main:app --reload --no-access-log
 
-# 5. Tests
+# 5. Run the web-chat frontend in another terminal
+cd frontend
+npm i
+npm run dev
+
+# 6. Tests
 pytest
 ```
 
-Keep `CHANNEL=fake` during development — it costs nothing and needs no Twilio setup. Switch to
-`CHANNEL=twilio` only when wiring the real WhatsApp sandbox in Week 3.
+The browser chat is the application interface. The backend defaults to `http://localhost:8000`
+and the Vite frontend to `http://localhost:5173`.
+Application steps are printed in the backend terminal and written to the rotating
+`logs/medbuddy.log` file. Request access logs are disabled to keep polling output quiet.
 
 ---
 

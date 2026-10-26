@@ -1,10 +1,12 @@
 """Small data-access helpers so tools/agent code doesn't hand-write queries."""
 from __future__ import annotations
 
+from datetime import datetime
+
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from medbuddy.db.models import Medication, Patient, Prescription
+from medbuddy.db.models import ChatMessage, Medication, Patient, Prescription
 
 
 def get_or_create_patient(session: Session, wa_number: str) -> Patient:
@@ -69,3 +71,30 @@ def latest_medications(session: Session, patient_id: int) -> list[Medication]:
     return list(
         session.scalars(select(Medication).where(Medication.prescription_id == rx.id))
     )
+
+
+def save_chat_message(
+    session: Session, *, phone: str, direction: str, text: str | None,
+    created_at: datetime, media_path: str | None = None, media_type: str | None = None,
+    media_name: str | None = None, media_size: int | None = None, status: str = "sent",
+) -> ChatMessage:
+    row = ChatMessage(
+        phone=phone, direction=direction, text=text, media_path=media_path,
+        media_type=media_type, media_name=media_name, media_size=media_size,
+        created_at=created_at, status=status,
+    )
+    session.add(row)
+    session.commit()
+    session.refresh(row)
+    return row
+
+
+def chat_messages_after(session: Session, phone: str, after_id: int = 0) -> list[ChatMessage]:
+    return list(session.scalars(
+        select(ChatMessage).where(ChatMessage.phone == phone, ChatMessage.id > after_id)
+        .order_by(ChatMessage.id)
+    ))
+
+
+def get_chat_message(session: Session, message_id: int) -> ChatMessage | None:
+    return session.get(ChatMessage, message_id)

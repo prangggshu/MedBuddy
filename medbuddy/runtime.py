@@ -1,7 +1,8 @@
 """Shared singletons: LLM client, agent, channel, clock.
 
 Both the FastAPI app and the CLI build their dependencies here so behaviour matches.
-Channel is chosen from settings.CHANNEL (fake by default -> zero Twilio credits).
+The browser chat is the sole application transport. FakeChannel remains available in tests
+and in the local CLI.
 """
 from __future__ import annotations
 
@@ -9,7 +10,6 @@ from functools import lru_cache
 from typing import TYPE_CHECKING
 
 from medbuddy.agent import Agent
-from medbuddy.channels import FakeChannel
 from medbuddy.config import get_settings
 from medbuddy.llm import LLMClient
 from medbuddy.scheduler.clock import RealClock
@@ -36,13 +36,6 @@ def get_clock() -> "Clock":
 
 @lru_cache
 def get_channel() -> "MessagingChannel":
-    settings = get_settings()
-    if settings.channel == "twilio":
-        from medbuddy.channels.twilio import TwilioChannel
+    from medbuddy.channels.web import WebChannel
 
-        return TwilioChannel(
-            settings.twilio_account_sid,
-            settings.twilio_auth_token,
-            settings.twilio_whatsapp_from,
-        )
-    return FakeChannel(echo=False)
+    return WebChannel()

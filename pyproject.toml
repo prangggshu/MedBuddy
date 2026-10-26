@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "medbuddy"
 version = "0.1.0"
-description = "WhatsApp-based medication adherence & drug-interaction assistant (proof-of-concept)"
+description = "Web-chat medication adherence & drug-interaction assistant (proof-of-concept)"
 requires-python = ">=3.10"
 
 [tool.setuptools.packages.find]

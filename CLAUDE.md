@@ -1,7 +1,7 @@
 # MedBuddy — Project Context for Claude Code
 
 ## What this is
-MedBuddy is a WhatsApp-based medication adherence & drug-interaction assistant. A patient photographs their prescription, the system extracts the medicines, explains them in plain language, flags dangerous drug-drug interactions, and sends WhatsApp reminders to take each dose — with zero app install required.
+MedBuddy is a web-based medication adherence & drug-interaction assistant. A patient photographs their prescription, the system extracts the medicines, explains them in plain language, flags dangerous drug-drug interactions, and manages reminders in the browser chat.
 
 **Type:** 5-credit college minor project (KIIT University), 1-month timeline, team of 2.
 **Status:** Proof-of-concept. Not a certified medical tool — explicitly not for clinical use.
@@ -12,7 +12,8 @@ MedBuddy is a WhatsApp-based medication adherence & drug-interaction assistant. 
 
 > **Portable source of truth** for decisions made during development, so the project can be resumed from any account/IDE. Where this section conflicts with older framing below, **this section wins**. Keep it updated as decisions change.
 
-**Stage (2026-10-09):** Core CLI flow works end-to-end in offline simulation (photo → meds + warnings → reminders with YES/NO confirm → adherence). Not yet verified against live Gemini. Remaining: reminder dispatch scheduler, Twilio adapter + webhook.
+**Stage (2026-10-25):** The React web chat (`frontend/`) talks to the FastAPI API (`medbuddy/api_web.py`). `WebChannel` persists browser-chat replies. The CLI and `FakeChannel` remain available for local development and tests.
+**Demo interface:** The React web chat is the complete patient-facing chat platform, including onboarding, conversation, prescription uploads, and medication reminders.
 **Implementation notes:** LLM calls go through **LiteLLM** (`medbuddy/llm/client.py`), not `init_chat_model` — deliberate; all three roles default to `gemini/gemini-3.8-flash`. Conversation checkpoints live in `checkpoints.db` (separate from app data); CLI `/reset` clears one. Reminder times use `TZ_OFFSET_MINUTES` (IST = 330).
 **Deadline:** 2 weeks from 2026-09-20. Prangshu starting solo; Arundhati joins in parallel once tools are unblocked.
 **Priority:** Working demo + evaluation numbers + report. Nothing else.
@@ -25,7 +26,7 @@ MedBuddy is a WhatsApp-based medication adherence & drug-interaction assistant. 
 - **Why we changed:** the fully-agentic photo turn took ~12 Gemini calls and exhausted the free tier in one run; it now takes 1. It also makes grounding on the safety-critical path guaranteed by code instead of by prompt.
 - **Evaluation impact:** orchestration success (layer 2) is measured on text turns; the photo path is measured by extraction accuracy + interaction correctness.
 - The **real design work is still the tool set**: each tool's name, input/output schema, and whether it is state-changing.
-- **LangGraph chosen because:** the confirmation gate (agent proposes → patient confirms → tool commits) maps cleanly onto `interrupt()`, with the Postgres checkpointer holding state between WhatsApp turns. Per-patient conversation history is free via `thread_id = whatsapp_number`.
+- **LangGraph chosen because:** the confirmation gate (agent proposes → patient confirms → tool commits) maps cleanly onto `interrupt()`, with the checkpointer holding state between chat turns. Conversation history is keyed by the patient's phone identity.
 
 > **Note:** `docs/MedBuddy-Project-Document.md` is the faculty proposal doc — it analyzes hybrid vs agentic and is not expected to match implementation decisions. Treat it as a design artefact, not a spec.
 
@@ -47,10 +48,10 @@ MedBuddy is a WhatsApp-based medication adherence & drug-interaction assistant. 
 - **Privacy note:** prescription images are sent to Google's cloud. Use synthetic or anonymised prescriptions during development; document this as a known limitation in the report.
 
 ### Transport abstraction — DECIDED
-Twilio/WhatsApp is **just a transport**. `medbuddy/channels/` has:
+The browser chat is the application transport. `medbuddy/channels/` has:
 - `base.py` — `MessagingChannel` interface
-- `fake.py` — `FakeChannel` / console channel for zero-credit local dev and tests
-- `twilio.py` — Twilio adapter, wired in last
+- `fake.py` — `FakeChannel` for the local CLI and tests
+- `web.py` — `WebChannel` for persisted browser chat replies
 
 Use a **mockable clock** (`medbuddy/scheduler/clock.py`) so reminder timing and 3-day-expiry can be tested without real time passing.
 
@@ -79,7 +80,7 @@ medbuddy/
   channels/
     base.py           # MessagingChannel ABC
     fake.py           # FakeChannel for local dev
-    twilio.py         # Twilio WhatsApp adapter
+    web.py            # Persisted browser chat transport
   datasets/
     loaders.py        # Loads brand_generic.csv + interactions.csv into memory
   db/
@@ -109,7 +110,7 @@ data/
   interactions.csv
   sample_prescriptions/   # empty — add synthetic/anonymised images here
 scripts/
-  cli.py              # CLI runner for local testing without WhatsApp
+  cli.py              # CLI runner for local testing
 tests/
   conftest.py
   test_agent_orchestration.py
@@ -124,14 +125,14 @@ docs/
 ---
 
 ## Team
-- **Prangshu** — backend architecture, DB schema, interaction rule engine, scheduler/reminder logic, WhatsApp webhook integration. Secondary: testing, deployment.
+- **Prangshu** — backend architecture, DB schema, interaction rule engine, scheduler/reminder logic, web API integration. Secondary: testing, deployment.
 - **Arundhati** — OCR + LLM extraction pipeline, drug normalization, grounded explanation generation, evaluation metrics. Secondary: dataset curation, report writing.
 - Both: dataset curation (interactions + brand-generic mapping), end-to-end integration testing, report + demo prep.
 
 ---
 
 ## Core user flow
-1. Patient sends "Hi" → registers name + age (one WhatsApp number = one patient, no multi-tenant auth)
+1. Patient opens the browser chat and registers name + age (one phone identity = one patient, no multi-tenant auth)
 2. Patient sends a photo of their prescription
 3. `run_ocr` tool: Gemini vision call → raw extracted text
 4. `extract_medications` tool: LLM structured extraction → drug name, dosage, frequency, duration (Pydantic-validated JSON)
@@ -150,7 +151,7 @@ docs/
 
 | Layer | Tech |
 |---|---|
-| Messaging | Twilio WhatsApp Sandbox API |
+| Messaging | React browser chat + FastAPI web API |
 | Backend | FastAPI, Python |
 | Agent framework | **LangGraph** |
 | OCR + extraction | **Gemini vision** (single multimodal call — no Tesseract) |
@@ -167,7 +168,7 @@ DB tables: `patients`, `prescriptions`, `medications`, `interactions`, `reminder
 ## Explicitly out of scope
 - No live FDA/WHO API integration — static curated dataset only
 - No clinical-grade accuracy claims — proof-of-concept disclaimer throughout
-- No multi-tenant auth — single patient per WhatsApp number
+- No multi-tenant auth — single patient per phone identity
 - No doctor-facing dashboard — patient-facing only
 
 ---
@@ -179,14 +180,6 @@ DB tables: `patients`, `prescriptions`, `medications`, `interactions`, `reminder
 - End-to-end latency: photo upload → explanation delivered
 
 ---
-
-## Twilio Sandbox constraints
-- **Sandbox only** — for testing/discovery, not production.
-- **100 free WhatsApp messages** on trial; beyond that, billed at standard rates.
-- **Sessions expire 3 days after joining** — test numbers must re-send `join <code>` every 3 days. Plan for this during Weeks 3–4 testing; document as a known limitation.
-- **1 message per 3 seconds** rate limit — queue bursty sends rather than firing all at once.
-- **Business-initiated messages outside 24h window** — only pre-approved sandbox templates allowed. Workaround: keep reminder flow inside the 24h window (natural if patients reply taken/missed daily), or repurpose the "Appointment Reminders" template placeholders.
-- Sandbox uses shared number `+14155238886` — cosmetic, but document as a production-readiness gap.
 
 ---
 

@@ -90,3 +90,14 @@ def test_major_warnings_listed_before_moderate():
         }
     )
     assert reply.index("MAJOR") < reply.index("Moderate")
+
+
+class DownLLM(VisionOnlyLLM):
+    def complete(self, messages, *, role="agent", tools=None, **kwargs):
+        raise RuntimeError("503 model is currently experiencing high demand")
+
+
+def test_service_outage_is_not_blamed_on_the_photo(session, datasets, clock, channel):
+    reply = _send_photo(DownLLM([]), session, datasets, channel, clock)
+    assert "send the same photo again" in reply
+    assert "clearer" not in reply

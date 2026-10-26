@@ -14,7 +14,9 @@ checkpointed per patient (thread_id = sender) in a dedicated SQLite file.
 from __future__ import annotations
 
 import json
+import logging
 import sqlite3
+import time
 from typing import TYPE_CHECKING, Annotated, Any, TypedDict
 
 from langgraph.checkpoint.sqlite import SqliteSaver
@@ -38,8 +40,13 @@ if TYPE_CHECKING:
     from medbuddy.scheduler.clock import Clock
 
 STATE_CHANGING_TOOLS = {"schedule_reminder", "log_adherence"}
+logger = logging.getLogger(__name__)
 YES_WORDS = {"yes", "y", "confirm", "ok", "okay", "haan", "ha", "sure"}
 FALLBACK_REPLY = "Sorry — I couldn't finish that just now. Could you try again?"
+
+
+def _patient_ref(sender: str) -> str:
+    return f"…{sender[-4:]}"
 
 
 class AgentState(TypedDict):
@@ -145,6 +152,11 @@ class Agent:
         return graph.compile(checkpointer=checkpointer)
 
     def agent_node(self, state: AgentState) -> AgentState:
+        started = time.perf_counter()
+        logger.info(
+            "step=llm_started patient=%s history_messages=%d",
+            _patient_ref(state["sender"]), len(state["messages"]),
+        )
         llm_messages: list[dict] = []
         for message in state["messages"]:
             if isinstance(message, dict):
@@ -180,6 +192,10 @@ class Agent:
         )
         msg = response.choices[0].message
         tool_calls = getattr(msg, "tool_calls", None) or []
+        logger.info(
+            "step=llm_finished patient=%s duration_seconds=%.2f tool_calls=%d",
+            _patient_ref(state["sender"]), time.perf_counter() - started, len(tool_calls),
+        )
 
         assistant_entry: dict = {"role": "assistant", "content": msg.content or ""}
         if tool_calls:
@@ -203,7 +219,9 @@ class Agent:
     def prescription_node(self, state: AgentState) -> AgentState:
         """Fixed photo pipeline. Its reply lands in history so the agent has context next turn."""
         ctx = self._ctx_map[state["sender"]]
+        logger.info("step=prescription_pipeline_started patient=%s", _patient_ref(state["sender"]))
         reply = prescription_reply(ctx)
+        logger.info("step=prescription_pipeline_finished patient=%s", _patient_ref(state["sender"]))
         return {
             "messages": [{"role": "assistant", "content": reply}],
             "sender": state["sender"],
@@ -231,6 +249,7 @@ class Agent:
 
         new_messages: list[dict] = []
         for name, args, call_id in calls:
+            logger.info("step=tool_started patient=%s tool=%s", _patient_ref(state["sender"]), name)
             if name in STATE_CHANGING_TOOLS:
                 if approved:
                     args = {**args, "confirm": True}
@@ -243,6 +262,10 @@ class Agent:
                 result = tool.run(args, ctx) if tool else {"error": f"unknown tool '{name}'"}
             except Exception as err:  # noqa: BLE001 - a tool crash must not kill the turn
                 result = {"error": f"{name} failed: {err}"}
+            logger.info(
+                "step=tool_finished patient=%s tool=%s success=%s",
+                _patient_ref(state["sender"]), name, "error" not in result,
+            )
             new_messages.append(self._tool_message(call_id, name, result))
 
         return {
@@ -307,6 +330,10 @@ class Agent:
             pending_image=incoming.media_bytes,
         )
         self._ctx_map[incoming.sender] = ctx
+        logger.info(
+            "step=agent_turn_started patient=%s has_text=%s has_attachment=%s",
+            _patient_ref(incoming.sender), bool(incoming.text), incoming.has_image,
+        )
         config = {
             "configurable": {"thread_id": incoming.sender},
             "recursion_limit": max_iters or get_settings().agent_recursion_limit,
@@ -336,15 +363,14 @@ class Agent:
             result = self._graph.invoke(graph_input, config=config)
             reply = self._reply_from(result)
         except Exception:
-            import traceback
-
-            traceback.print_exc()
+            logger.exception("step=agent_turn_failed patient=%s", _patient_ref(incoming.sender))
             self._discard_dangling_tool_calls(config)
             reply = FALLBACK_REPLY
         finally:
             self._ctx_map.pop(incoming.sender, None)
 
         channel.send_text(incoming.sender, reply)
+        logger.info("step=reply_sent patient=%s", _patient_ref(incoming.sender))
         return reply
 
     @staticmethod

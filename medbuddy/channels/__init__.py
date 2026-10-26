@@ -1,9 +1,4 @@
-"""Messaging transport abstraction.
-
-Twilio/WhatsApp is just a transport. Everything above this layer works against
-`MessagingChannel`, so the whole system runs end-to-end with `FakeChannel` — zero
-Twilio credits — and Twilio becomes one adapter added last.
-"""
+"""Message types and transport protocol used by the browser chat and tests."""
 from .base import IncomingMessage, MessagingChannel
 from .fake import FakeChannel, SentMessage
 

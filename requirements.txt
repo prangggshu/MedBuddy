@@ -1,7 +1,8 @@
 # ─── Web / API ───────────────────────────────────────────────
 fastapi
 uvicorn[standard]
-python-multipart            # form parsing for Twilio webhooks
+python-multipart            # multipart chat and prescription uploads
+pymupdf                     # render uploaded prescription PDFs without Poppler
 
 # ─── Config & validation ─────────────────────────────────────
 pydantic>=2
@@ -17,9 +18,6 @@ rapidfuzz
 
 # ─── Database ────────────────────────────────────────────────
 sqlalchemy>=2
-
-# ─── Messaging (optional Twilio adapter) ─────────────────────
-twilio
 
 # ─── Dev / test ──────────────────────────────────────────────
 pytest

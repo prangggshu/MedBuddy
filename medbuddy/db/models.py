@@ -1,6 +1,6 @@
 """ORM models for the six MedBuddy tables (see CLAUDE.md → DB tables planned).
 
-One WhatsApp number == one patient (no multi-tenant auth, per scope).
+One phone identity == one patient (no multi-tenant auth, per scope).
 """
 from __future__ import annotations
 
@@ -95,3 +95,18 @@ class AdherenceLog(Base):
     reminder_id: Mapped[int | None] = mapped_column(ForeignKey("reminders.id"), default=None)
     response: Mapped[str] = mapped_column(String(20))  # taken | missed | snooze
     logged_at: Mapped[datetime] = mapped_column(default=_utcnow)
+
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    phone: Mapped[str] = mapped_column(String(40), index=True)
+    direction: Mapped[str] = mapped_column(String(3))  # in | out
+    text: Mapped[str | None] = mapped_column(Text, default=None)
+    media_path: Mapped[str | None] = mapped_column(String(500), default=None)
+    media_type: Mapped[str | None] = mapped_column(String(100), default=None)
+    media_name: Mapped[str | None] = mapped_column(String(255), default=None)
+    media_size: Mapped[int | None] = mapped_column(default=None)
+    created_at: Mapped[datetime] = mapped_column()
+    status: Mapped[str] = mapped_column(String(20), default="sent")

@@ -35,3 +35,9 @@ data/sample_prescriptions/*
 
 # LangGraph conversation checkpoints
 checkpoints.db*
+
+# Uploaded prescription files are local demo data
+data/uploads/
+logs/
+frontend/node_modules/
+*.tsbuildinfo

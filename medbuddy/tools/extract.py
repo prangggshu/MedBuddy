@@ -77,10 +77,13 @@ class ExtractMedicationsTool(Tool):
                 content = resp.choices[0].message.content or "{}"
             else:
                 return {"ok": False, "error": "no raw_text and no image to extract from"}
+        except Exception as err:  # noqa: BLE001 - API down/overloaded, not the photo's fault
+            return {"ok": False, "reason": "service", "error": f"model call failed: {err}"}
 
+        try:
             result = ExtractionResult.model_validate(_loads_json(content))
-        except Exception as err:  # noqa: BLE001 - surface extraction failure to the agent
-            return {"ok": False, "error": f"extraction failed: {err}"}
+        except Exception as err:  # noqa: BLE001 - model answered but nothing usable
+            return {"ok": False, "reason": "unreadable", "error": f"extraction failed: {err}"}
 
         medications = []
         for med in result.medications:

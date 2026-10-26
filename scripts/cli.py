@@ -1,4 +1,4 @@
-"""Local REPL to talk to MedBuddy without WhatsApp/Twilio — zero credits.
+"""Local REPL to talk to MedBuddy in the terminal.
 
     python -m scripts.cli
 
@@ -31,7 +31,7 @@ def main() -> None:
     clock = RealClock()
     sender = "cli:local"
 
-    print("MedBuddy CLI — FakeChannel, zero Twilio credits. Ctrl-C or 'quit' to exit.")
+    print("MedBuddy CLI — FakeChannel. Ctrl-C or 'quit' to exit.")
     print("Attach an image with:  img:<path-to-file>   |   /reset clears the chat\n")
     print("Proof-of-concept, not for clinical use.\n")
 

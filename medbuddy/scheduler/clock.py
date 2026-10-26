@@ -1,4 +1,4 @@
-"""A mockable clock so reminder timing (and Twilio's 3-day expiry) can be tested fast.
+"""A mockable clock so reminder timing can be tested without waiting.
 
 Inject a `Clock` everywhere time is read; use `RealClock` in production and `FakeClock`
 in tests to advance time deterministically without waiting.

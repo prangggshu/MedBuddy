@@ -31,10 +31,9 @@ class Settings(BaseSettings):
     openrouter_api_key: str = ""
 
     # ── Messaging ─────────────────────────────────────────────
-    channel: str = "fake"  # "fake" | "twilio"
-    twilio_account_sid: str = ""
-    twilio_auth_token: str = ""
-    twilio_whatsapp_from: str = "whatsapp:+14155238886"
+    cors_origins: str = "http://localhost:5173"
+    max_upload_mb: int = 10
+    demo_mode: bool = False
 
     # ── Reminders ─────────────────────────────────────────────
     missed_dose_window_min: int = 60

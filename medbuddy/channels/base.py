@@ -9,10 +9,10 @@ from typing import Protocol
 class IncomingMessage:
     """A message from a patient, normalized across channels."""
 
-    sender: str  # channel-specific id (e.g. "whatsapp:+9199...")
+    sender: str  # normalized patient phone identity
     text: str | None = None
-    media_url: str | None = None  # image URL (Twilio)
-    media_bytes: bytes | None = None  # raw image bytes (fake channel / local files)
+    media_url: str | None = None
+    media_bytes: bytes | None = None  # raw image bytes for the vision path
 
     @property
     def has_image(self) -> bool:
@@ -20,6 +20,6 @@ class IncomingMessage:
 
 
 class MessagingChannel(Protocol):
-    """Outbound transport. Implementations: FakeChannel (dev/tests), TwilioChannel (prod)."""
+    """Outbound transport. WebChannel persists chat replies; FakeChannel supports tests."""
 
     def send_text(self, to: str, text: str) -> None: ...
