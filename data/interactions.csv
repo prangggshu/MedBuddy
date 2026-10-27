@@ -1,76 +1,58 @@
 drug_a,drug_b,severity,description,source
-Aspirin,Ibuprofen,moderate,"Ibuprofen can blunt the antiplatelet effect of low-dose aspirin and raises GI bleeding risk when combined.",curated-poc
-Warfarin,Aspirin,major,"Combined use markedly increases the risk of serious bleeding.",curated-poc
-Metformin,Alcohol,moderate,"Alcohol increases the risk of lactic acidosis with metformin.",curated-poc
-Azithromycin,Warfarin,moderate,"Azithromycin may potentiate warfarin's anticoagulant effect; monitor INR.",curated-poc
-Paracetamol,Warfarin,minor,"Regular high-dose paracetamol may modestly increase INR; usually clinically minor.",curated-poc
-Ibuprofen,Losartan,minor,NSAIDs may reduce the antihypertensive effect of losartan.,curated-poc
-Naproxen,Amlodipine,minor,NSAIDs may modestly reduce blood-pressure control with amlodipine.,curated-poc
-Diclofenac,Telmisartan,minor,NSAIDs may reduce telmisartan's antihypertensive effect.,curated-poc
-Cetirizine,Clonazepam,moderate,Cetirizine can add to clonazepam's sedation and impair alertness.,curated-poc
-Levocetirizine,Clonazepam,moderate,Levocetirizine can enhance clonazepam-related drowsiness and psychomotor impairment.,curated-poc
-Fexofenadine,Aluminium hydroxide,minor,Aluminium-containing antacids can reduce fexofenadine absorption; separate doses by several hours.,curated-poc
-Omeprazole,Clopidogrel,moderate,Omeprazole inhibits CYP2C19 and can reduce activation and antiplatelet effect of clopidogrel.,curated-poc
-Rabeprazole,Clopidogrel,minor,Rabeprazole has less CYP2C19 inhibition than omeprazole but may still modestly reduce clopidogrel activation.,curated-poc
-Pantoprazole,Clopidogrel,minor,Pantoprazole has relatively little CYP2C19 inhibition and is less likely to reduce clopidogrel activation.,curated-poc
-Atorvastatin,Amlodipine,minor,Amlodipine can modestly increase atorvastatin exposure; monitor for statin adverse effects.,curated-poc
-Rosuvastatin,Warfarin,moderate,Rosuvastatin may increase INR in patients receiving warfarin; monitor INR after initiation or dose changes.,curated-poc
-Atorvastatin,Warfarin,moderate,Atorvastatin may increase warfarin effect; monitor INR after starting or changing statin therapy.,curated-poc
-Amlodipine,Simvastatin,moderate,Amlodipine increases simvastatin exposure; simvastatin dosing should be limited.,curated-poc
-Glimepiride,Fluconazole,moderate,Fluconazole can increase glimepiride exposure and cause prolonged hypoglycemia.,curated-poc
-Glimepiride,Ciprofloxacin,moderate,Ciprofloxacin can alter glucose control and has been associated with hypoglycemia in sulfonylurea users.,curated-poc
-Sitagliptin,Insulin,moderate,Combining sitagliptin with insulin increases hypoglycemia risk.,curated-poc
-Metformin,Contrast media,major,Iodinated contrast can increase the risk of metformin-associated lactic acidosis in susceptible patients.,curated-poc
-Insulin,Prednisolone,moderate,Prednisolone can raise blood glucose and increase insulin requirements.,curated-poc
-Glimepiride,Prednisolone,moderate,Prednisolone can reduce glucose control and counteract glimepiride's glucose-lowering effect.,curated-poc
-Telmisartan,Ibuprofen,moderate,NSAIDs may reduce telmisartan's antihypertensive effect and impair renal function.,curated-poc
-Losartan,Naproxen,moderate,Naproxen may reduce losartan's blood-pressure effect and increase renal impairment risk.,curated-poc
-Amlodipine,Clonazepam,minor,Concurrent use may increase dizziness or hypotension in susceptible patients.,curated-poc
-Atenolol,Insulin,moderate,Atenolol can mask adrenergic symptoms of hypoglycemia and may prolong hypoglycemia.,curated-poc
-Atenolol,Salbutamol,moderate,Atenolol can antagonize salbutamol's bronchodilator effect and may cause bronchospasm in susceptible patients.,curated-poc
-Digoxin,Amlodipine,moderate,Amlodipine may increase digoxin concentrations in some patients; monitor digoxin effects and levels.,curated-poc
-Digoxin,Clarithromycin,major,Clarithromycin can markedly increase digoxin exposure and toxicity risk.,curated-poc
-Digoxin,Amiodarone,major,Amiodarone substantially increases digoxin concentrations and toxicity risk; dose reduction and monitoring are often required.,curated-poc
-Digoxin,Verapamil,major,"Verapamil can increase digoxin concentrations and slow cardiac conduction, increasing toxicity risk.",curated-poc
-Lithium,Ibuprofen,moderate,Ibuprofen can reduce renal lithium clearance and increase lithium concentrations.,curated-poc
-Lithium,Naproxen,moderate,Naproxen can reduce renal lithium clearance and increase lithium concentrations.,curated-poc
-Lithium,Diclofenac,moderate,Diclofenac can reduce renal lithium clearance and increase lithium concentrations.,curated-poc
-Lithium,Telmisartan,major,Telmisartan may reduce lithium clearance and increase lithium concentrations to potentially toxic levels.,curated-poc
-Lithium,Losartan,major,Losartan may reduce lithium clearance and increase lithium concentrations to potentially toxic levels.,curated-poc
-Lithium,Hydrochlorothiazide,major,Thiazide diuretics substantially reduce lithium clearance and can cause lithium toxicity.,curated-poc
-Escitalopram,Clonazepam,moderate,Combined use can increase sedation and psychomotor impairment.,curated-poc
-Escitalopram,Ibuprofen,moderate,Combined use increases gastrointestinal bleeding risk compared with either drug alone.,curated-poc
-Escitalopram,Warfarin,moderate,Escitalopram can increase bleeding risk when combined with warfarin.,curated-poc
-Fluconazole,Warfarin,major,Fluconazole inhibits warfarin metabolism and can markedly increase INR and bleeding risk.,curated-poc
-Fluconazole,Atorvastatin,major,Fluconazole can increase atorvastatin exposure and the risk of myopathy or rhabdomyolysis.,curated-poc
-Itraconazole,Atorvastatin,major,Itraconazole strongly inhibits CYP3A4 and can markedly increase atorvastatin exposure and myopathy risk.,curated-poc
-Itraconazole,Simvastatin,major,Itraconazole markedly increases simvastatin exposure and can cause severe myopathy or rhabdomyolysis.,curated-poc
-Fluconazole,Phenytoin,major,Fluconazole can increase phenytoin concentrations and cause toxicity.,curated-poc
-Fluconazole,Clonazepam,moderate,Fluconazole may increase clonazepam exposure and enhance sedation.,curated-poc
-Phenytoin,Warfarin,moderate,Phenytoin can unpredictably alter warfarin effect; close INR monitoring is required.,curated-poc
-Phenytoin,Valproate,moderate,Valproate can increase free phenytoin concentrations and phenytoin toxicity risk.,curated-poc
-Valproate,Lamotrigine,major,Valproate markedly reduces lamotrigine clearance and increases serious skin-reaction risk.,curated-poc
-Phenytoin,Levothyroxine,moderate,Phenytoin can increase thyroid hormone metabolism and reduce levothyroxine effectiveness.,curated-poc
-Levothyroxine,Calcium carbonate,moderate,Calcium carbonate reduces levothyroxine absorption; separate administration by at least four hours.,curated-poc
-Levothyroxine,Iron,moderate,Iron supplements reduce levothyroxine absorption; separate administration by at least four hours.,curated-poc
-Levothyroxine,Omeprazole,minor,Long-term acid suppression may reduce levothyroxine absorption and increase thyroid-stimulating hormone in some patients.,curated-poc
-Ciprofloxacin,Warfarin,moderate,Ciprofloxacin can increase warfarin effect and INR; monitor anticoagulation closely.,curated-poc
-Levofloxacin,Warfarin,moderate,Levofloxacin can increase warfarin effect and INR; monitor anticoagulation closely.,curated-poc
-Doxycycline,Warfarin,moderate,Doxycycline can enhance warfarin anticoagulation and increase INR.,curated-poc
-Amoxicillin,Warfarin,minor,Amoxicillin may increase INR in some warfarin-treated patients; monitor during antibiotic therapy.,curated-poc
-Clarithromycin,Atorvastatin,major,Clarithromycin increases atorvastatin exposure and the risk of myopathy and rhabdomyolysis.,curated-poc
-Clarithromycin,Warfarin,major,"Clarithromycin can increase warfarin exposure and anticoagulant effect, raising bleeding risk.",curated-poc
-Ciprofloxacin,Antacids,minor,Aluminium or magnesium antacids reduce ciprofloxacin absorption; separate administration by several hours.,curated-poc
-Levofloxacin,Antacids,minor,Aluminium or magnesium antacids reduce levofloxacin absorption; separate administration by several hours.,curated-poc
-Doxycycline,Calcium carbonate,minor,Calcium binds doxycycline and reduces its absorption; separate administration by several hours.,curated-poc
-Doxycycline,Iron,minor,Iron binds doxycycline and substantially reduces its absorption; separate administration by several hours.,curated-poc
-Prednisolone,Ibuprofen,moderate,Concurrent use increases gastrointestinal irritation and bleeding risk.,curated-poc
-Prednisolone,Naproxen,moderate,Concurrent use increases gastrointestinal ulceration and bleeding risk.,curated-poc
-Apixaban,Ibuprofen,major,Ibuprofen increases bleeding risk when combined with apixaban.,curated-poc
-Apixaban,Naproxen,major,Naproxen increases bleeding risk when combined with apixaban.,curated-poc
-Clopidogrel,Ibuprofen,major,Ibuprofen increases gastrointestinal and overall bleeding risk with clopidogrel.,curated-poc
-Clopidogrel,Naproxen,major,Naproxen increases gastrointestinal and overall bleeding risk with clopidogrel.,curated-poc
-Warfarin,Ibuprofen,major,Ibuprofen increases gastrointestinal and systemic bleeding risk with warfarin.,curated-poc
-Warfarin,Naproxen,major,Naproxen increases gastrointestinal and systemic bleeding risk with warfarin.,curated-poc
-Rosuvastatin,Cyclosporine,major,Cyclosporine markedly increases rosuvastatin exposure and the risk of myopathy.,curated-poc
-Simvastatin,Clarithromycin,major,Clarithromycin markedly increases simvastatin exposure and the risk of rhabdomyolysis.,curated-poc
+Alcohol,Metformin,moderate,Excessive alcohol can potentiate metformin's effect on lactate metabolism and is a risk factor for metformin-associated lactic acidosis.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1ed9dde4-339c-486f-a346-dde33a5e493f
+Aluminium hydroxide,Ciprofloxacin,minor,Aluminium-containing antacids reduce ciprofloxacin absorption. Separate ciprofloxacin by at least 2 hours before or 6 hours after the antacid.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b281a5c0-5f3e-4e6f-86ac-ed7794aac64c
+Aluminium hydroxide,Fexofenadine,minor,Aluminium-containing antacids can reduce fexofenadine absorption; separate administration by at least 2 hours.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e5a207e4-472b-4bf9-8cd3-a018ef3a82bb
+Aluminium hydroxide,Levofloxacin,minor,Aluminium-containing antacids reduce levofloxacin absorption when taken within 2 hours; separate doses by at least 2 hours.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0a0fd993-7bea-42d8-e063-6394a90a4e0e
+Amlodipine,Simvastatin,moderate,Amlodipine increases simvastatin exposure; the simvastatin dose should not exceed 20 mg daily when used together.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b3d9dd95-d250-4201-8e95-466fd321c37e
+Apixaban,Ibuprofen,major,Chronic NSAID use with apixaban increases bleeding risk. Contact a clinician before combining and seek urgent care for serious bleeding.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1523ab32-2c2c-6501-e063-6394a90aa0b3
+Apixaban,Naproxen,major,Chronic NSAID use with apixaban increases bleeding risk. Contact a clinician before combining and seek urgent care for serious bleeding.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1523ab32-2c2c-6501-e063-6394a90aa0b3
+Aspirin,Ibuprofen,moderate,Ibuprofen can interfere with the antiplatelet effect of low-dose aspirin and the combination may increase adverse effects. Timing matters; ask a clinician or pharmacist about an alternative or schedule.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=70e191ef-8fad-49eb-9850-fceea119e92f
+Aspirin,Warfarin,major,Using aspirin with warfarin increases bleeding risk because of their combined effects on hemostasis. Monitor for bleeding and seek clinician guidance.,https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=51e98fb6-ba76-497e-95d8-fe895ef0b7ed
+Atenolol,Insulin,moderate,"Atenolol may mask tachycardia, a warning sign of hypoglycemia, although at recommended doses it does not potentiate insulin-induced hypoglycemia or delay glucose recovery. Monitor glucose and symptoms.",https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=793b6b1d-54fd-4856-ab0b-899bb046a239
+Atorvastatin,Clarithromycin,major,Clarithromycin inhibits CYP3A4 and can raise atorvastatin exposure and myopathy risk. Dose limitation and clinical monitoring may be needed.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a215aea1-d8fc-a67f-e053-2995a90adc02
+Atorvastatin,Itraconazole,major,Itraconazole inhibits CYP3A4 and can raise atorvastatin exposure and myopathy risk. Dose limitation and clinical monitoring may be needed.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a215aea1-d8fc-a67f-e053-2995a90adc02
+Azithromycin,Warfarin,moderate,Azithromycin may increase coagulation time with warfarin; monitor prothrombin time/INR during concurrent use.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=21c67de0-3a4e-caab-e063-6394a90ae3cd
+Calcium carbonate,Doxycycline,minor,Calcium can reduce doxycycline absorption; separate calcium and doxycycline doses according to the product label or pharmacist's advice.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1fcfcd30-e493-4e88-8c0e-329265a72b26
+Calcium carbonate,Levothyroxine,moderate,Calcium carbonate can bind levothyroxine and reduce absorption. Separate doses by at least 4 hours.,https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=8906f2de-8099-b14c-e053-2a95a90a237f
+Cetirizine,Clonazepam,moderate,Cetirizine can add to clonazepam-related drowsiness and impaired alertness. Avoid driving or other risky tasks if affected.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3eb3fd74-2d47-4303-a3cc-0d3fdd2b0dae
+Ciprofloxacin,Glimepiride,moderate,Ciprofloxacin with sulfonylureas including glimepiride has been associated with sometimes severe hypoglycemia; monitor blood glucose closely.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=888dc7f9-ad9c-4c00-8d50-8ddfd9bd27c0
+Ciprofloxacin,Magnesium hydroxide,minor,Magnesium-containing antacids reduce ciprofloxacin absorption. Separate ciprofloxacin by at least 2 hours before or 6 hours after the antacid.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b281a5c0-5f3e-4e6f-86ac-ed7794aac64c
+Ciprofloxacin,Warfarin,moderate,Ciprofloxacin can enhance warfarin anticoagulation; monitor INR and signs of bleeding during concomitant use.,https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=8cb3b13b-9cee-faa7-e053-2a95a90a0bfb&type=display
+Clarithromycin,Simvastatin,major,Clarithromycin strongly inhibits CYP3A4; avoid the combination because simvastatin concentrations and rhabdomyolysis risk can rise markedly.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8f55d5de-5a4f-4a39-8c84-c53976dd6af9
+Clonazepam,Levocetirizine,moderate,Levocetirizine may add to clonazepam-related drowsiness and impaired alertness. Avoid driving or other risky tasks if affected.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1a7cba99-8a10-44d9-bd92-5aa85032ed3d
+Clopidogrel,Esomeprazole,major,Avoid this combination: esomeprazole can significantly reduce clopidogrel's antiplatelet activity.,https://dailymed.nlm.nih.gov/dailymed/downloadpdffile.cfm?setId=98a83879-4e53-41f5-83bc-681b342884dd
+Clopidogrel,Ibuprofen,major,Clopidogrel with an NSAID increases gastrointestinal bleeding risk. Use only with clinician guidance and monitor for bleeding.,https://dailymed.nlm.nih.gov/dailymed/downloadpdffile.cfm?setId=5903a773-7f31-3223-e053-2991aa0ac983
+Clopidogrel,Naproxen,major,Clopidogrel with an NSAID increases gastrointestinal bleeding risk. Use only with clinician guidance and monitor for bleeding.,https://dailymed.nlm.nih.gov/dailymed/downloadpdffile.cfm?setId=5903a773-7f31-3223-e053-2991aa0ac983
+Clopidogrel,Omeprazole,major,"Avoid this combination: omeprazole inhibits CYP2C19 and significantly reduces clopidogrel's antiplatelet activity, even when doses are separated by 12 hours.",https://dailymed.nlm.nih.gov/dailymed/downloadpdffile.cfm?setId=98a83879-4e53-41f5-83bc-681b342884dd
+Contrast media,Metformin,major,Iodinated contrast imaging can require temporary metformin interruption in specified patients because of renal impairment and lactic-acidosis risk. Follow the imaging team's instructions and restart only when advised.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1ed9dde4-339c-486f-a346-dde33a5e493f
+Cyclosporine,Rosuvastatin,major,Cyclosporine markedly increases rosuvastatin exposure and myopathy risk; use only with strict prescriber dose limits and monitoring.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=70be13ed-bff9-4fbd-8489-bc5522f2
+Diclofenac,Lithium,moderate,NSAIDs can reduce renal lithium clearance and raise serum lithium concentrations; check lithium levels and toxicity symptoms when combined.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1a62d5ae-a4a3-4b10-8281-feba134bbe3a
+Diclofenac,Losartan,moderate,"NSAIDs may reduce losartan's blood-pressure effect and, especially in older, volume-depleted, or renally impaired patients, worsen renal function. Monitor blood pressure and renal function.",https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=adc984d5-91d6-ef17-e053-2a95a90a7571
+Diclofenac,Telmisartan,moderate,"NSAIDs may attenuate telmisartan's blood-pressure effect and increase renal impairment risk, particularly with renal impairment, volume depletion, or diuretic use.",https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=20a60231-64f0-4751-aa81-6c0e64334179
+Doxycycline,Iron,minor,Iron can reduce doxycycline absorption; separate iron and doxycycline doses according to the product label or pharmacist's advice.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1fcfcd30-e493-4e88-8c0e-329265a72b26
+Escitalopram,Ibuprofen,moderate,An SSRI with an NSAID can increase bleeding risk; monitor for gastrointestinal or other bleeding and ask a clinician before regular combined use.,https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=51e98fb6-ba76-497e-95d8-fe895ef0b7ed
+Escitalopram,Warfarin,moderate,SSRIs including escitalopram can increase bleeding risk with warfarin; monitor for bleeding and ensure the prescriber knows about the combination.,https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=51e98fb6-ba76-497e-95d8-fe895ef0b7ed
+Fluconazole,Glimepiride,moderate,Fluconazole inhibits glimepiride metabolism and can increase glimepiride exposure and hypoglycemia risk; monitor blood glucose closely.,https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=01196f54-32c8-41a0-b0ed-7968ca5d2fa2&type=pdf
+Fluconazole,Phenytoin,major,Fluconazole can increase phenytoin exposure; monitor phenytoin concentrations and toxicity during coadministration.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=6614e522-1804-4904-8bce-bd907b49da90
+Glimepiride,Prednisolone,moderate,Corticosteroids can worsen glucose control and reduce the glucose-lowering effect of sulfonylureas; monitor glucose closely.,https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=35427b4b-534d-6414-e054-00144ff88e88
+Hydrochlorothiazide,Lithium,major,Hydrochlorothiazide reduces renal lithium clearance and can greatly increase lithium toxicity risk; this combination generally should be avoided or managed with close monitoring by the prescriber.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=90a0a64c-1c98-f27b-e053-2a95a90a8ca5
+Ibuprofen,Lithium,moderate,Ibuprofen can reduce renal lithium clearance and raise serum lithium concentrations; check lithium levels and toxicity symptoms when combined.,https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=1a62d5ae-a4a3-4b10-8281-feba134bbe3a
+Ibuprofen,Losartan,moderate,"NSAIDs may reduce losartan's blood-pressure effect and, especially in older, volume-depleted, or renally impaired patients, worsen renal function. Monitor blood pressure and renal function.",https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=adc984d5-91d6-ef17-e053-2a95a90a7571
+Ibuprofen,Prednisolone,moderate,"Systemic corticosteroids combined with NSAIDs increase gastrointestinal adverse-effect risk, including ulceration or bleeding.",https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=463c7cd2-c973-5c6c-e063-6394a90a09a0&type=pdf
+Ibuprofen,Telmisartan,moderate,"NSAIDs may attenuate telmisartan's blood-pressure effect and increase renal impairment risk, particularly with renal impairment, volume depletion, or diuretic use.",https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=20a60231-64f0-4751-aa81-6c0e64334179
+Ibuprofen,Warfarin,major,Ibuprofen with warfarin increases bleeding risk through independent effects. Avoid unless specifically directed and monitor for bleeding.,https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=51e98fb6-ba76-497e-95d8-fe895ef0b7ed
+Insulin,Prednisolone,moderate,Systemic corticosteroids such as prednisolone can raise blood glucose and may require closer glucose monitoring or adjustment of diabetes treatment by the prescriber.,https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=35427b4b-534d-6414-e054-00144ff88e88
+Insulin,Sitagliptin,moderate,Sitagliptin used with insulin increases hypoglycemia risk; the insulin dose may need adjustment by the prescriber.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=cebc8388-c9db-4e27-8d6b-0d9bdc9d766d
+Iron,Levothyroxine,moderate,Iron supplements can bind levothyroxine and reduce absorption. Separate doses by at least 4 hours.,https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=8906f2de-8099-b14c-e053-2a95a90a237f
+Itraconazole,Simvastatin,major,Itraconazole strongly inhibits CYP3A4; avoid the combination because simvastatin concentrations and rhabdomyolysis risk can rise markedly.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8f55d5de-5a4f-4a39-8c84-c53976dd6af9
+Levofloxacin,Magnesium hydroxide,minor,Magnesium-containing antacids reduce levofloxacin absorption when taken within 2 hours; separate doses by at least 2 hours.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0a0fd993-7bea-42d8-e063-6394a90a4e0e
+Levofloxacin,Warfarin,moderate,Levofloxacin has been associated with increased INR and bleeding when used with warfarin; monitor INR and signs of bleeding.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0a0fd993-7bea-42d8-e063-6394a90a4e0e
+Lithium,Losartan,major,Losartan and other angiotensin receptor blockers have been associated with increased serum lithium and toxicity; monitor lithium concentrations closely.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=44050993-c20e-45d4-baeb-f77d91296168
+Lithium,Naproxen,moderate,Naproxen can reduce renal lithium clearance and raise serum lithium concentrations; check lithium levels and toxicity symptoms when combined.,https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=1a62d5ae-a4a3-4b10-8281-feba134bbe3a
+Lithium,Telmisartan,major,Telmisartan and other angiotensin receptor blockers have been associated with increased serum lithium and toxicity; monitor lithium concentrations closely.,https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=20a60231-64f0-4751-aa81-6c0e64334179
+Losartan,Naproxen,moderate,"NSAIDs may reduce losartan's blood-pressure effect and, especially in older, volume-depleted, or renally impaired patients, worsen renal function. Monitor blood pressure and renal function.",https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=adc984d5-91d6-ef17-e053-2a95a90a7571
+Naproxen,Prednisolone,moderate,"Systemic corticosteroids combined with NSAIDs increase gastrointestinal adverse-effect risk, including ulceration or bleeding.",https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=463c7cd2-c973-5c6c-e063-6394a90a09a0&type=pdf
+Naproxen,Telmisartan,moderate,"NSAIDs may attenuate telmisartan's blood-pressure effect and increase renal impairment risk, particularly with renal impairment, volume depletion, or diuretic use.",https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=20a60231-64f0-4751-aa81-6c0e64334179
+Naproxen,Warfarin,major,Naproxen with warfarin increases bleeding risk through independent effects. Avoid unless specifically directed and monitor for bleeding.,https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=51e98fb6-ba76-497e-95d8-fe895ef0b7ed
+Paracetamol,Warfarin,moderate,Repeated regular paracetamol use may increase INR in some patients taking warfarin. Check INR when starting or stopping repeated use; occasional use may differ.,https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=bd85912e-23bf-499f-b91d-7ff17f61c8df&type=pdf
+Rosuvastatin,Warfarin,moderate,"Rosuvastatin may increase INR in patients receiving warfarin. Monitor INR when rosuvastatin is initiated, discontinued, or dose-adjusted.",https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8b961193-a2cc-4b1f-95d4-750735218e25

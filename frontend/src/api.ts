@@ -17,6 +17,10 @@ export const getMessages = (phone: string, afterId = 0) => request<ChatMessage[]
   `/api/messages?phone=${encodeURIComponent(phone)}&after_id=${afterId}`,
 )
 export const getTyping = (phone: string) => request<{typing:boolean}>(`/api/typing?phone=${encodeURIComponent(phone)}`)
+export type HealthSearchResult = { title: string; summary: string; url: string }
+export const searchHealth = (query: string) => request<{
+  query: string; source: string; results: HealthSearchResult[]
+}>(`/api/health-search?q=${encodeURIComponent(query)}`)
 export function sendMessage(phone: string, text: string, file: File | null, onProgress: (p:number)=>void) {
   return new Promise<ChatMessage>((resolve,reject)=>{
     const xhr = new XMLHttpRequest()

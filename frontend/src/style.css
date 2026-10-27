@@ -25,6 +25,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .app-shell {
   display: grid;
   grid-template-columns: 340px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   width: min(1500px, 100%);
   height: calc(100vh - 48px);
   min-height: 430px;
@@ -43,6 +44,9 @@ button { -webkit-tap-highlight-color: transparent; }
 .icon-btn:hover { background: #e3e8e7; }
 .search { display: flex; align-items: center; gap: 14px; height: 50px; margin: 8px 12px; padding: 0 13px; color: #66777d; border-radius: 8px; background: #f0f2f5; }
 .search input { width: 100%; min-width: 0; font-size: 13px; outline: 0; border: 0; background: transparent; }
+.search-launch { width: calc(100% - 24px); cursor: pointer; text-align: left; }
+.search-launch span { color: #66777d; font-size: 13px; }
+.search-launch:hover { background: #e5e9e8; }
 .chat-row { display: flex; align-items: center; gap: 12px; padding: 12px 15px; text-align: left; cursor: pointer; border: 0; border-top: 1px solid #f1f2f2; background: #fff; }
 .chat-row:hover { background: #f5f6f6; }
 .chat-row-copy { display: flex; flex: 1; flex-direction: column; min-width: 0; gap: 6px; }
@@ -52,7 +56,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .sidebar-note { margin-top: auto; padding: 18px 15px; color: #839094; font-size: 12px; border-top: 1px solid #eee; }
 .sidebar-note span { display: block; margin-top: 4px; }
 
-.chat-pane { position: relative; display: flex; flex-direction: column; min-width: 0; background: #efeae2; }
+.chat-pane { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; height: 100%; overflow: hidden; background: #efeae2; }
 .chat-header { gap: 12px; padding: 9px 17px; }
 .head-copy { display: flex; flex-direction: column; gap: 4px; }
 .head-copy b { font-size: 15px; font-weight: 500; }
@@ -62,12 +66,27 @@ button { -webkit-tap-highlight-color: transparent; }
 .notice svg { flex: none; }
 .messages {
   flex: 1;
-  overflow: auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #aeb8b4 transparent;
   padding: 12px clamp(16px, 5vw, 85px) 24px;
   background-color: #efeae2;
   background-image: radial-gradient(ellipse at 12% 20%, #ffffff60 0 1px, transparent 2px), radial-gradient(ellipse at 78% 63%, #b9b3a71c 0 2px, transparent 3px), radial-gradient(ellipse at 34% 80%, #ffffff50 0 1px, transparent 2px);
   background-size: 44px 45px, 57px 54px, 37px 39px;
 }
+.messages::-webkit-scrollbar { width: 9px; }
+.messages::-webkit-scrollbar-track { background: transparent; }
+.messages::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #aeb8b4;
+  background-clip: padding-box;
+}
+.messages::-webkit-scrollbar-thumb:hover { background: #82928c; background-clip: padding-box; }
 .day { margin: 6px 0 18px; text-align: center; }
 .day span { padding: 7px 12px; color: #66777d; font-size: 12px; border-radius: 7px; background: #fff; box-shadow: 0 1px 1px #0001; }
 .welcome { max-width: 330px; margin: 38px auto 20px; padding: 25px 24px; color: #41515a; text-align: center; border-radius: 12px; background: #fff; box-shadow: 0 1px 2px #0001; }
@@ -117,6 +136,26 @@ button { -webkit-tap-highlight-color: transparent; }
 .preview img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
 .preview button { position: absolute; top: 20px; right: 24px; padding: 10px; color: #fff; cursor: pointer; border: 0; border-radius: 50%; background: #ffffff25; }
 
+.search-backdrop { position: fixed; z-index: 20; inset: 0; display: grid; padding: 20px; place-items: center; background: #15211dcc; }
+.health-search { display: flex; flex-direction: column; width: min(100%, 650px); max-height: min(82vh, 760px); overflow: hidden; border-radius: 14px; background: #fff; box-shadow: 0 18px 60px #0004; }
+.health-search-header { display: flex; flex: none; align-items: center; justify-content: space-between; padding: 18px 22px; border-bottom: 1px solid #e8edeb; }
+.health-search-header > div { display: flex; flex-direction: column; gap: 5px; }
+.health-search-header b { color: #183d35; font-size: 17px; }
+.health-search-header small { color: #72817b; font-size: 12px; }
+.health-search-form { display: flex; flex: none; align-items: center; gap: 10px; margin: 18px 22px 8px; padding: 7px 8px 7px 13px; color: #687873; border: 1px solid #d8e1dc; border-radius: 9px; }
+.health-search-form input { flex: 1; min-width: 0; padding: 7px 0; outline: 0; border: 0; background: transparent; }
+.health-search-submit { flex: none; padding: 9px 14px; color: #fff; cursor: pointer; border: 0; border-radius: 7px; background: #087e68; }
+.health-search-submit:disabled { cursor: default; opacity: .55; }
+.health-search-note { flex: none; margin: 0 22px 12px; color: #74817d; font-size: 11px; line-height: 1.45; }
+.health-search-error, .health-search-empty { margin: 14px 22px; color: #6a7772; font-size: 13px; line-height: 1.5; }
+.health-search-error { color: #ad453c; }
+.health-search-results { min-height: 0; overflow-y: auto; padding: 0 22px 18px; scrollbar-width: thin; scrollbar-color: #aeb8b4 transparent; }
+.health-result { padding: 15px 0; border-top: 1px solid #edf0ef; }
+.health-result a { color: #08735e; font-size: 15px; font-weight: 600; text-decoration: none; }
+.health-result a:hover { text-decoration: underline; }
+.health-result p { margin: 8px 0; color: #43534c; font-size: 13px; line-height: 1.55; }
+.health-result small { color: #7b8983; font-size: 11px; }
+
 .login-screen { display: grid; min-height: 100vh; padding: 22px; place-items: center; background: linear-gradient(145deg, #d9ebe2, #eff2ed); }
 .login-card { width: min(100%, 400px); padding: 36px 36px 27px; text-align: center; border: 1px solid #e9efeb; border-radius: 18px; background: #fff; box-shadow: 0 14px 45px #31584722; }
 .brand-mark { display: grid; width: 58px; height: 58px; margin: 0 auto 15px; color: #087e68; place-items: center; border-radius: 18px; background: #d9f4e7; }
@@ -144,6 +183,12 @@ button { -webkit-tap-highlight-color: transparent; }
   .quick-replies { padding-left: 12px; }
   .file-chip { margin-left: 12px; }
   .login-card { padding: 32px 25px 25px; }
+  .search-backdrop { padding: 10px; }
+  .health-search { max-height: 90dvh; }
+  .health-search-header { padding: 14px 16px; }
+  .health-search-form { margin: 14px 16px 8px; }
+  .health-search-note { margin-right: 16px; margin-left: 16px; }
+  .health-search-results { padding-right: 16px; padding-left: 16px; }
 }
 
 @layer components {

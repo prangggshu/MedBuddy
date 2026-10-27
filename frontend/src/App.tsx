@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Paperclip, Send, LogOut, Search, Check, CheckCheck, X, FileText, ShieldCheck, MessageCircle } from 'lucide-react'
-import { getMessages, getTyping, login, maxUploadMb, mediaUrl, sendMessage } from './api'
+import { getMessages, getTyping, login, maxUploadMb, mediaUrl, searchHealth, sendMessage } from './api'
 import type { ChatMessage } from './types'
 import { formatted, timeLabel } from './format'
 
@@ -18,6 +18,12 @@ function App() {
   const [progress,setProgress]=useState<number|null>(null)
   const [toast,setToast]=useState('')
   const [preview,setPreview]=useState<string|null>(null)
+  const [searchOpen,setSearchOpen]=useState(false)
+  const [searchQuery,setSearchQuery]=useState('')
+  const [searchResults,setSearchResults]=useState<{title:string;summary:string;url:string}[]>([])
+  const [searchLoading,setSearchLoading]=useState(false)
+  const [searchError,setSearchError]=useState('')
+  const [hasSearched,setHasSearched]=useState(false)
   const [dragging,setDragging]=useState(false)
   const listRef=useRef<HTMLDivElement>(null)
   const followBottom=useRef(true)
@@ -56,11 +62,12 @@ function App() {
   }
   const retry=(m:ChatMessage)=>{const savedFile=retryFiles.current.get(m.id)||null;setMessages(old=>old.filter(x=>x.id!==m.id));void send(m.text||'',savedFile)}
   const logout=()=>{localStorage.removeItem('medbuddy_phone');setPhone('');setMessages([])}
+  const runHealthSearch=async(e:React.FormEvent)=>{e.preventDefault();if(searchQuery.trim().length<2)return;setSearchLoading(true);setSearchError('');setSearchResults([]);setHasSearched(true);try{const response=await searchHealth(searchQuery.trim());setSearchResults(response.results)}catch(err){setSearchError(err instanceof Error?err.message:'Search failed. Please try again.')}finally{setSearchLoading(false)}}
 
   if(!phone)return <main className="login-screen"><form className="login-card" onSubmit={signIn}><div className="brand-mark"><MessageCircle size={29}/></div><h1>MedBuddy</h1><p className="muted">Your medication companion, right here.</p><label className="field-label">Phone number</label><div className="phone-field"><input className="country-code" aria-label="Country code" inputMode="numeric" value={countryCode} onChange={e=>setCountryCode('+'+e.target.value.replace(/\D/g,'').slice(0,3))}/><input autoFocus inputMode="numeric" placeholder="98765 43210" value={phoneInput} onChange={e=>setPhoneInput(e.target.value.replace(/\D/g,'').slice(0,15))}/></div><button className="primary wide">Continue</button><p className="login-foot"><ShieldCheck size={14}/> Proof-of-concept demo. Not for clinical use.</p></form></main>
 
   return <main className="app-bg"><div className="app-shell">
-    <aside className="sidebar"><div className="side-top"><div className="avatar self">{phone.slice(-2)}</div><button className="icon-btn" title="Log out" onClick={logout}><LogOut size={19}/></button></div><div className="search"><Search size={16}/><input placeholder="Search or start a new chat" /></div><button className="chat-row"><div className="avatar bot">M</div><span className="chat-row-copy"><b>MedBuddy</b><small>{lastMessage?.text||'Your medication companion'}</small></span><time>{lastMessage?timeLabel(lastMessage.created_at):''}</time></button><div className="sidebar-note">Private demo chat<br/><span>{phone}</span></div></aside>
+    <aside className="sidebar"><div className="side-top"><div className="avatar self">{phone.slice(-2)}</div><button className="icon-btn" title="Log out" onClick={logout}><LogOut size={19}/></button></div><button className="search search-launch" type="button" onClick={()=>{setSearchOpen(true);setSearchError('')}}><Search size={16}/><span>Search trusted health info</span></button><button className="chat-row"><div className="avatar bot">M</div><span className="chat-row-copy"><b>MedBuddy</b><small>{lastMessage?.text||'Your medication companion'}</small></span><time>{lastMessage?timeLabel(lastMessage.created_at):''}</time></button><div className="sidebar-note">Private demo chat<br/><span>{phone}</span></div></aside>
     <section className="chat-pane" onDragOver={e=>{e.preventDefault();setDragging(true)}} onDragLeave={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node))setDragging(false)}} onDrop={e=>{e.preventDefault();setDragging(false);const f=e.dataTransfer.files[0];if(f)validate(f)}}>
       <header className="chat-header"><div className="avatar bot">M</div><div className="head-copy"><b>MedBuddy</b><small>{typing?'typing…':'online'}</small></div><button className="icon-btn mobile-logout" onClick={logout}><LogOut size={18}/></button></header>
       <div className="notice"><ShieldCheck size={17}/><span>This is a proof-of-concept demo, not for clinical use. Use sample prescriptions only. Prescription images are sent to a cloud LLM provider.</span></div>
@@ -84,6 +91,6 @@ function App() {
       {dragging&&<div className="drop-overlay"><div><Paperclip size={34}/><b>Drop prescription here</b></div></div>}
       {toast&&<div role="alert" className="toast">{toast}<button onClick={()=>setToast('')}><X size={16}/></button></div>}
     </section>
-  </div>{preview&&<div className="preview" onClick={()=>setPreview(null)}><button><X/></button><img src={preview} onClick={e=>e.stopPropagation()} alt="Prescription preview"/></div>}</main>
+  </div>{searchOpen&&<div className="search-backdrop" onMouseDown={e=>{if(e.target===e.currentTarget)setSearchOpen(false)}}><section className="health-search" role="dialog" aria-modal="true" aria-labelledby="health-search-title"><header className="health-search-header"><div><b id="health-search-title">Search a health question</b><small>Trusted patient information from MedlinePlus</small></div><button className="icon-btn" type="button" aria-label="Close search" onClick={()=>setSearchOpen(false)}><X size={19}/></button></header><form className="health-search-form" onSubmit={runHealthSearch}><Search size={18}/><input autoFocus value={searchQuery} onChange={e=>setSearchQuery(e.target.value)} placeholder="e.g. What is high blood pressure?" maxLength={160}/><button className="health-search-submit" disabled={searchLoading||searchQuery.trim().length<2}>{searchLoading?'Searching…':'Search'}</button></form><p className="health-search-note">Search terms are sent to MedlinePlus (U.S. National Library of Medicine). Results are general information, not a diagnosis or personal treatment advice.</p>{searchError&&<p className="health-search-error" role="alert">{searchError}</p>}<div className="health-search-results">{searchResults.map(result=><article className="health-result" key={result.url}><a href={result.url} target="_blank" rel="noreferrer">{result.title}<span aria-hidden="true"> ↗</span></a><p>{result.summary}</p><small>Source: MedlinePlus.gov</small></article>)}{!searchLoading&&!searchError&&searchResults.length===0&&<p className="health-search-empty">{hasSearched?'No matching MedlinePlus topics were found. Try a shorter topic or medicine name.':'Search for a symptom, condition, medicine topic, or general health question.'}</p>}</div></section></div>}{preview&&<div className="preview" onClick={()=>setPreview(null)}><button><X/></button><img src={preview} onClick={e=>e.stopPropagation()} alt="Prescription preview"/></div>}</main>
 }
 export default App

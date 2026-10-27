@@ -21,6 +21,7 @@ from medbuddy.db.repo import chat_messages_after, get_chat_message, get_or_creat
 from medbuddy.datasets.loaders import load_datasets
 from medbuddy.media import pdf_first_pages, read_upload, safe_display_name
 from medbuddy.runtime import get_agent, get_channel, get_clock
+from medbuddy.health_search import search_medlineplus
 
 router = APIRouter(prefix="/api")
 logger = logging.getLogger(__name__)
@@ -179,6 +180,20 @@ def get_messages(phone: str = Query(...), after_id: int = Query(default=0, ge=0)
 @router.get("/typing")
 def get_typing(phone: str = Query(...)):
     return {"typing": normalize_phone(phone) in _typing}
+
+
+@router.get("/health-search")
+def health_search(q: str = Query(min_length=2, max_length=160)):
+    query = re.sub(r"\s+", " ", q).strip()
+    if len(query) < 2:
+        raise HTTPException(422, detail="Enter at least two characters to search.")
+    try:
+        results = search_medlineplus(query)
+    except RuntimeError as exc:
+        logger.warning("step=health_search_unavailable")
+        raise HTTPException(503, detail=str(exc)) from exc
+    logger.info("step=health_search_completed result_count=%d", len(results))
+    return {"query": query, "source": "MedlinePlus", "results": results}
 
 
 @router.get("/media/{message_id}")
