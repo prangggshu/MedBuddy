@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="690" viewBox="0 0 420 690" role="img" aria-labelledby="title desc">
+  <title id="title">MedBuddy methodology and system workflow</title>
+  <desc id="desc">The web chat routes prescription photos through a grounded fixed pipeline and text messages through a conversational agent with tools and confirmation gates.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#526579"/>
+    </marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #18324b; }
+      .head { font-size: 19px; font-weight: 700; }
+      .label { font-size: 14px; font-weight: 700; }
+      .small { font-size: 12px; }
+      .box { stroke-width: 1.5; rx: 10; }
+      .edge { stroke: #526579; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="420" height="690" rx="14" fill="#ffffff"/>
+  <text x="210" y="30" text-anchor="middle" class="head">MedBuddy: Methodology</text>
+
+  <rect x="95" y="48" width="230" height="48" class="box" fill="#e8f5e9" stroke="#388e3c"/>
+  <text x="210" y="68" text-anchor="middle" class="label">Patient</text>
+  <text x="210" y="86" text-anchor="middle" class="small">React web chat → FastAPI</text>
+  <path d="M210 96 V116" class="edge"/>
+
+  <rect x="95" y="120" width="230" height="42" class="box" fill="#eef3f8" stroke="#718096"/>
+  <text x="210" y="146" text-anchor="middle" class="label">Route by input type</text>
+  <path d="M210 162 V180 H107 V198" class="edge"/>
+  <path d="M210 180 H313 V198" class="edge"/>
+  <text x="82" y="190" text-anchor="middle" class="small">Prescription photo</text>
+  <text x="338" y="190" text-anchor="middle" class="small">Text message</text>
+
+  <rect x="24" y="202" width="166" height="45" class="box" fill="#ede7f6" stroke="#7952a3"/>
+  <text x="107" y="222" text-anchor="middle" class="label">Gemini vision</text>
+  <text x="107" y="239" text-anchor="middle" class="small">Extract medicines (1 call)</text>
+  <path d="M107 247 V263" class="edge"/>
+  <rect x="24" y="267" width="166" height="45" class="box" fill="#e3f2fd" stroke="#2878a5"/>
+  <text x="107" y="287" text-anchor="middle" class="label">Normalize names</text>
+  <text x="107" y="304" text-anchor="middle" class="small">Brand → generic dataset</text>
+  <path d="M107 312 V328" class="edge"/>
+  <rect x="24" y="332" width="166" height="53" class="box" fill="#e3f2fd" stroke="#2878a5"/>
+  <text x="107" y="352" text-anchor="middle" class="label">Check + look up</text>
+  <text x="107" y="369" text-anchor="middle" class="small">Interaction and drug datasets</text>
+  <path d="M107 385 V401" class="edge"/>
+  <rect x="24" y="405" width="166" height="55" class="box" fill="#e8f5e9" stroke="#388e3c"/>
+  <text x="107" y="425" text-anchor="middle" class="label">Grounded reply</text>
+  <text x="107" y="442" text-anchor="middle" class="small">Template; unknowns flagged</text>
+
+  <rect x="230" y="202" width="166" height="55" class="box" fill="#ede7f6" stroke="#7952a3"/>
+  <text x="313" y="223" text-anchor="middle" class="label">LangGraph agent</text>
+  <text x="313" y="241" text-anchor="middle" class="small">Conversation + tool use</text>
+  <path d="M313 257 V273" class="edge"/>
+  <rect x="230" y="277" width="166" height="55" class="box" fill="#e3f2fd" stroke="#2878a5"/>
+  <text x="313" y="298" text-anchor="middle" class="label">Tools</text>
+  <text x="313" y="316" text-anchor="middle" class="small">Profile, medicine, reminders</text>
+  <path d="M313 332 V348" class="edge"/>
+  <rect x="230" y="352" width="166" height="55" class="box" fill="#fff3e0" stroke="#d28a24"/>
+  <text x="313" y="373" text-anchor="middle" class="label">Confirm before changes</text>
+  <text x="313" y="391" text-anchor="middle" class="small">Patient YES/NO gate</text>
+
+  <path d="M107 460 V480 H210" class="edge"/>
+  <path d="M313 407 V480 H210" class="edge"/>
+  <rect x="95" y="484" width="230" height="48" class="box" fill="#eceff1" stroke="#607d8b"/>
+  <text x="210" y="504" text-anchor="middle" class="label">Persist records and chat</text>
+  <text x="210" y="522" text-anchor="middle" class="small">SQLite database</text>
+  <path d="M210 532 V552" class="edge"/>
+  <rect x="95" y="556" width="230" height="48" class="box" fill="#e8f5e9" stroke="#388e3c"/>
+  <text x="210" y="576" text-anchor="middle" class="label">Reply in browser chat</text>
+  <text x="210" y="594" text-anchor="middle" class="small">Proof-of-concept disclaimer included</text>
+  <text x="210" y="638" text-anchor="middle" class="small">Drug statements are grounded in tool or dataset results.</text>
+</svg>

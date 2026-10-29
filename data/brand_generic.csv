@@ -1,100 +1,501 @@
 brand,generic,notes
-Crocin,Paracetamol,common antipyretic/analgesic (India)
-Calpol,Paracetamol,
-Dolo,Paracetamol,
-Combiflam,Ibuprofen + Paracetamol,combination product
-Brufen,Ibuprofen,
-Augmentin,Amoxicillin + Clavulanic acid,combination antibiotic
-Azee,Azithromycin,
-Pan,Pantoprazole,
-Ecosprin,Aspirin,low-dose antiplatelet
-Glycomet,Metformin,
-Amoxil,Amoxicillin,penicillin antibiotic
-Mox,Amoxicillin,penicillin antibiotic
-Doxrid,Doxycycline,tetracycline antibiotic
-Cifran,Ciprofloxacin,fluoroquinolone antibiotic
-Daxicip,Ciprofloxacin,fluoroquinolone antibiotic
-Doxicip,Doxycycline,tetracycline antibiotic
-Levoday,Levofloxacin,fluoroquinolone antibiotic
-Lariago,Chloroquine,antimalarial
-Amaryl,Glimepiride,sulfonylurea antidiabetic
-Januvia,Sitagliptin,DPP-4 inhibitor
-Lantus,Insulin glargine,long-acting insulin
-Humalog,Insulin lispro,rapid-acting insulin
-Novorapid,Insulin aspart,rapid-acting insulin
+A Waylable,Prednisolone acetate,manufacturer-listed Indian brand
+Abiratred,Abiraterone acetate,manufacturer-listed Indian brand
+Accom-DSR,Omeprazole + Domperidone,manufacturer-listed Indian brand
+Acefan SP,Serrapeptase + Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Acep QR,Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Aceviron-P,Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Acip,Ciprofloxacin hydrochloride,manufacturer-listed Indian brand
+Aclozest-DT,Aceclofenac,manufacturer-listed Indian brand
+Actdrol,Methylprednisolone sodium succinate,manufacturer-listed Indian brand
 Actrapid,Insulin regular,short-acting insulin
-Stamlo,Amlodipine,calcium channel blocker
-Telma,Telmisartan,angiotensin receptor blocker
-Tenormin,Atenolol,beta blocker
-Losar,Losartan,angiotensin receptor blocker
-Atorva,Atorvastatin,statin
-Storvas,Atorvastatin,statin
-Rosuvas,Rosuvastatin,statin
-Rozavel,Rosuvastatin,statin
-Omez,Omeprazole,proton pump inhibitor
-Rabicip,Rabeprazole,proton pump inhibitor
-Pantocid D,Pantoprazole + Domperidone,acid suppression and prokinetic combination
-Pan-D,Pantoprazole + Domperidone,acid suppression and prokinetic combination
-Razo,Rabeprazole,proton pump inhibitor
-Digene,Aluminium hydroxide + Magnesium hydroxide + Simethicone,antacid
-Cetzine,Cetirizine,second-generation antihistamine
+Adamox CV,Amoxicillin + Clavulanate potassium,manufacturer-listed Indian brand
+Adoxin OZ,Ornidazole + Ofloxacin,manufacturer-listed Indian brand
+Aezlox-OZ,Ornidazole + Ofloxacin,manufacturer-listed Indian brand
+Agoprex,Agomelatine,manufacturer-listed Indian brand
+Aklace,Aceclofenac,manufacturer-listed Indian brand
+Albitif,Albendazole,manufacturer-listed Indian brand
+Aleo,Levofloxacin,manufacturer-listed Indian brand
 Alerid,Cetirizine,second-generation antihistamine
-Levocet,Levocetirizine,second-generation antihistamine
+Aliver,Ivermectin,manufacturer-listed Indian brand
 Allegra,Fexofenadine,second-generation antihistamine
-Diclogesic,Diclofenac,NSAID analgesic
-Voveran,Diclofenac,NSAID analgesic
-Naprosyn,Naproxen,NSAID analgesic
-Hifenac,Aceclofenac,NSAID analgesic
-Zerodol,Aceclofenac,NSAID analgesic
-Methycobal,Methylcobalamin,vitamin B12 supplement
-Neurobion,Methylcobalamin,vitamin B12 supplement
-Uprise-D3,Cholecalciferol,vitamin D3 supplement
-Shelcal,Calcium carbonate + Vitamin D3,calcium and vitamin D supplement
-Calcimax,Calcium carbonate + Vitamin D3,calcium and vitamin D supplement
-Livogen,Ferrous fumarate + Folic acid,iron supplement
-Autrin,Ferrous fumarate + Folic acid + Vitamin B12,iron and vitamin supplement
-Lexapro,Escitalopram,SSRI antidepressant
-Nexito,Escitalopram,SSRI antidepressant
-Clonotril,Clonazepam,benzodiazepine anxiolytic
-Rivotril,Clonazepam,benzodiazepine anxiolytic
-Eltroxin,Levothyroxine,thyroid hormone replacement
-Thyronorm,Levothyroxine,thyroid hormone replacement
-Warf,Warfarin,vitamin K antagonist anticoagulant
-Coumadin,Warfarin,vitamin K antagonist anticoagulant
-Clopilet,Clopidogrel,antiplatelet
-Plagerine,Clopidogrel,antiplatelet
-Eliquis,Apixaban,direct oral anticoagulant
-Dilantin,Phenytoin,antiepileptic
-Eptoin,Phenytoin,antiepileptic
-Depakote,Valproate,antiepileptic
-Levera,Levetiracetam,antiepileptic
-Asthalin,Salbutamol,short-acting bronchodilator
-Ventorlin,Salbutamol,short-acting bronchodilator
-Montair,Montelukast,leukotriene receptor antagonist
-Budecort,Budesonide,inhaled corticosteroid
-Fluka,Fluconazole,azole antifungal
-Forcan,Fluconazole,azole antifungal
-Canditral,Itraconazole,azole antifungal
-Zovirax,Acyclovir,antiviral
-Tamiflu,Oseltamivir,antiviral
-Wysolone,Prednisolone,corticosteroid
-Omnacortil,Prednisolone,corticosteroid
-Nexpro,Esomeprazole,proton pump inhibitor
-Glyree,Glimepiride,manufacturer-listed Indian brand
-Glimda,Glimepiride,manufacturer-listed Indian brand
-Cipmol,Paracetamol,manufacturer-listed Indian brand
-Azicip,Azithromycin,manufacturer-listed Indian brand
-Azipro,Azithromycin,manufacturer-listed Indian brand
-Azomycin,Azithromycin,manufacturer-listed Indian brand
-Azimax,Azithromycin,manufacturer-listed Indian brand
-Cosart,Losartan,manufacturer-listed Indian brand
-Telgard,Telmisartan,manufacturer-listed Indian brand
-Olmed,Olmesartan,manufacturer-listed Indian brand
-Prilace,Ramipril,manufacturer-listed Indian brand
-Cobix,Celecoxib,manufacturer-listed Indian brand
-Etozox,Etoricoxib,manufacturer-listed Indian brand
-Mobicam,Piroxicam,manufacturer-listed Indian brand
-Aztor,Atorvastatin,manufacturer-listed Indian brand
+Alltop,Alprazolam,manufacturer-listed Indian brand
+Alprocalm,Alprazolam,manufacturer-listed Indian brand
+Alvotrak FX,Montelukast + Fexofenadine hydrochloride,manufacturer-listed Indian brand
+Amaryl,Glimepiride,sulfonylurea antidiabetic
+Ambrolite Levo,Ambroxol hydrochloride + Guaifenesin + Levalbuterol sulfate,manufacturer-listed Indian brand
+Amicos,Amikacin sulfate,manufacturer-listed Indian brand
+Amisten,Amikacin sulfate,manufacturer-listed Indian brand
+Amloman,Amlodipine besylate,manufacturer-listed Indian brand
+Amoquin,Chloroquine phosphate,manufacturer-listed Indian brand
+Amoxil,Amoxicillin,penicillin antibiotic
+Ampitag,Ampicillin sodium + Sulbactam sodium,manufacturer-listed Indian brand
+Anafen A,Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Anicuf-DR,Phenylephrine hydrochloride + Dextromethorphan hydrobromide + Chlorpheniramine maleate,manufacturer-listed Indian brand
+Anvifix-LB,Cefixime anhydrous + Lactobacillus,manufacturer-listed Indian brand
+Apiquis,Apixaban,manufacturer-listed Indian brand
 Aquazide,Hydrochlorothiazide,manufacturer-listed Indian brand
-Teleact,Telmisartan,manufacturer-listed Indian brand
+Arbtor AM,Amlodipine besylate + Telmisartan,manufacturer-listed Indian brand
+Arlexin,Cephalexin,manufacturer-listed Indian brand
+Artfen,Lumefantrine + Artemether,manufacturer-listed Indian brand
+Asfolin-DP,Folic acid + Pyridoxine hydrochloride + Doxylamine,manufacturer-listed Indian brand
+Assat,Atorvastatin calcium,manufacturer-listed Indian brand
+Asthalin,Salbutamol,short-acting bronchodilator
+Atchol-ASP,Aspirin + Atorvastatin,manufacturer-listed Indian brand
+Atorapid,Atorvastatin calcium,manufacturer-listed Indian brand
+Atorva,Atorvastatin,statin
+Atrosun,Atropine sulfate,manufacturer-listed Indian brand
+Augmentin,Amoxicillin + Clavulanic acid,combination antibiotic
+Autorin,Azathioprine,manufacturer-listed Indian brand
+Autrin,Ferrous fumarate + Folic acid + Vitamin B12,iron and vitamin supplement
+Awayke,Loratadine,manufacturer-listed Indian brand
+Ayufen TH,Thiocolchicoside + Aceclofenac,manufacturer-listed Indian brand
+Azee,Azithromycin,
+Azicip,Azithromycin,manufacturer-listed Indian brand
+Azikare,Azithromycin,manufacturer-listed Indian brand
+Azimax,Azithromycin,manufacturer-listed Indian brand
+Azipro,Azithromycin,manufacturer-listed Indian brand
+Azitrin,Azithromycin,manufacturer-listed Indian brand
+Azomycin,Azithromycin,manufacturer-listed Indian brand
+Aztor,Atorvastatin,manufacturer-listed Indian brand
+B Flox FC,Ofloxacin,manufacturer-listed Indian brand
+Bactroban,Mupirocin calcium,manufacturer-listed Indian brand
+Bdpazo,Pazopanib hydrochloride,manufacturer-listed Indian brand
+Bendacon,Albendazole,manufacturer-listed Indian brand
+Betacard,Atenolol,manufacturer-listed Indian brand
+Bicebro,Ambroxol acefyllinate,manufacturer-listed Indian brand
+Biocef-S,Sulbactam sodium + Ceftriaxone sodium,manufacturer-listed Indian brand
+Biovom,Ondansetron hydrochloride,manufacturer-listed Indian brand
+Bleomycin,Bleomycin sulfate,manufacturer-listed Indian brand
+Boxer,Ofloxacin,manufacturer-listed Indian brand
+Briscef-S,Sulbactam sodium + Ceftriaxone sodium,manufacturer-listed Indian brand
+Bronzacef SB,Sulbactam sodium + Ceftriaxone sodium,manufacturer-listed Indian brand
+Brufen,Ibuprofen,
+Budecort,Budesonide,inhaled corticosteroid
+Bupivac,Bupivacaine,manufacturer-listed Indian brand
+C2V,Clotrimazole + Clindamycin phosphate,manufacturer-listed Indian brand
+Calcimax,Calcium carbonate + Vitamin D3,calcium and vitamin D supplement
+Calpol,Paracetamol,
+Calpol+,Acetaminophen,manufacturer-listed Indian brand
+Canditral,Itraconazole,azole antifungal
+Canzoll,Luliconazole,manufacturer-listed Indian brand
+Carditel A,Amlodipine besylate + Telmisartan,manufacturer-listed Indian brand
+Casacef,Ceftriaxone sodium,manufacturer-listed Indian brand
+Ceco,Aceclofenac,manufacturer-listed Indian brand
+Cefbio,Cefpodoxime,manufacturer-listed Indian brand
+Cefinta-O,Cefixime + Ofloxacin,manufacturer-listed Indian brand
+Cefodem,Cefpodoxime proxetil,manufacturer-listed Indian brand
+Cefposure,Cefpodoxime proxetil,manufacturer-listed Indian brand
+Ceftazin SB EDTA,Ceftazidime + Sulbactam sodium,manufacturer-listed Indian brand
+Cefudix,Cefepime hydrochloride,manufacturer-listed Indian brand
+Celicard,Celiprolol hydrochloride,manufacturer-listed Indian brand
+Ceploc,Ranitidine hydrochloride,manufacturer-listed Indian brand
+Cetbris,Levocetirizine dihydrochloride,manufacturer-listed Indian brand
+Cetvic-M,Levocetirizine dihydrochloride + Montelukast sodium,manufacturer-listed Indian brand
+Cetzine,Cetirizine,second-generation antihistamine
+Chewfol,Folic acid,manufacturer-listed Indian brand
+Cifell,Ciprofloxacin hydrochloride,manufacturer-listed Indian brand
+Cifran,Ciprofloxacin,fluoroquinolone antibiotic
+Cim-O,Cefixime anhydrous,manufacturer-listed Indian brand
+Ciplora,Ciprofloxacin hydrochloride,manufacturer-listed Indian brand
+Cipmol,Paracetamol,manufacturer-listed Indian brand
+Ciprotas,Ciprofloxacin hydrochloride,manufacturer-listed Indian brand
+Citibid,Tinidazole + Ciprofloxacin hydrochloride,manufacturer-listed Indian brand
+Clabid,Amoxicillin sodium + Clavulanate potassium,manufacturer-listed Indian brand
+Clavis,Amoxicillin + Clavulanate potassium,manufacturer-listed Indian brand
+Cliff P,Mefenamic acid + Acetaminophen,manufacturer-listed Indian brand
+Clodapin-A,Aspirin + Clopidogrel bisulfate,manufacturer-listed Indian brand
+Clonotril,Clonazepam,benzodiazepine anxiolytic
+Clopilet,Clopidogrel,antiplatelet
+CLOPRIDE,Metoclopramide hydrochloride,manufacturer-listed Indian brand
+Cobix,Celecoxib,manufacturer-listed Indian brand
+Cobsa,Mecobalamin,manufacturer-listed Indian brand
+Coldium Total,Chlorpheniramine maleate + Acetaminophen + Phenylephrine hydrochloride,manufacturer-listed Indian brand
+Combiflam,Ibuprofen + Paracetamol,combination product
+Comcapsy,Capecitabine + Cyclophosphamide,manufacturer-listed Indian brand
+Coralan,Ivabradine hydrochloride,manufacturer-listed Indian brand
+Cosart,Losartan,manufacturer-listed Indian brand
+Cosdome,Domperidone maleate,manufacturer-listed Indian brand
+Coumadin,Warfarin,vitamin K antagonist anticoagulant
+Cpdx,Cefpodoxime,manufacturer-listed Indian brand
+Crocin,Paracetamol,common antipyretic/analgesic (India)
+Crushpod,Cefpodoxime proxetil,manufacturer-listed Indian brand
+Cuox,Amoxicillin,manufacturer-listed Indian brand
+Cyclomek-P,Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Czam,Clobazam,manufacturer-listed Indian brand
+Dalnac-SP,Serrapeptase + Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Darbatitor,Darbepoetin alfa,manufacturer-listed Indian brand
+Daxicip,Ciprofloxacin,fluoroquinolone antibiotic
+Dcoxia,Etoricoxib,manufacturer-listed Indian brand
+Deflader,Deflazacort,manufacturer-listed Indian brand
+Delponac MR,Aceclofenac + Chlorzoxazone + Acetaminophen,manufacturer-listed Indian brand
+Depakote,Valproate,antiepileptic
+Depzac,Fluoxetine hydrochloride,manufacturer-listed Indian brand
+Devot,Divalproex sodium,manufacturer-listed Indian brand
+Diamide,Glyburide,manufacturer-listed Indian brand
+Diclogesic,Diclofenac,NSAID analgesic
+Diclonip,Diclofenac sodium,manufacturer-listed Indian brand
+Digene,Aluminium hydroxide + Magnesium hydroxide + Simethicone,antacid
+Dikul,Diclofenac sodium,manufacturer-listed Indian brand
+Dilantin,Phenytoin,antiepileptic
+Dipal,Amlodipine besylate,manufacturer-listed Indian brand
+Dix,Nalidixic acid,manufacturer-listed Indian brand
+Doff SP,Diclofenac potassium + Acetaminophen + Serrapeptase,manufacturer-listed Indian brand
+Dolo,Paracetamol,
+Dols,Tramadol hydrochloride,manufacturer-listed Indian brand
+Dor-M,Drotaverine hydrochloride + Mefenamic acid,manufacturer-listed Indian brand
+Dovas,Dobesilate calcium,manufacturer-listed Indian brand
+Doxicip,Doxycycline,tetracycline antibiotic
+Doxrid,Doxycycline,tetracycline antibiotic
+Doxtret,Doxepin hydrochloride,manufacturer-listed Indian brand
+Dropenem,Meropenem,manufacturer-listed Indian brand
+Ducira,Hypromellose + Sodium perborate monohydrate,manufacturer-listed Indian brand
+Duralyn,Theophylline anhydrous,manufacturer-listed Indian brand
+Dynapar SR,Diclofenac sodium,manufacturer-listed Indian brand
+Eberjen Sol,Eberconazole nitrate,manufacturer-listed Indian brand
+Ecosprin,Aspirin,low-dose antiplatelet
+Edenic-DX,Phenylephrine hydrochloride + Dextromethorphan hydrobromide + Chlorpheniramine maleate,manufacturer-listed Indian brand
+Ehanac,Nepafenac,manufacturer-listed Indian brand
+Eliquis,Apixaban,direct oral anticoagulant
+Elixaban,Apixaban,manufacturer-listed Indian brand
+Eltroxin,Levothyroxine,thyroid hormone replacement
+Embargo,Cetirizine hydrochloride,manufacturer-listed Indian brand
+Emprogest,Progesterone,manufacturer-listed Indian brand
+Endoxan-asta,Cyclophosphamide,manufacturer-listed Indian brand
+Enzograce,Diclofenac potassium + Serrapeptase + Acetaminophen,manufacturer-listed Indian brand
+Eptifab,Eptifibatide,manufacturer-listed Indian brand
+Eptoin,Phenytoin,antiepileptic
+Erytho,Erythromycin,manufacturer-listed Indian brand
+Esmovin,Esomeprazole sodium,manufacturer-listed Indian brand
+Esopraid D,Domperidone + Esomeprazole magnesium,manufacturer-listed Indian brand
+Estrafast,Estradiol valerate,manufacturer-listed Indian brand
+Etisung,Etizolam,manufacturer-listed Indian brand
+Etopres LP,Lisinopril + Amlodipine besylate,manufacturer-listed Indian brand
+Etozox,Etoricoxib,manufacturer-listed Indian brand
+Etraxa SL,Sulbactam sodium + Ceftriaxone sodium,manufacturer-listed Indian brand
+Evamec,Ivermectin,manufacturer-listed Indian brand
+Exenta,Eplerenone,manufacturer-listed Indian brand
+Ezicas,Fluticasone propionate,manufacturer-listed Indian brand
+Falcodol-P,Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Fconaz,Fluconazole,manufacturer-listed Indian brand
+Femzil 200,Progesterone,manufacturer-listed Indian brand
+Fertifact,Clomiphene citrate,manufacturer-listed Indian brand
+Fexomee-M,Montelukast + Fexofenadine hydrochloride,manufacturer-listed Indian brand
+Filnac SP,Serrapeptase + Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Fixtol,Cefixime,manufacturer-listed Indian brand
+Flingo OZ,Ornidazole + Ofloxacin,manufacturer-listed Indian brand
+Floxgen-OZ,Ornidazole + Ofloxacin,manufacturer-listed Indian brand
+Fludot,Flumazenil,manufacturer-listed Indian brand
+Fluka,Fluconazole,azole antifungal
+Flutiflo FT,Fluticasone furoate,manufacturer-listed Indian brand
+Folya,Folic acid,manufacturer-listed Indian brand
+Forcan,Fluconazole,azole antifungal
+Foxilox,Ofloxacin,manufacturer-listed Indian brand
+Fulgram,Ciprofloxacin hydrochloride,manufacturer-listed Indian brand
+Fussi,Sodium fusidate,manufacturer-listed Indian brand
+Gabanyt-Semi,Nortriptyline hydrochloride + Gabapentin,manufacturer-listed Indian brand
+Gastronov,Pantoprazole sodium,manufacturer-listed Indian brand
+Gemfex,Fexofenadine hydrochloride,manufacturer-listed Indian brand
+Geozid-AV,Avibactam sodium + Ceftazidime,manufacturer-listed Indian brand
+Gionate,Artesunate,manufacturer-listed Indian brand
+Glimda,Glimepiride,manufacturer-listed Indian brand
+Glimecaid 3,Glimepiride,manufacturer-listed Indian brand
+Glomika,Amikacin sulfate,manufacturer-listed Indian brand
+Glycirest,Metformin hydrochloride,manufacturer-listed Indian brand
+Glycomet,Metformin,
+Glyree,Glimepiride,manufacturer-listed Indian brand
+Goodizine L,Levocetirizine dihydrochloride,manufacturer-listed Indian brand
+Grezole,Omeprazole,manufacturer-listed Indian brand
+Gzide Xr M,Metformin hydrochloride + Gliclazide,manufacturer-listed Indian brand
+Hbnem,Meropenem,manufacturer-listed Indian brand
+Herpovir,Acyclovir,manufacturer-listed Indian brand
+Hifenac,Aceclofenac,NSAID analgesic
+Hillpan,Pantoprazole sodium,manufacturer-listed Indian brand
+Hocid,Omeprazole,manufacturer-listed Indian brand
+Humalog,Insulin lispro,rapid-acting insulin
+Hydrocine,Hydrocortisone sodium succinate,manufacturer-listed Indian brand
+Ibada,Ivabradine hydrochloride,manufacturer-listed Indian brand
+Ifexime,Cefixime,manufacturer-listed Indian brand
+Inace,Lisinopril + Amlodipine besylate,manufacturer-listed Indian brand
+Infutec DNS,Sodium chloride + Glucose,manufacturer-listed Indian brand
+Inteworm,Albendazole,manufacturer-listed Indian brand
+Isart-A,Amlodipine besylate + Telmisartan,manufacturer-listed Indian brand
 Istavel,Sitagliptin,manufacturer-listed Indian brand
+Itor,Atorvastatin calcium,manufacturer-listed Indian brand
+Ivera Sure,Ivermectin,manufacturer-listed Indian brand
+Jacef,Ceftriaxone sodium,manufacturer-listed Indian brand
+Januvia,Sitagliptin,DPP-4 inhibitor
+Jexin,Cephalexin,manufacturer-listed Indian brand
+Juliet CD,Cinnarizine + Dimenhydrinate,manufacturer-listed Indian brand
+Kamadol P,Tramadol + Acetaminophen,manufacturer-listed Indian brand
+Kedol,Tramadol hydrochloride,manufacturer-listed Indian brand
+Ketlur,Ketorolac tromethamine,manufacturer-listed Indian brand
+Kinaplat,Oxaliplatin,manufacturer-listed Indian brand
+Kofarest-LS Junior,Ambroxol hydrochloride + Guaifenesin + Levalbuterol sulfate,manufacturer-listed Indian brand
+Krocain-O,Oxethazaine + Sucralfate,manufacturer-listed Indian brand
+Kyrah,Desogestrel + Ethinylestradiol,manufacturer-listed Indian brand
+Lac-FX-M,Montelukast + Fexofenadine hydrochloride,manufacturer-listed Indian brand
+Lamycin-DS,Colistin sulfate,manufacturer-listed Indian brand
+Lantus,Insulin glargine,long-acting insulin
+Lariago,Chloroquine,antimalarial
+Laveta M,Levocetirizine dihydrochloride + Montelukast sodium,manufacturer-listed Indian brand
+Lecenza,Levocetirizine dihydrochloride,manufacturer-listed Indian brand
+LEMIT,Lamotrigine,manufacturer-listed Indian brand
+Lesat-M,Levocetirizine + Montelukast sodium,manufacturer-listed Indian brand
+Levera,Levetiracetam,antiepileptic
+Levibest,Levofloxacin,manufacturer-listed Indian brand
+Levocet,Levocetirizine,second-generation antihistamine
+Levoday,Levofloxacin,fluoroquinolone antibiotic
+Levoew,Levofloxacin,manufacturer-listed Indian brand
+Levomni,Levofloxacin,manufacturer-listed Indian brand
+Levota,Levofloxacin,manufacturer-listed Indian brand
+Lexapro,Escitalopram,SSRI antidepressant
+Lexflo,Levofloxacin,manufacturer-listed Indian brand
+Lignomax,Lidocaine hydrochloride,manufacturer-listed Indian brand
+Linoriz,Linezolid,manufacturer-listed Indian brand
+Liralin-DP,Linagliptin + Dapagliflozin propanediol,manufacturer-listed Indian brand
+Livogen,Ferrous fumarate + Folic acid,iron supplement
+Livoxit,Levofloxacin,manufacturer-listed Indian brand
+Lofcin,Levofloxacin,manufacturer-listed Indian brand
+Lopt-H,Losartan potassium + Hydrochlorothiazide,manufacturer-listed Indian brand
+Losacron H,Losartan potassium + Hydrochlorothiazide,manufacturer-listed Indian brand
+Losar,Losartan,angiotensin receptor blocker
+Loxa,Levofloxacin,manufacturer-listed Indian brand
+Lukotas-LC,Levocetirizine dihydrochloride + Montelukast sodium,manufacturer-listed Indian brand
+Luprodex Depot,Leuprolide acetate,manufacturer-listed Indian brand
+Lytiq FM,Flupentixol hydrochloride + Melitracen hydrochloride,manufacturer-listed Indian brand
+Macphylline SR,Ambroxol acefyllinate,manufacturer-listed Indian brand
+Malacure Forte,Chloroquine phosphate,manufacturer-listed Indian brand
+Masclona Plus,Clonazepam + Escitalopram oxalate,manufacturer-listed Indian brand
+Maxxocef,Ceftriaxone sodium,manufacturer-listed Indian brand
+Mectin,Ivermectin,manufacturer-listed Indian brand
+Medtrax,Ceftriaxone sodium,manufacturer-listed Indian brand
+Mefpree,Mefenamic acid + Acetaminophen,manufacturer-listed Indian brand
+Melafine,Mometasone furoate + Hydroquinone + Tretinoin,manufacturer-listed Indian brand
+Meprazen,Esomeprazole sodium,manufacturer-listed Indian brand
+Meroky,Meropenem,manufacturer-listed Indian brand
+Merozit,Meropenem,manufacturer-listed Indian brand
+Methofy D,Folic acid + Pyridoxine + Cholecalciferol + Mecobalamin + Lipoic acid,manufacturer-listed Indian brand
+Methycobal,Methylcobalamin,vitamin B12 supplement
+Mettefex,Fexofenadine hydrochloride,manufacturer-listed Indian brand
+Microcef,Cefpodoxime proxetil,manufacturer-listed Indian brand
+Mikascot,Amikacin sulfate,manufacturer-listed Indian brand
+Minoliv UD,Ursodiol,manufacturer-listed Indian brand
+Mitocin,Mitomycin,manufacturer-listed Indian brand
+Mobicam,Piroxicam,manufacturer-listed Indian brand
+Mofenac P,Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Monflox-OZ,Ornidazole + Ofloxacin,manufacturer-listed Indian brand
+Montair,Montelukast,leukotriene receptor antagonist
+Monte-P Kid,Montelukast sodium,manufacturer-listed Indian brand
+Montiscaa LC,Levocetirizine dihydrochloride + Montelukast sodium,manufacturer-listed Indian brand
+Mosac,Mosapride citrate,manufacturer-listed Indian brand
+Mox,Amoxicillin,penicillin antibiotic
+Moxidat CL,Amoxicillin + Clavulanate potassium,manufacturer-listed Indian brand
+Moxizest K,Moxifloxacin hydrochloride + Ketorolac tromethamine,manufacturer-listed Indian brand
+Moxyzyme,Amoxicillin + Clavulanate potassium,manufacturer-listed Indian brand
+Muderma,Mupirocin calcium,manufacturer-listed Indian brand
+Myclad,Clindamycin hydrochloride,manufacturer-listed Indian brand
+Myphen-S,Mycophenolate sodium,manufacturer-listed Indian brand
+Nalsign,Naltrexone hydrochloride,manufacturer-listed Indian brand
+Naprosyn,Naproxen,NSAID analgesic
+Natacare Eye Drops,Natamycin,manufacturer-listed Indian brand
+Nebivomax,Nebivolol hydrochloride,manufacturer-listed Indian brand
+Neolevo OZ,Levofloxacin + Ornidazole,manufacturer-listed Indian brand
+Nervmend-D3,Folic acid + Pyridoxine + Cholecalciferol + Mecobalamin + Lipoic acid,manufacturer-listed Indian brand
+Neurobion,Methylcobalamin,vitamin B12 supplement
+Neutrihix Prega,Nortriptyline hydrochloride + Mecobalamin + Pregabalin,manufacturer-listed Indian brand
+Nexito,Escitalopram,SSRI antidepressant
+Nexofex M,Montelukast + Fexofenadine hydrochloride,manufacturer-listed Indian brand
+Nexpro,Esomeprazole,proton pump inhibitor
+Nidaflox,Tinidazole + Norfloxacin,manufacturer-listed Indian brand
+Nimpod,Nimodipine,manufacturer-listed Indian brand
+Nitrobest SR,Nitrofurantoin,manufacturer-listed Indian brand
+Nodep,Fluoxetine hydrochloride,manufacturer-listed Indian brand
+Norinac-MR,Aceclofenac + Chlorzoxazone + Acetaminophen,manufacturer-listed Indian brand
+Notriven-Plus,Nortriptyline hydrochloride + Mecobalamin + Pregabalin,manufacturer-listed Indian brand
+Novorapid,Insulin aspart,rapid-acting insulin
+NS-Fer XT,Iron sucrose,manufacturer-listed Indian brand
+Nupenta ls,Levosulpiride + Pantoprazole,manufacturer-listed Indian brand
+Nzyme,Alpha-amylase + Pepsin A,manufacturer-listed Indian brand
+Ocicure -IV,Omeprazole sodium,manufacturer-listed Indian brand
+Odizol,Omeprazole,manufacturer-listed Indian brand
+Offing,Ceftriaxone sodium,manufacturer-listed Indian brand
+Oflite O,Ornidazole + Ofloxacin,manufacturer-listed Indian brand
+Ofloron O,Ornidazole + Ofloxacin,manufacturer-listed Indian brand
+Ofras,Ofloxacin,manufacturer-listed Indian brand
+Okadoxime,Cefpodoxime,manufacturer-listed Indian brand
+Olit,Omeprazole,manufacturer-listed Indian brand
+Olmed,Olmesartan,manufacturer-listed Indian brand
+Olmo-AM,Olmesartan medoxomil + Amlodipine besylate,manufacturer-listed Indian brand
+Omara,Omeprazole,manufacturer-listed Indian brand
+Omez,Omeprazole,proton pump inhibitor
+Omfloxin OR,Ornidazole + Ofloxacin,manufacturer-listed Indian brand
+Omnacortil,Prednisolone,corticosteroid
+Ompizole,Omeprazole,manufacturer-listed Indian brand
+Ondigo,Ondansetron hydrochloride,manufacturer-listed Indian brand
+Ontaflox,Ofloxacin,manufacturer-listed Indian brand
+Optimide,Tropicamide,manufacturer-listed Indian brand
+Orin O,Ornidazole + Ofloxacin,manufacturer-listed Indian brand
+Orticepth,Cephalexin,manufacturer-listed Indian brand
+Otex D,Dexamethasone sodium phosphate + Ofloxacin,manufacturer-listed Indian brand
+Oxasoft,Oxaceprol,manufacturer-listed Indian brand
+Oyxin,Ofloxacin,manufacturer-listed Indian brand
+Pablomol,Acetaminophen,manufacturer-listed Indian brand
+Pan,Pantoprazole,
+PAN EC,Pantoprazole sodium,manufacturer-listed Indian brand
+Pan-D,Pantoprazole + Domperidone,acid suppression and prokinetic combination
+Panjio,Pantoprazole sodium,manufacturer-listed Indian brand
+Panstyx,Pantoprazole sodium,manufacturer-listed Indian brand
+Pantip-DSR,Domperidone + Pantoprazole sodium,manufacturer-listed Indian brand
+Pantocid D,Pantoprazole + Domperidone,acid suppression and prokinetic combination
+Pantored,Pantoprazole sodium,manufacturer-listed Indian brand
+Panzaris,Pantoprazole sodium,manufacturer-listed Indian brand
+Parazid-500,Pyrazinamide,manufacturer-listed Indian brand
+Pattimef-D,Drotaverine hydrochloride + Mefenamic acid,manufacturer-listed Indian brand
+Pee,Pantoprazole sodium,manufacturer-listed Indian brand
+Pentalink-D,Domperidone + Pantoprazole sodium,manufacturer-listed Indian brand
+Pepzer O,Omeprazole,manufacturer-listed Indian brand
+Pgbest-NT,Pregabalin + Nortriptyline hydrochloride,manufacturer-listed Indian brand
+Picoso,Sodium picosulfate,manufacturer-listed Indian brand
+Pioride,Prucalopride succinate,manufacturer-listed Indian brand
+Pipzowel,Tazobactam sodium + Piperacillin sodium,manufacturer-listed Indian brand
+Plagerine,Clopidogrel,antiplatelet
+Plecasoft,Plecanatide,manufacturer-listed Indian brand
+Poliexar,Polmacoxib,manufacturer-listed Indian brand
+Pozone-S,Cefoperazone sodium + Sulbactam sodium,manufacturer-listed Indian brand
+Predichem,Methylprednisolone sodium succinate,manufacturer-listed Indian brand
+Pregtec,Allylestrenol micronized,manufacturer-listed Indian brand
+Prilace,Ramipril,manufacturer-listed Indian brand
+Primigyn,Dinoprostone,manufacturer-listed Indian brand
+Promectin A,Albendazole + Ivermectin,manufacturer-listed Indian brand
+Proxyflam-SP,Serrapeptase + Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Pulmorest JR,Bromhexine hydrochloride + Guaifenesin + Terbutaline sulfate,manufacturer-listed Indian brand
+Pza-Ciba,Pyrazinamide,manufacturer-listed Indian brand
+Que,Quetiapine fumarate,manufacturer-listed Indian brand
+Qutistrom,Quetiapine fumarate,manufacturer-listed Indian brand
+Rabfro,Rabeprazole sodium,manufacturer-listed Indian brand
+Rabicip,Rabeprazole,proton pump inhibitor
+Radmox CV,Amoxicillin + Clavulanate potassium,manufacturer-listed Indian brand
+Ranazy,Azithromycin dihydrate,manufacturer-listed Indian brand
+Rasmin,Ethinylestradiol + Drospirenone,manufacturer-listed Indian brand
+Razo,Rabeprazole,proton pump inhibitor
+Rebclav-LB,Amoxicillin + Clavulanate potassium + Lactobacillus,manufacturer-listed Indian brand
+Refvon,Ondansetron hydrochloride,manufacturer-listed Indian brand
+Remaclo P,Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Repel,Tazobactam sodium + Piperacillin sodium,manufacturer-listed Indian brand
+Retop-A,Tretinoin,manufacturer-listed Indian brand
+Rheonex,Tranexamic acid,manufacturer-listed Indian brand
+Rifatouch,Rifaximin,manufacturer-listed Indian brand
+Risdovia,Risperidone,manufacturer-listed Indian brand
+Rivotril,Clonazepam,benzodiazepine anxiolytic
+Rl,Ramipril,manufacturer-listed Indian brand
+Romazyme,Bromelains + Rutin trihydrate + Trypsin,manufacturer-listed Indian brand
+Rosimit-F,Fenofibrate micronized + Rosuvastatin calcium,manufacturer-listed Indian brand
+Rosur,Rosuvastatin calcium,manufacturer-listed Indian brand
+Rosuvas,Rosuvastatin,statin
+Roxin,Levothyroxine sodium anhydrous,manufacturer-listed Indian brand
+Rozavel,Rosuvastatin,statin
+RPD,Rabeprazole + Domperidone,manufacturer-listed Indian brand
+Rutowel-D,Rutin trihydrate + Bromelains + Diclofenac sodium + Trypsin,manufacturer-listed Indian brand
+Safcin SP,Serrapeptase + Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Samecure,Ademetionine,manufacturer-listed Indian brand
+Sarpec-A,Ambroxol hydrochloride + Guaifenesin + Menthol + Terbutaline sulfate,manufacturer-listed Indian brand
+Scotdox CV,Cefuroxime axetil + Clavulanate potassium,manufacturer-listed Indian brand
+Sefuxi,Cefuroxime axetil,manufacturer-listed Indian brand
+Seprox,Piroxicam,manufacturer-listed Indian brand
+Serstar,Sertaconazole nitrate,manufacturer-listed Indian brand
+Sgltd M,Metformin hydrochloride + Dapagliflozin propanediol,manufacturer-listed Indian brand
+Shelcal,Calcium carbonate + Vitamin D3,calcium and vitamin D supplement
+Sibdom,Domperidone,manufacturer-listed Indian brand
+Silvo,Silver sulfadiazine,manufacturer-listed Indian brand
+Sitadoc M,Metformin hydrochloride + Sitagliptin phosphate,manufacturer-listed Indian brand
+Sleep,Alprazolam,manufacturer-listed Indian brand
+Soflene,Adapalene,manufacturer-listed Indian brand
+Somenor D,Domperidone + Esomeprazole magnesium,manufacturer-listed Indian brand
+Spankast-A,Ambroxol acefyllinate + Montelukast sodium,manufacturer-listed Indian brand
+Splanz,Lansoprazole,manufacturer-listed Indian brand
+Stamlo,Amlodipine,calcium channel blocker
+Staphox-CV,Amoxicillin + Clavulanate potassium,manufacturer-listed Indian brand
+Stener,Enoxaparin sodium,manufacturer-listed Indian brand
+Storvas,Atorvastatin,statin
+Strovo,Rabeprazole sodium,manufacturer-listed Indian brand
+Sugesterone,Progesterone,manufacturer-listed Indian brand
+Supracef-CV,Cefuroxime axetil + Clavulanate potassium,manufacturer-listed Indian brand
+Swiclo SP,Serrapeptase + Aceclofenac + Acetaminophen,manufacturer-listed Indian brand
+Synovace,Aceclofenac,manufacturer-listed Indian brand
+Tabi,Bicalutamide,manufacturer-listed Indian brand
+Takzide,Ceftazidime,manufacturer-listed Indian brand
+Tamiflu,Oseltamivir,antiviral
+Taramol-DT,Tramadol + Acetaminophen,manufacturer-listed Indian brand
+Tazobik,Tazobactam sodium + Piperacillin sodium,manufacturer-listed Indian brand
+Teco,Teicoplanin,manufacturer-listed Indian brand
+Telcure,Telmisartan,manufacturer-listed Indian brand
+Teleact,Telmisartan,manufacturer-listed Indian brand
+Telgard,Telmisartan,manufacturer-listed Indian brand
+Telma,Telmisartan,angiotensin receptor blocker
+Telma CT,Telmisartan + Chlorthalidone,manufacturer-listed Indian brand
+Telmilong H,Hydrochlorothiazide + Telmisartan,manufacturer-listed Indian brand
+Telmxyn AM,Amlodipine besylate + Telmisartan,manufacturer-listed Indian brand
+Telverge AM,Amlodipine besylate + Telmisartan,manufacturer-listed Indian brand
+Tenohep AF,Tenofovir alafenamide fumarate,manufacturer-listed Indian brand
+Tenormin,Atenolol,beta blocker
+Terific Plus,Tramadol hydrochloride + Acetaminophen,manufacturer-listed Indian brand
+Texnic MF,Mefenamic acid + Tranexamic acid,manufacturer-listed Indian brand
+Thio-A4,Thiocolchicoside + Aceclofenac,manufacturer-listed Indian brand
+Thyrolix,Levothyroxine sodium,manufacturer-listed Indian brand
+Thyronorm,Levothyroxine,thyroid hormone replacement
+Tigerad,Tigecycline,manufacturer-listed Indian brand
+Tiruzipan-DSR,Domperidone + Pantoprazole sodium,manufacturer-listed Indian brand
+Tojawa,Tobramycin,manufacturer-listed Indian brand
+Topdip,Amlodipine besylate,manufacturer-listed Indian brand
+Torplat,Ticagrelor,manufacturer-listed Indian brand
+Trafix P,Tramadol + Acetaminophen,manufacturer-listed Indian brand
+Tranarest,Tranexamic acid,manufacturer-listed Indian brand
+Traxof,Cefixime + Ofloxacin,manufacturer-listed Indian brand
+Tribose M,Metformin hydrochloride + Voglibose,manufacturer-listed Indian brand
+Trirab D,Rabeprazole + Domperidone,manufacturer-listed Indian brand
+Truclave DS,Amoxicillin + Clavulanic acid,manufacturer-listed Indian brand
+Tufcid D,Domperidone + Pantoprazole sodium,manufacturer-listed Indian brand
+Typsin D,Rutin trihydrate + Bromelains + Diclofenac sodium + Trypsin,manufacturer-listed Indian brand
+Ufipan,Pantoprazole sodium,manufacturer-listed Indian brand
+Ultroxime,Cefuroxime axetil,manufacturer-listed Indian brand
+Uprise-D3,Cholecalciferol,vitamin D3 supplement
+Urcef,Ceftriaxone sodium,manufacturer-listed Indian brand
+US Clave,Amoxicillin + Clavulanate potassium,manufacturer-listed Indian brand
+Valcet,Valacyclovir hydrochloride,manufacturer-listed Indian brand
+Vancowar-CP,Vancomycin hydrochloride,manufacturer-listed Indian brand
+VB Clav,Amoxicillin + Clavulanate potassium,manufacturer-listed Indian brand
+Venmoxyn DT,Amoxicillin,manufacturer-listed Indian brand
+Ventorlin,Salbutamol,short-acting bronchodilator
+Vermyk,Amikacin sulfate,manufacturer-listed Indian brand
+Vibace-TH4,Thiocolchicoside + Aceclofenac,manufacturer-listed Indian brand
+Vildapride M,Metformin hydrochloride + Vildagliptin,manufacturer-listed Indian brand
+Viperazone,Cefoperazone sodium,manufacturer-listed Indian brand
+Viziros,Rosuvastatin calcium,manufacturer-listed Indian brand
+Voltacef,Cefixime,manufacturer-listed Indian brand
+Vomivib-MD,Ondansetron hydrochloride,manufacturer-listed Indian brand
+Voveran,Diclofenac,NSAID analgesic
+Voxipod OF,Cefpodoxime proxetil + Ofloxacin,manufacturer-listed Indian brand
+Wanocort,Deflazacort,manufacturer-listed Indian brand
+Warf,Warfarin,vitamin K antagonist anticoagulant
+Weltaz,Ceftazidime,manufacturer-listed Indian brand
+Wipibactum,Tazobactam sodium + Piperacillin sodium,manufacturer-listed Indian brand
+Wypred,Prednisolone,manufacturer-listed Indian brand
+Wysolone,Prednisolone,corticosteroid
+Xeplocop-M,Levocetirizine dihydrochloride + Montelukast sodium,manufacturer-listed Indian brand
+Xolybex,Flupentixol hydrochloride,manufacturer-listed Indian brand
+Xylopalm-P,Xylometazoline hydrochloride,manufacturer-listed Indian brand
+Yuvimont-LC,Levocetirizine dihydrochloride + Montelukast sodium,manufacturer-listed Indian brand
+Zargesic BR,Rutin trihydrate + Bromelains + Diclofenac sodium + Trypsin,manufacturer-listed Indian brand
+Zefax,Cefixime,manufacturer-listed Indian brand
+Zenom,Levocetirizine dihydrochloride,manufacturer-listed Indian brand
+Zerodol,Aceclofenac,NSAID analgesic
+Zeromal-AT,Artesunate,manufacturer-listed Indian brand
+Ziety,Alprazolam,manufacturer-listed Indian brand
+Zipril,Ramipril,manufacturer-listed Indian brand
+Zodium,Sodium bicarbonate,manufacturer-listed Indian brand
+Zolotrix,Naphazoline hydrochloride + Menthol + Phenylephrine hydrochloride + Camphor,manufacturer-listed Indian brand
+Zoridol,Haloperidol,manufacturer-listed Indian brand
+Zovirax,Acyclovir,antiviral
+Zuker MF OD,Metformin hydrochloride + Gliclazide,manufacturer-listed Indian brand
+Zynesp,Darbepoetin alfa,manufacturer-listed Indian brand

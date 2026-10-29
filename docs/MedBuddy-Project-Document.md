@@ -1,18 +1,15 @@
 # MedBuddy
-### A WhatsApp-Based Medication Adherence & Drug-Interaction Assistant
-**Project Design Document — for review by the Faculty Guide**
+### A Browser-Based Medication Adherence & Drug-Interaction Assistant
+**Project Documentation — current implementation**
 
 | | |
 |---|---|
 | **Institution** | Kalinga Institute of Industrial Technology (KIIT University) |
 | **Course** | Minor Project (5 credits) |
-| **Team** | Prangshu [Roll No. ____] · Arundhati [Roll No. ____] |
-| **Faculty Guide** | [Prof. ____] |
-| **Duration** | 1 month |
-| **Status** | Proof-of-Concept |
-| **Date** | August 2026 |
+| **Team** | Prangshu [Roll No. 23052898] · Arundhati [Roll No. 23052873] |
+| **Faculty Guide** | [Prof. Lipika Mohanty] |
 
-> **Disclaimer:** MedBuddy is an academic proof-of-concept built for learning and demonstration. It is **not a certified medical device and must not be used for real clinical decision-making.** All drug information is drawn from a small, curated, static dataset. Every user-facing message carries this disclaimer.
+> **Disclaimer:** MedBuddy is an academic proof-of-concept built for learning and demonstration. It is **not a certified medical device and must not be used for real clinical decision-making.** Medication and interaction information is limited to curated data, and the interface and medication-related responses display a proof-of-concept disclaimer.
 
 ---
 
@@ -20,30 +17,29 @@
 
 > **For readers short on time — this section summarises the entire project.**
 
-**MedBuddy** is a proof-of-concept WhatsApp assistant that turns a **photo of a prescription** into three things: plain-language explanations of each medicine, **drug-drug interaction warnings**, and automated **dose reminders** with adherence tracking — all with **zero app installation**.
+**MedBuddy** is a browser-based proof-of-concept medication assistant. It accepts prescription images and PDFs in a web chat, extracts medication details, checks recognized medicines against curated interaction data, and supports conversational reminders and adherence logging. It uses a hybrid LangGraph architecture: prescription images follow a fixed pipeline, while text turns use an LLM tool-use loop.
 
 | Aspect | Summary |
 |---|---|
-| **What it is** | A WhatsApp bot for medication adherence and drug-interaction safety |
-| **Target users** | Patients — especially those for whom installing a dedicated health app is a barrier |
-| **Why it matters** | ≈50% of patients do not take long-term medicines as prescribed (WHO); dangerous interactions often go unnoticed |
-| **Key ideas** | (1) Meet patients on WhatsApp — no install, no learning curve; (2) AI explanations are **grounded** in a curated dataset and never invented |
-| **Core flow** | Photo → OCR → structured extraction → brand→generic normalization → interaction check → plain-language reply → scheduled reminders |
-| **Architecture** | Two designs are evaluated in §7. **Recommended: Hybrid** — a deterministic, safety-critical core wrapped in a conversational AI agent; a fully agentic design is proposed as a stretch goal |
-| **Tech stack** | FastAPI · Twilio WhatsApp · Tesseract + vision LLM · LLM extraction + Pydantic · Python rule engine · APScheduler · PostgreSQL |
-| **Team / timeline** | 2 members (Prangshu, Arundhati) · 1 month · KIIT 5-credit minor project |
-| **Deliverables** | A working WhatsApp demo and an evaluation report (extraction accuracy, interaction correctness, delivery rate, latency) |
+| **What it is** | A React browser chat backed by a FastAPI medication-assistance API |
+| **Target users** | Patients using a proof-of-concept medication assistant |
+| **Key ideas** | Prescription processing is deterministic after extraction; drug and interaction claims are restricted to curated tool results |
+| **Core flow** | Image/PDF → vision extraction → normalization → interaction check → grounded template reply; text → agent/tool loop |
+| **Architecture** | Hybrid LangGraph implementation: fixed prescription path plus agentic text-chat path |
+| **Tech stack** | React · FastAPI · LangGraph · LiteLLM · Gemini · SQLAlchemy · SQLite · curated CSV datasets |
+| **Team / timeline** | 2 members (Prangshu, Arundhati) · KIIT 5-credit minor project |
+| **Deliverables** | Working browser-chat proof-of-concept; evaluation metrics are intended to be measured and reported |
 | **Status** | Proof-of-concept — **not for clinical use** |
 
-**Bottom line:** a focused, achievable one-month project with a strong safety guarantee (the AI never invents drug information) and a clear primary deliverable, plus an ambitious agentic stretch goal.
+**Current status:** the browser chat, API, hybrid agent flow, prescription pipeline, reminder confirmation, adherence logging, and health-information search are implemented. The app and its curated data are not clinically validated.
 
 ---
 
 ## 1. Abstract
 
-Medication non-adherence and unnoticed drug-drug interactions are among the most common and preventable causes of treatment failure. MedBuddy is a proof-of-concept assistant, delivered entirely over WhatsApp, that lets a patient photograph a prescription and, in return, receive: (a) the medicines extracted and explained in plain language, (b) warnings about dangerous interactions between those medicines, and (c) automated dose reminders with adherence tracking — all with **no app installation required**.
+Medication non-adherence and unnoticed drug-drug interactions can contribute to treatment problems. MedBuddy is a proof-of-concept browser chat that lets a patient upload a prescription image or PDF and receive extracted medication details, dataset-backed interaction findings, and a reminder prompt. The text-chat agent also supports patient profile registration, medication-list lookup, reminder proposals, and adherence logging.
 
-This document presents the project's motivation, objectives, scope, and technology stack, and then examines **two candidate system architectures** — a *hybrid* design (a deterministic safety-critical core wrapped in a conversational agent) and a *fully agentic* design (an LLM that autonomously decides which operations to run). A comparative analysis and a recommendation follow.
+The implemented architecture is hybrid: image submissions take a fixed prescription path, while non-image messages use an LLM-driven tool loop. This document describes the current implementation and its limitations; it does not treat earlier architecture options as future plans or implemented features.
 
 ---
 
@@ -52,54 +48,55 @@ This document presents the project's motivation, objectives, scope, and technolo
 - **Non-adherence is widespread.** The World Health Organization has noted that adherence to long-term therapies averages around 50% in developed countries, and is often lower in resource-constrained settings. Missed and mistimed doses reduce treatment effectiveness and increase avoidable complications.
 - **Prescriptions are hard for patients to understand.** Medical shorthand, brand vs. generic naming, and handwriting make it difficult for a patient to know *what* they are taking and *why*.
 - **Interactions go unnoticed.** Patients frequently take multiple medicines (and over-the-counter drugs) without any check for dangerous combinations.
-- **Existing apps create friction.** Dedicated medication apps require installation, sign-up, and a degree of digital literacy — a real barrier for elderly and first-time smartphone users.
-- **WhatsApp removes that friction.** WhatsApp is already installed and familiar for the vast majority of users in India. Meeting patients on a channel they already use — with zero install — is the core design bet of this project.
+- **Medication tools need an accessible interface.** MedBuddy explores a familiar browser-chat interface for submitting prescriptions and asking follow-up questions.
+- **The assistant must communicate uncertainty.** Because extraction and curated-data coverage are limited, the system is designed to flag unknown medicines and avoid presenting missing interaction data as proof of safety.
 
 ---
 
 ## 3. Objectives
 
-**Primary objectives**
+**Implemented capabilities**
 1. Extract structured medication details (drug name, dosage, frequency, duration) from a photograph of a prescription.
-2. Explain each medicine in plain, non-technical language.
-3. Detect and flag drug-drug interactions, classified by severity (minor / moderate / major).
-4. Schedule and deliver dose reminders over WhatsApp, and log the patient's "taken / missed / snooze" responses.
-
-**Secondary objectives**
-5. Send a follow-up nudge when a dose reminder goes unanswered.
-6. Maintain a per-patient log of prescriptions, conversations, and adherence.
-7. (Optional) Provide a simple web dashboard reporting extraction accuracy and interaction statistics for evaluation.
+2. Resolve known brand and generic names using the curated mapping dataset.
+3. Check pairs of recognized medicines against the curated interaction dataset and report the stored severity and description.
+4. Provide templated prescription results and a constrained optional rephrase mode.
+5. Support profile registration, medication lookup, reminder proposals/confirmation, and taken/missed adherence logging through chat.
+6. Provide MedlinePlus health-information search from the web interface.
+7. Persist patient, prescription, reminder, adherence, chat, and conversation-checkpoint data.
 
 ---
 
 ## 4. Scope
 
 **In scope**
-- Single patient per WhatsApp number (no multi-tenant authentication).
-- A **static, curated** drug-interaction dataset and a brand→generic mapping dataset (≈150–200 entries each).
+- A phone number identifies a patient in the demo; this is not a full authentication or multi-tenant account system.
+- A **static, curated** drug-interaction dataset and brand→generic mapping dataset.
+- A browser-based React chat connected to a FastAPI backend.
 - Proof-of-concept accuracy, with disclaimers throughout.
 
 **Out of scope**
 - Live FDA / WHO API integration — the interaction data is curated and static by design.
 - Clinical-grade accuracy claims.
 - Multi-tenant authentication or user-account management.
-- A doctor-facing dashboard — MedBuddy is patient-facing only.
+- WhatsApp/Twilio transport, a doctor-facing dashboard, or a clinical workflow.
+- Tesseract OCR, a live FDA/WHO interaction integration, or a claim of comprehensive drug coverage.
+- Snooze handling, missed-dose escalation, and recurring reminder scheduling.
 
 ---
 
 ## 5. System Overview — Core User Flow
 
-1. The patient messages the bot ("Hi") and registers a name and age.
-2. The patient sends a **photo** of their prescription.
-3. **OCR** extracts the raw text (Tesseract as the primary engine; a vision-capable LLM as a fallback for handwriting).
-4. **Structured extraction** pulls drug name, dosage, frequency, and duration into a validated JSON record.
-5. **Normalization** maps brand names to generics via fuzzy matching against the curated dataset (e.g. *Crocin → Paracetamol*).
-6. The **interaction engine** checks every pair of drugs against the interaction dataset and flags severity.
-7. The patient receives a **plain-language explanation** of each medicine plus any interaction warnings — grounded strictly in the dataset, never invented.
-8. The **reminder scheduler** parses frequency strings ("twice daily", "every 8 hrs") into concrete send times and pushes reminders over WhatsApp.
-9. The patient replies **"taken" / "missed" / "snooze"**, which is logged with a timestamp.
-10. If no reply arrives within a set window, a **missed-dose follow-up** is sent.
-11. All prescriptions, chats, and interactions are **logged per patient**.
+1. The patient enters a phone number in the browser chat. The number is used as the patient identity; it is not secure account authentication.
+2. The patient can provide a name and age through chat for profile registration.
+3. The patient sends an image (JPEG, PNG, WebP) or PDF. The backend validates file type and size; PDFs are rendered as images for up to the first three pages.
+4. An image is routed to a fixed pipeline. The vision model extracts medication name, dosage, frequency, duration, and optional source text into a schema-validated result.
+5. Medication names are matched against the static brand/generic dataset; unmatched drugs are marked unknown.
+6. Recognized generic names are checked pairwise against the interaction dataset.
+7. The reply is built from extracted medication fields and interaction results. The default is a template; optional rephrase mode adds a second LLM call with constraints and a template fallback.
+8. The patient may request reminders in a text conversation. A proposed state change is shown for explicit YES/NO confirmation before it is saved.
+9. Due reminders are dispatched by the web chat's message-polling endpoint. The implementation schedules the next occurrence for each supplied time; it does not currently implement a recurring scheduler.
+10. The patient can report a dose as **taken** or **missed**. The adherence log is written only after confirmation. Snooze and missed-dose escalation are not implemented.
+11. Messages and application records are stored in SQLite; LangGraph conversation state is stored in a separate checkpoint database.
 
 ---
 
@@ -107,124 +104,162 @@ This document presents the project's motivation, objectives, scope, and technolo
 
 | Layer | Technology |
 |---|---|
-| Messaging | Twilio WhatsApp Sandbox API |
+| User interface / transport | React + TypeScript web chat; FastAPI HTTP API |
 | Backend | FastAPI (Python) |
-| OCR | Tesseract (primary); vision-capable LLM (handwriting fallback) |
-| Extraction / NLP | LLM structured output + Pydantic validation |
-| Interaction engine | Python rule engine over a curated JSON/CSV dataset |
-| Scheduler | APScheduler |
-| Database | PostgreSQL (SQLite acceptable for local development) |
-| Optional dashboard | Plain HTML / React served from a FastAPI endpoint |
-| Deployment (optional) | Docker, Render free tier |
+| Agent orchestration | LangGraph |
+| LLM integration | LiteLLM; Gemini defaults configured by role (agent, vision, explanation) |
+| Image extraction | Vision model directly reads the image; no Tesseract in the photo pipeline |
+| Extraction validation | JSON parsing and Pydantic schema validation |
+| Normalization | RapidFuzz matching against curated CSV data |
+| Interaction engine | Python pairwise rule lookup over curated CSV data |
+| Database | SQLAlchemy with SQLite by default |
+| Conversation checkpointing | LangGraph SQLite checkpointer in a separate database |
+| Health-information search | MedlinePlus search endpoint |
+| Reminder dispatch | Due-reminder check on chat message polling; mockable clock for tests |
 
-**Planned database tables:** `patients`, `prescriptions`, `medications`, `interactions`, `reminders`, `adherence_logs`.
+**Database models:** `patients`, `prescriptions`, `medications`, `interactions`, `reminders`, `adherence_logs`, and `chat_messages`. Conversation checkpoints are stored separately.
 
 ---
 
 ## 7. System Architecture
 
-A key design decision for this project is **how the individual processing steps are orchestrated.** The steps themselves are common to both approaches; what differs is *who decides the order in which they run* — fixed application code, or the language model itself.
+The current implementation is a **hybrid LangGraph application** with two entry routes. An incoming image is processed by a fixed prescription pipeline. A text message is handled by an LLM tool-use loop. This is the implemented architecture, not a proposal for a future phase.
 
-### 7.1 Common building blocks
+### 7.1 Current methodology and data flow
 
-Regardless of the approach chosen, the system is built from the same capabilities:
+```mermaid
+flowchart TD
+    U[Patient in React browser chat] --> API[FastAPI API]
+    API --> SAVE[Save incoming chat message]
+    SAVE --> ROUTE{Image attached?}
 
-| Capability | Nature |
-|---|---|
-| OCR / text extraction | Tesseract, with a vision-LLM fallback |
-| Structured extraction | A single LLM call, schema-validated |
-| Drug normalization | **Deterministic** fuzzy matching |
-| Interaction check | **Deterministic** Python rule engine |
-| Explanation generation | A single LLM call, grounded to matched dataset rows |
-| Reminder scheduling | Deterministic (APScheduler) |
+    ROUTE -->|Yes| IMAGE[Validate image or PDF]
+    IMAGE --> PDF{PDF?}
+    PDF -->|Yes| PAGES[Render up to first 3 pages]
+    PDF -->|No| VISION
+    PAGES --> VISION[Vision model extracts medications]
+    VISION --> VALIDATE[Pydantic validation]
+    VALIDATE --> NORMALIZE[Normalize against brand-generic dataset]
+    NORMALIZE --> INTERACTIONS[Check recognized drug pairs]
+    INTERACTIONS --> LOOKUP[Lookup grounded dataset facts]
+    LOOKUP --> TEMPLATE[Render grounded reply template]
+    TEMPLATE --> OUT[Persist and display reply]
 
-An essential safety principle applies throughout: **the LLM is never the source of drug facts.** Drug identity and interaction data always come from the curated datasets; the LLM only *reads* (extraction) and *rephrases* (explanation). Drugs that cannot be matched to the dataset are flagged and routed to a disclaimer, never described from the model's own knowledge.
+    ROUTE -->|No| AGENT[LangGraph agent node]
+    AGENT --> TOOL{Tool calls requested?}
+    TOOL -->|Yes| EXEC[Execute registered tools]
+    EXEC --> STATE{State-changing tool?}
+    STATE -->|Yes| CONFIRM[interrupt: ask patient YES or NO]
+    CONFIRM -->|YES| COMMIT[Commit reminder or adherence change]
+    CONFIRM -->|NO| CANCEL[Cancel without saving]
+    COMMIT --> AGENT
+    CANCEL --> AGENT
+    STATE -->|No| AGENT
+    TOOL -->|No| OUT
 
-![Figure 1 — The MedBuddy intake pipeline. Green nodes are start/end points, blue nodes are deterministic (rule-based) steps, and purple nodes are LLM-powered steps. The two branch points — OCR confidence, and whether a drug matches the curated dataset — are where the safety-critical routing happens.](diagrams/pipeline.png)
+    SEARCH[Health search endpoint] --> MEDLINE[MedlinePlus]
+    DB[(SQLite application database)] --- SAVE
+    DB --- COMMIT
+    CHECKPOINT[(Separate LangGraph checkpoint database)] --- AGENT
+    DATA[(Curated CSV datasets)] --- NORMALIZE
+    DATA --- INTERACTIONS
+    DATA --- LOOKUP
+```
 
----
+In the default configuration, the image path makes one vision-model call for extraction. If `PHOTO_REPLY_MODE=rephrase` is enabled, an optional explanation-model call rewrites the already-rendered template; the template is used if rephrasing fails or omits required details. The separate `run_ocr` tool is available to the general agent, but the automatic image pipeline does not run a separate OCR/Tesseract stage.
 
-### 7.2 Approach A — Hybrid (deterministic core + conversational agent)
+### 7.2 Prescription image path
 
-The prescription-processing path is a **fixed, deterministic pipeline** — the order of steps is written into the application code and is identical on every run. This pipeline is exposed as a *single operation*. Around it sits a **conversational agent** that handles everything which does *not* fit a rigid sequence: free-form questions, clarifications, adherence coaching, and regimen queries. The agent may call the deterministic pipeline, plus a set of read-only lookup tools, but the safety-critical computation stays fixed.
+`route_entry` sends messages with a pending image to `prescription_node`. That node invokes the implementation in `medbuddy/agent/prescription.py`:
 
-![Figure 2 — Approach A (Hybrid). A conversational agent handles free-form dialogue and read-only lookups, but the safety-critical intake work runs as one fixed, deterministic pipeline that the agent invokes as a single operation.](diagrams/hybrid.png)
+1. `extract_medications` sends the image directly to the configured vision model and validates the returned structure.
+2. Each extracted name is normalized against the curated brand/generic dataset; results below the matching threshold remain unmatched.
+3. Only matched generic names are included in pairwise interaction checks.
+4. Drug lookup returns the dataset-backed identity information, or an unknown-drug disclaimer.
+5. The final message is assembled from medication fields and interaction results. It does not claim that a combination is safe merely because no matching interaction was found.
+6. Extracted medications are saved to the patient's prescription records.
 
-**Characteristics**
-- The safety-critical path (extraction → interaction check → scheduling) is fully deterministic, reproducible, and unit-testable.
-- The interaction check *cannot* be skipped or hallucinated for the intake path.
-- The agent layer adds a natural, conversational experience for the patient.
-- Evaluation is clean: each pipeline stage and each tool can be tested in isolation against a labelled test set.
+The backend accepts JPEG, PNG, WebP, and PDF uploads subject to the configured size limit. PDFs are rendered as images for up to the first three pages; later pages are skipped with a chat notice.
 
----
+### 7.3 Text conversation and tools
 
-### 7.3 Approach B — Fully Agentic (LLM-orchestrated)
+Text messages enter the LangGraph `agent_node` and `tool_node` loop. The LLM selects from the tools registered in `medbuddy/tools/__init__.py`:
 
-Here there is **no fixed pipeline.** Each capability is exposed to the LLM as a **tool**, and the model itself decides which tools to call, and in what order, based on the incoming message and the conversation so far.
+- `run_ocr`
+- `extract_medications`
+- `normalize_drug`
+- `check_interactions`
+- `lookup_drug_info`
+- `schedule_reminder`
+- `log_adherence`
+- `register_patient`
+- `get_my_meds`
 
-![Figure 3 — Approach B (Fully Agentic). Every capability is exposed as a tool, and the LLM decides at runtime which tools to call and in what order. There is no fixed pipeline; grounding and safety depend on prompt guardrails and confirmation gates.](diagrams/agentic.png)
+Conversation state is checkpointed per phone identity. The system prompt requires tool-grounded medication and interaction claims and tells the agent not to invent medicines or report an unlisted interaction.
 
-**Characteristics**
-- Maximum flexibility: naturally handles multi-intent messages, out-of-order inputs, and arbitrary follow-up questions.
-- The control flow is not fixed — the same input may be handled via different tool sequences on different runs.
-- Requires explicit guardrails to preserve grounding (e.g. system-prompt rules forbidding any drug statement not derived from a tool result, and confirmation gates on state-changing tools).
-- Higher latency and cost (multiple LLM round-trips per prescription) and lower reproducibility, which complicates quantitative evaluation.
+### 7.4 State-changing confirmation
 
----
+`schedule_reminder` and `log_adherence` are the state-changing tools. Before executing either, the graph pauses with LangGraph `interrupt()` and asks the patient to confirm. A YES response allows the tool to commit; a NO response cancels it without saving. The confirmation gate is implemented in application code rather than relying only on an LLM instruction.
 
-### 7.4 Comparative Analysis
+Reminder times are interpreted using the configured fixed UTC offset (default: IST, UTC+05:30). The current implementation schedules the next occurrence for each supplied time. Due reminders are dispatched when the browser chat polls for messages; there is no APScheduler process or implemented daily recurrence. Adherence responses currently support only `taken` and `missed`.
 
-| Dimension | A — Hybrid | B — Fully Agentic |
-|---|---|---|
-| **Control flow** | Fixed pipeline + agent shell | Entirely LLM-decided |
-| **Safety / grounding** | Strong — critical path is deterministic | Weaker — depends on prompt guardrails |
-| **Reproducibility & evaluation** | Clean, per-stage metrics | Noisy, path-dependent |
-| **Latency & cost** | Low (1–3 LLM calls per intake) | Higher (multiple round-trips) |
-| **Flexibility / conversational ability** | High (agent shell) | Highest |
-| **Implementation effort (1 month)** | Moderate | High |
-| **Debuggability & explainability** | High | Lower |
+### 7.5 Other application features
 
----
+- **Patient profile:** the phone number is the patient identity. Name and age can be registered through chat; the phone login is not full authentication.
+- **Chat persistence:** incoming and outgoing browser-chat messages are stored and retrieved through the API.
+- **Health search:** the UI can query MedlinePlus through `/api/health-search`; this is separate from the curated dataset used for medication grounding.
+- **Transport:** the React/Vite frontend uses the FastAPI web API. `FakeChannel` and the CLI are available for local development and tests.
+- **LLM configuration:** LiteLLM is used with role-specific agent, vision, and explanation model settings; the configured defaults use Gemini.
 
-### 7.5 Recommendation
+### 7.6 Why hybrid rather than fully agentic
 
-For a one-month proof-of-concept in a **drug-safety** domain, evaluated by a formal report, we recommend **Approach A (Hybrid).** It preserves a strong, provable safety guarantee — the interaction check on the intake path is deterministic and cannot be hallucinated — while still delivering the conversational experience that makes the demo compelling. Critically, it keeps the evaluation metrics clean and reproducible, because each stage can be tested in isolation.
-
-Approach B remains a valuable **extension**: once the hybrid system is stable, selected conversational features can be handed to the agent to demonstrate autonomous, tool-using behaviour. This gives the project a clear, low-risk primary deliverable with an ambitious stretch goal, rather than betting the whole project on the harder architecture.
+The photo workflow is fixed to keep its extraction, normalization, interaction lookup, and reply generation predictable and testable. The text workflow remains agentic so the model can select tools in response to questions and requests. A fully agentic photo workflow is not the current implementation.
 
 ---
 
 ## 8. Evaluation Methodology
 
-- **OCR / extraction accuracy** — precision and recall on drug name, dosage, and frequency, measured against a manually labelled test set of prescription images.
-- **Interaction-detection correctness** — accuracy against a set of known drug-combination test cases.
-- **Reminder delivery success rate** — the percentage of scheduled reminders delivered on time.
-- **End-to-end latency** — elapsed time from photo upload to explanation delivered.
+The repository includes deterministic tests for normalization, interactions, prescription pipeline behavior, reminders, web API behavior, and agent orchestration. These test suites verify implementation behavior; they do not by themselves establish clinical accuracy or real-world effectiveness.
+
+Recommended project evaluation measures, to be reported only when measured:
+
+- **Extraction accuracy** — exact or normalized match for medication name, dosage, frequency, and duration against a manually labelled set of synthetic or anonymized prescription images.
+- **Interaction lookup correctness** — expected findings and severity for labelled drug-pair test cases drawn from the curated dataset.
+- **Reminder dispatch behavior** — whether a due reminder is emitted when the chat message endpoint is polled after its scheduled time.
+- **End-to-end latency** — elapsed time from upload to the prescription response.
 
 ---
 
 ## 9. Constraints & Known Limitations
 
-The project is built on Twilio's **WhatsApp Sandbox**, which imposes real constraints that shape the design and are documented as limitations in the final report:
+MedBuddy is an academic proof-of-concept and is **not suitable for clinical use**. Important limitations include:
 
-- The sandbox is for **testing only**, not production, and uses a shared Twilio number.
-- Trial messaging is limited (≈100 free messages), so integration testing is deliberately deferred until the pipeline is validated offline, to conserve credits.
-- **Sandbox sessions expire 3 days after a number joins**, which affects multi-day reminder testing — test numbers must periodically rejoin.
-- A rate limit (~1 message per 3 seconds) requires bursty sends to be queued.
-- Business-initiated messages outside a 24-hour window are restricted to pre-approved templates, which constrains how reminders are delivered.
+- The brand/generic and interaction CSV files are small, static, curated datasets; absence of a match is not proof that a medicine or interaction does not exist.
+- Prescription extraction can misread handwriting, image quality, or dosage details. The extracted result must be checked against the original prescription by a qualified professional.
+- The vision model receives prescription images through an external LLM provider. Use synthetic or anonymized images for demonstrations and testing; do not upload sensitive patient data.
+- The phone number is an identity key for the demo, not a verified login or complete security boundary.
+- Medication lookup data is intentionally narrow. It does not provide comprehensive indications, contraindications, side effects, or individualized clinical advice.
+- Reminder delivery is driven by browser chat polling and only schedules the next occurrence for supplied times; it is not a robust background scheduler or recurring notification service.
+- The app does not implement snooze, missed-dose escalation, clinician review, or WhatsApp messaging.
+- Health search uses MedlinePlus separately and is not a substitute for clinical advice.
 
-The interaction dataset is **small and curated**, so coverage is limited by design. MedBuddy is a proof-of-concept and is **not suitable for clinical use.**
+The project has no clinical validation, regulatory certification, or claim of comprehensive safety.
 
 ---
 
-## 10. Project Plan (4 Weeks)
+## 10. Implementation Status
 
-| Week | Focus |
+| Area | Current status |
 |---|---|
-| **1 — Foundation & data** | Repository, database schema, Twilio sandbox wiring; curate the interaction and brand→generic datasets; collect 15–20 sample prescription images. |
-| **2 — Core pipelines** | Interaction engine, OCR pipeline, LLM structured extraction, normalization, and grounded explanation — validated offline as an isolated pipeline. |
-| **3 — Integration & reminders** | Reminder scheduler, adherence logging, missed-dose escalation; wire the full pipeline into the WhatsApp webhook; end-to-end testing. |
-| **4 — Evaluation, polish & report** | Accuracy / precision-recall evaluation, delivery-rate testing, optional dashboard/deployment, joint report, and demo. |
+| Browser chat | React/Vite frontend with phone-identity entry, chat polling, upload, and health-search UI |
+| Web API | FastAPI endpoints for login, messages, typing state, media, and MedlinePlus search |
+| Prescription images | Fixed vision extraction, schema validation, normalization, interaction lookup, and templated response |
+| PDF input | First three pages rendered for image processing; extra pages are skipped with a notice |
+| Text conversation | LangGraph LLM tool-use loop with registered patient, medication, interaction, reminder, and adherence tools |
+| Confirmation | Reminder and adherence writes pause for patient YES/NO confirmation |
+| Persistence | SQLAlchemy application records in SQLite by default; separate SQLite LangGraph checkpoint store |
+| Tests | Component and integration-focused test modules are present for core tools, prescription pipeline, reminders, API, and orchestration |
+| Not implemented | WhatsApp/Twilio transport, Tesseract OCR, APScheduler, daily recurring reminders, snooze, missed-dose escalation, dashboard, clinical validation |
 
 ---
 
@@ -232,7 +267,7 @@ The interaction dataset is **small and curated**, so coverage is limited by desi
 
 | Member | Primary responsibilities | Secondary |
 |---|---|---|
-| **Prangshu** | Backend architecture, database schema, interaction rule engine, scheduler/reminder logic, WhatsApp webhook integration | Testing, deployment |
+| **Prangshu** | Backend architecture, database schema, interaction rule engine, reminder logic, web API integration | Testing, deployment |
 | **Arundhati** | OCR + LLM extraction pipeline, drug normalization, grounded explanation generation, evaluation metrics | Dataset curation, report writing |
 | **Both** | Dataset curation, end-to-end integration testing, report and demo preparation | |
 
@@ -240,10 +275,10 @@ The interaction dataset is **small and curated**, so coverage is limited by desi
 
 ## 12. Expected Outcomes
 
-- A working WhatsApp proof-of-concept demonstrating the full flow: prescription photo → extraction → interaction check → plain-language explanation → dose reminders with adherence logging.
-- A labelled evaluation dataset and a report quantifying extraction accuracy, interaction-detection correctness, delivery success rate, and latency.
-- A written analysis of the architectural trade-offs (hybrid vs. fully agentic) and the design decisions made.
-- (Optional) A simple evaluation dashboard and a containerised deployment on Render.
+- A working browser-chat proof-of-concept demonstrating prescription upload, medication extraction, normalization, interaction lookup, reminders with confirmation, and adherence logging.
+- Deterministic tests for core components and API/agent behavior.
+- An evaluation report may quantify extraction accuracy, interaction lookup correctness, reminder dispatch behavior, and response latency when measured against labelled test data.
+- Documentation of the hybrid design, grounding constraints, and known limitations.
 
 ---
 
