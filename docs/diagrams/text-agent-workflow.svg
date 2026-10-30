@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1030" viewBox="0 0 1200 1030" role="img" aria-labelledby="title desc">
+  <title id="title">MedBuddy Text Agent Workflow</title>
+  <desc id="desc">The text agent receives a message and history, the model either answers or requests a tool, ordinary tool results return to the agent, and reminder or adherence tools pause for YES or NO confirmation before committing or cancelling.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,1 L7,4 L0,7 Z" fill="#526579"/>
+    </marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #18324b; }
+      .title { font-size: 25px; font-weight: 700; }
+      .subtitle { font-size: 13px; fill: #526579; }
+      .number { font-size: 15px; font-weight: 700; fill: #ffffff; }
+      .label { font-size: 16px; font-weight: 700; }
+      .small { font-size: 13px; }
+      .tiny { font-size: 12px; }
+      .box { stroke-width: 1.5; rx: 12; }
+      .edge { stroke: #526579; stroke-width: 1.7; fill: none; marker-end: url(#arrow); }
+      .branch { stroke: #526579; stroke-width: 1.7; fill: none; marker-end: url(#arrow); }
+      .loop { stroke: #7952a3; stroke-width: 1.7; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1200" height="1030" rx="18" fill="#ffffff"/>
+  <text x="600" y="42" text-anchor="middle" class="title">MedBuddy Text Agent Workflow</text>
+  <text x="600" y="66" text-anchor="middle" class="subtitle">Model-driven tool loop with code-enforced confirmation for state changes</text>
+
+  <circle cx="570" cy="112" r="15" fill="#2878a5"/>
+  <text x="570" y="117" text-anchor="middle" class="number">1</text>
+  <rect x="600" y="86" width="430" height="60" class="box" fill="#e3f2fd" stroke="#2878a5"/>
+  <text x="815" y="112" text-anchor="middle" class="label">Agent receives message and history</text>
+  <text x="815" y="133" text-anchor="middle" class="small">Current patient turn + checkpointed conversation</text>
+  <path d="M815 146 V185" class="edge"/>
+
+  <circle cx="570" cy="220" r="15" fill="#7952a3"/>
+  <text x="570" y="225" text-anchor="middle" class="number">2</text>
+  <rect x="600" y="184" width="430" height="72" class="box" fill="#ede7f6" stroke="#7952a3"/>
+  <text x="815" y="212" text-anchor="middle" class="label">Model decides what to do</text>
+  <text x="815" y="235" text-anchor="middle" class="small">Answer directly, or request a named tool</text>
+  <path d="M815 256 V286" class="edge"/>
+
+  <path d="M815 286 L900 332 L815 378 L730 332 Z" fill="#fff8e8" stroke="#c49a58" stroke-width="1.5"/>
+  <text x="815" y="337" text-anchor="middle" class="label">Tool requested?</text>
+  <path d="M730 332 H360 V420" class="branch"/>
+  <text x="540" y="319" text-anchor="middle" class="tiny">No</text>
+  <circle cx="195" cy="454" r="15" fill="#388e3c"/>
+  <text x="195" y="459" text-anchor="middle" class="number">5</text>
+  <rect x="225" y="414" width="270" height="80" class="box" fill="#e8f5e9" stroke="#388e3c"/>
+  <text x="360" y="444" text-anchor="middle" class="label">Send reply to patient</text>
+  <text x="360" y="467" text-anchor="middle" class="small">No tool call: this turn ends</text>
+
+  <path d="M900 332 H1010 V410" class="branch"/>
+  <text x="955" y="319" text-anchor="middle" class="tiny">Yes</text>
+  <path d="M1010 410 L1090 454 L1010 498 L930 454 Z" fill="#fff8e8" stroke="#c49a58" stroke-width="1.5"/>
+  <text x="1010" y="449" text-anchor="middle" class="small" font-weight="700">Changes state?</text>
+  <text x="1010" y="468" text-anchor="middle" class="tiny">Reminder / adherence</text>
+
+  <path d="M930 454 H600 V490 H790 V506" class="branch"/>
+  <text x="825" y="441" text-anchor="middle" class="tiny">No</text>
+  <circle cx="610" cy="554" r="15" fill="#2878a5"/>
+  <text x="610" y="559" text-anchor="middle" class="number">3</text>
+  <rect x="640" y="514" width="300" height="78" class="box" fill="#e3f2fd" stroke="#2878a5"/>
+  <text x="790" y="544" text-anchor="middle" class="label">Execute requested tool</text>
+  <text x="790" y="567" text-anchor="middle" class="small">Read-only or non-state-changing action</text>
+  <path d="M790 592 V738 H720 V780" class="edge"/>
+
+  <path d="M1010 498 V570" class="branch"/>
+  <circle cx="820" cy="600" r="15" fill="#d28a24"/>
+  <text x="820" y="605" text-anchor="middle" class="number">4</text>
+  <rect x="850" y="578" width="320" height="74" class="box" fill="#fff3e0" stroke="#d28a24"/>
+  <text x="1010" y="607" text-anchor="middle" class="label">Graph pauses for confirmation</text>
+  <text x="1010" y="630" text-anchor="middle" class="small">Code asks the patient: YES or NO</text>
+  <path d="M1010 652 V681" class="edge"/>
+
+  <path d="M1010 681 L1090 725 L1010 769 L930 725 Z" fill="#fff8e8" stroke="#c49a58" stroke-width="1.5"/>
+  <text x="1010" y="730" text-anchor="middle" class="label">Patient says YES?</text>
+
+  <path d="M930 725 H830 V780" class="branch"/>
+  <text x="875" y="712" text-anchor="middle" class="tiny">YES</text>
+  <rect x="690" y="780" width="280" height="66" class="box" fill="#e8f5e9" stroke="#388e3c"/>
+  <text x="830" y="808" text-anchor="middle" class="label">Commit approved action</text>
+  <text x="830" y="829" text-anchor="middle" class="small">Run reminder / adherence tool</text>
+  <path d="M830 846 V879 H720 V900" class="edge"/>
+
+  <path d="M1090 725 H1100 V780" class="branch"/>
+  <text x="1120" y="712" text-anchor="middle" class="tiny">NO</text>
+  <rect x="990" y="780" width="200" height="66" class="box" fill="#fbe9e7" stroke="#c0504d"/>
+  <text x="1090" y="808" text-anchor="middle" class="label">Cancel</text>
+  <text x="1090" y="829" text-anchor="middle" class="small">No state change</text>
+  <path d="M1090 846 V879 H720 V900" class="edge"/>
+
+  <rect x="470" y="900" width="500" height="66" class="box" fill="#eef3f8" stroke="#718096"/>
+  <text x="720" y="928" text-anchor="middle" class="label">Tool result returns to conversation</text>
+  <text x="720" y="950" text-anchor="middle" class="small">Agent sees the result and continues the loop</text>
+
+  <path d="M470 933 H100 V116 H590" class="loop"/>
+  <text x="95" y="540" transform="rotate(-90 95 540)" text-anchor="middle" class="tiny" fill="#7952a3">Tool result added; loop back to agent</text>
+  <text x="600" y="1005" text-anchor="middle" class="tiny">The cycle ends when the model responds without requesting another tool.</text>
+</svg>

@@ -1,0 +1,234 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1210" viewBox="0 0 1400 1210" role="img" aria-labelledby="title desc">
+  <title id="title">Figure 1.2. Class Diagram of MedBuddy</title>
+  <desc id="desc">UML-style class diagram of the MedBuddy graph controller, prescription pipeline, tool registry, LLM client, dataset loader, shared tool context, and SQLAlchemy database models.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0,1 L6,3.5 L0,6 Z" fill="#526579"/>
+    </marker>
+    <marker id="diamond" markerWidth="10" markerHeight="10" refX="1" refY="5" orient="auto">
+      <path d="M1,5 L5,1 L9,5 L5,9 Z" fill="#ffffff" stroke="#526579" stroke-width="1"/>
+    </marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #18324b; }
+      .title { font-size: 25px; font-weight: 700; }
+      .subtitle { font-size: 13px; fill: #526579; }
+      .section { font-size: 16px; font-weight: 700; letter-spacing: 1px; }
+      .name { font-size: 15px; font-weight: 700; }
+      .stereo { font-size: 11px; font-style: italic; fill: #526579; }
+      .member { font-size: 12px; }
+      .note { font-size: 12px; fill: #42586c; }
+      .panel { stroke-width: 1.5; rx: 14; }
+      .classbox { fill: #ffffff; stroke: #668098; stroke-width: 1.4; }
+      .classhead { fill: #eaf1f7; }
+      .entityhead { fill: #f7efe0; }
+      .rule { stroke: #9aaaba; stroke-width: 1; }
+      .edge { stroke: #526579; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+      .dependency { stroke: #526579; stroke-width: 1.5; fill: none; stroke-dasharray: 5 4; marker-end: url(#arrow); }
+      .composition { stroke: #526579; stroke-width: 1.5; fill: none; marker-start: url(#diamond); marker-end: url(#arrow); }
+      .relation { font-size: 11px; fill: #42586c; }
+    </style>
+  </defs>
+  <rect width="1400" height="1210" rx="18" fill="#ffffff"/>
+  <text x="700" y="42" text-anchor="middle" class="title">Figure 1.2. Class Diagram of MedBuddy</text>
+  <text x="700" y="65" text-anchor="middle" class="subtitle">Core orchestration modules and the persistent application data model</text>
+
+  <rect x="35" y="85" width="1330" height="535" class="panel" fill="#f3f7fb" stroke="#7896b3"/>
+  <text x="60" y="115" class="section">APPLICATION MODULES</text>
+
+  <path d="M550 198 H370" class="edge"/>
+  <text x="460" y="188" text-anchor="middle" class="relation">routes image to</text>
+  <path d="M850 198 H1030" class="edge"/>
+  <text x="940" y="188" text-anchor="middle" class="relation">uses schemas</text>
+  <path d="M700 275 V340" class="edge"/>
+  <text x="710" y="312" class="relation">calls</text>
+  <path d="M220 275 V340" class="edge"/>
+  <text x="230" y="312" class="relation">uses context</text>
+  <path d="M1180 275 V340" class="composition"/>
+  <text x="1192" y="312" class="relation">registers</text>
+  <path d="M370 407 H550" class="edge"/>
+  <text x="460" y="397" text-anchor="middle" class="relation">llm</text>
+  <path d="M220 475 V515" class="edge"/>
+  <text x="232" y="501" class="relation">datasets</text>
+  <path d="M700 475 V495 H880 V515" class="edge"/>
+  <text x="790" y="487" text-anchor="middle" class="relation">session</text>
+  <path d="M400 565 H370" class="edge"/>
+  <text x="385" y="555" text-anchor="middle" class="relation">loads / caches</text>
+  <path d="M880 615 V665" class="dependency"/>
+
+  <g>
+    <rect x="70" y="145" width="300" height="130" rx="8" class="classbox"/>
+    <path d="M70 153 Q70 145 78 145 H362 Q370 145 370 153 V176 H70 Z" class="classhead"/>
+    <text x="220" y="166" text-anchor="middle" class="name">PrescriptionPipeline</text>
+    <line x1="70" y1="176" x2="370" y2="176" class="rule"/>
+    <text x="84" y="197" class="stereo">&lt;&lt;module&gt;&gt;</text>
+    <text x="84" y="220" class="member">+process_prescription(ctx)</text>
+    <text x="84" y="240" class="member">+prescription_reply(ctx)</text>
+    <text x="84" y="260" class="member">+render_reply(result)</text>
+  </g>
+
+  <g>
+    <rect x="550" y="145" width="300" height="130" rx="8" class="classbox"/>
+    <path d="M550 153 Q550 145 558 145 H842 Q850 145 850 153 V176 H550 Z" class="classhead"/>
+    <text x="700" y="166" text-anchor="middle" class="name">Agent (Graph Controller)</text>
+    <line x1="550" y1="176" x2="850" y2="176" class="rule"/>
+    <text x="564" y="199" class="member">+llm: LLMClient</text>
+    <text x="564" y="218" class="member">+registry: ToolRegistry</text>
+    <text x="564" y="239" class="member">+handle(incoming, ...)</text>
+    <text x="564" y="259" class="member">+agent_node() · +tool_node()</text>
+  </g>
+
+  <g>
+    <rect x="1030" y="145" width="300" height="130" rx="8" class="classbox"/>
+    <path d="M1030 153 Q1030 145 1038 145 H1322 Q1330 145 1330 153 V176 H1030 Z" class="classhead"/>
+    <text x="1180" y="166" text-anchor="middle" class="name">ToolRegistry</text>
+    <line x1="1030" y1="176" x2="1330" y2="176" class="rule"/>
+    <text x="1044" y="200" class="member">-tools: list[Tool]</text>
+    <text x="1044" y="222" class="member">+schemas(): list</text>
+    <text x="1044" y="244" class="member">+get(name): Tool</text>
+  </g>
+
+  <g>
+    <rect x="70" y="340" width="300" height="135" rx="8" class="classbox"/>
+    <path d="M70 348 Q70 340 78 340 H362 Q370 340 370 348 V371 H70 Z" class="classhead"/>
+    <text x="220" y="361" text-anchor="middle" class="name">ToolContext</text>
+    <line x1="70" y1="371" x2="370" y2="371" class="rule"/>
+    <text x="84" y="392" class="member">sender · session · pending_image</text>
+    <text x="84" y="412" class="member">llm: LLMClient</text>
+    <text x="84" y="432" class="member">datasets: Datasets · clock</text>
+    <text x="84" y="452" class="member">channel: MessagingChannel</text>
+  </g>
+
+  <g>
+    <rect x="550" y="340" width="300" height="135" rx="8" class="classbox"/>
+    <path d="M550 348 Q550 340 558 340 H842 Q850 340 850 348 V371 H550 Z" class="classhead"/>
+    <text x="700" y="361" text-anchor="middle" class="name">LLMClient</text>
+    <line x1="550" y1="371" x2="850" y2="371" class="rule"/>
+    <text x="564" y="394" class="member">+model_for(role): str</text>
+    <text x="564" y="416" class="member">+complete(messages, ...)</text>
+    <text x="564" y="438" class="member">+text(prompt, role): str</text>
+    <text x="564" y="460" class="member">+image_message(...): dict</text>
+  </g>
+
+  <g>
+    <rect x="1030" y="340" width="300" height="135" rx="8" class="classbox"/>
+    <path d="M1030 348 Q1030 340 1038 340 H1322 Q1330 340 1330 348 V371 H1030 Z" class="classhead"/>
+    <text x="1180" y="361" text-anchor="middle" class="name">Tool</text>
+    <line x1="1030" y1="371" x2="1330" y2="371" class="rule"/>
+    <text x="1044" y="392" class="stereo">&lt;&lt;abstract base class&gt;&gt;</text>
+    <text x="1044" y="416" class="member">+schema(): dict</text>
+    <text x="1044" y="438" class="member">+run(args, ctx): dict</text>
+    <text x="1044" y="460" class="member">Shared interface for registered tools</text>
+  </g>
+
+  <g>
+    <rect x="70" y="515" width="300" height="100" rx="8" class="classbox"/>
+    <path d="M70 523 Q70 515 78 515 H362 Q370 515 370 523 V546 H70 Z" class="classhead"/>
+    <text x="220" y="536" text-anchor="middle" class="name">Datasets</text>
+    <line x1="70" y1="546" x2="370" y2="546" class="rule"/>
+    <text x="84" y="568" class="member">brand_to_generic · generics</text>
+    <text x="84" y="590" class="member">interactions · known_names()</text>
+  </g>
+
+  <g>
+    <rect x="400" y="515" width="300" height="100" rx="8" class="classbox"/>
+    <path d="M400 523 Q400 515 408 515 H692 Q700 515 700 523 V546 H400 Z" class="classhead"/>
+    <text x="550" y="536" text-anchor="middle" class="name">DatasetLoader</text>
+    <line x1="400" y1="546" x2="700" y2="546" class="rule"/>
+    <text x="414" y="568" class="stereo">&lt;&lt;module · cached CSV loader&gt;&gt;</text>
+    <text x="414" y="590" class="member">+load_datasets(data_dir): Datasets</text>
+  </g>
+
+  <g>
+    <rect x="730" y="515" width="300" height="100" rx="8" class="classbox"/>
+    <path d="M730 523 Q730 515 738 515 H1022 Q1030 515 1030 523 V546 H730 Z" class="classhead"/>
+    <text x="880" y="536" text-anchor="middle" class="name">SQLAlchemy Session</text>
+    <line x1="730" y1="546" x2="1030" y2="546" class="rule"/>
+    <text x="744" y="570" class="member">Application DB unit of work</text>
+    <text x="744" y="592" class="member">queries and persists ORM entities</text>
+  </g>
+
+  <rect x="35" y="665" width="1330" height="505" class="panel" fill="#fbf8f1" stroke="#c49a58"/>
+  <text x="60" y="695" class="section">SQLALCHEMY DATABASE MODELS</text>
+  <text x="690" y="695" text-anchor="middle" class="note">Solid associations show foreign-key relationships; ChatMessage uses a phone string, not a Patient foreign key.</text>
+
+  <path d="M700 835 L285 875" class="edge"/>
+  <text x="455" y="844" text-anchor="middle" class="relation">1 owns 0..*</text>
+  <path d="M700 835 V875" class="edge"/>
+  <text x="714" y="857" class="relation">1 has 0..*</text>
+  <path d="M790 825 L915 875" class="edge"/>
+  <text x="870" y="846" text-anchor="middle" class="relation">1 schedules 0..*</text>
+  <path d="M205 975 V1020" class="edge"/>
+  <text x="217" y="1003" class="relation">1 contains 0..*</text>
+  <path d="M1035 975 V1020" class="edge"/>
+  <text x="1047" y="1003" class="relation">0..1 reminder_id</text>
+  <path d="M325 1080 H880 V975" class="edge"/>
+  <text x="602" y="1070" text-anchor="middle" class="relation">0..1 medication_id · reminder may omit medication</text>
+  <path d="M825 780 H1340 V1080 H1155" class="edge"/>
+  <text x="1120" y="770" text-anchor="middle" class="relation">1 records 0..*</text>
+
+  <g>
+    <rect x="575" y="725" width="250" height="110" rx="8" class="classbox"/>
+    <path d="M575 733 Q575 725 583 725 H817 Q825 725 825 733 V756 H575 Z" class="entityhead"/>
+    <text x="700" y="746" text-anchor="middle" class="name">Patient</text>
+    <line x1="575" y1="756" x2="825" y2="756" class="rule"/>
+    <text x="589" y="779" class="member">id · wa_number</text>
+    <text x="589" y="801" class="member">name · age · created_at</text>
+    <text x="589" y="822" class="member">prescriptions relationship</text>
+  </g>
+
+  <g>
+    <rect x="85" y="875" width="240" height="100" rx="8" class="classbox"/>
+    <path d="M85 883 Q85 875 93 875 H317 Q325 875 325 883 V906 H85 Z" class="entityhead"/>
+    <text x="205" y="896" text-anchor="middle" class="name">Prescription</text>
+    <line x1="85" y1="906" x2="325" y2="906" class="rule"/>
+    <text x="99" y="930" class="member">id · patient_id · image_ref</text>
+    <text x="99" y="952" class="member">raw_text · created_at</text>
+  </g>
+
+  <g>
+    <rect x="430" y="875" width="240" height="100" rx="8" class="classbox"/>
+    <path d="M430 883 Q430 875 438 875 H662 Q670 875 670 883 V906 H430 Z" class="entityhead"/>
+    <text x="550" y="896" text-anchor="middle" class="name">Interaction</text>
+    <line x1="430" y1="906" x2="670" y2="906" class="rule"/>
+    <text x="444" y="930" class="member">id · patient_id · drug_a / drug_b</text>
+    <text x="444" y="952" class="member">severity · description · created_at</text>
+  </g>
+
+  <g>
+    <rect x="795" y="875" width="240" height="100" rx="8" class="classbox"/>
+    <path d="M795 883 Q795 875 803 875 H1027 Q1035 875 1035 883 V906 H795 Z" class="entityhead"/>
+    <text x="915" y="896" text-anchor="middle" class="name">Reminder</text>
+    <line x1="795" y1="906" x2="1035" y2="906" class="rule"/>
+    <text x="809" y="930" class="member">id · patient_id · medication_id?</text>
+    <text x="809" y="952" class="member">scheduled_for · status</text>
+  </g>
+
+  <g>
+    <rect x="1080" y="875" width="240" height="100" rx="8" class="classbox"/>
+    <path d="M1080 883 Q1080 875 1088 875 H1312 Q1320 875 1320 883 V906 H1080 Z" class="entityhead"/>
+    <text x="1200" y="896" text-anchor="middle" class="name">ChatMessage</text>
+    <line x1="1080" y1="906" x2="1320" y2="906" class="rule"/>
+    <text x="1094" y="930" class="member">id · phone · direction · text</text>
+    <text x="1094" y="952" class="member">media fields · created_at · status</text>
+  </g>
+
+  <g>
+    <rect x="85" y="1020" width="240" height="100" rx="8" class="classbox"/>
+    <path d="M85 1028 Q85 1020 93 1020 H317 Q325 1020 325 1028 V1051 H85 Z" class="entityhead"/>
+    <text x="205" y="1041" text-anchor="middle" class="name">Medication</text>
+    <line x1="85" y1="1051" x2="325" y2="1051" class="rule"/>
+    <text x="99" y="1075" class="member">id · prescription_id · name · generic</text>
+    <text x="99" y="1097" class="member">dosage · frequency · duration · matched</text>
+  </g>
+
+  <g>
+    <rect x="915" y="1020" width="240" height="100" rx="8" class="classbox"/>
+    <path d="M915 1028 Q915 1020 923 1020 H1147 Q1155 1020 1155 1028 V1051 H915 Z" class="entityhead"/>
+    <text x="1035" y="1041" text-anchor="middle" class="name">AdherenceLog</text>
+    <line x1="915" y1="1051" x2="1155" y2="1051" class="rule"/>
+    <text x="929" y="1075" class="member">id · patient_id · reminder_id?</text>
+    <text x="929" y="1097" class="member">response · logged_at</text>
+  </g>
+
+  <text x="700" y="1147" text-anchor="middle" class="note">The prescription pipeline calls extraction, interaction-check, and drug-lookup tools; the text agent dispatches tools through ToolRegistry.</text>
+</svg>

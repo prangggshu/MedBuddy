@@ -1,0 +1,23 @@
+flowchart TD
+    AGENT["1. Agent receives the message<br/>and conversation history"]
+    MODEL["2. Model responds directly<br/>or requests a tool"]
+    REQUEST{"Tool requested?"}
+    DIRECT["5. Reply to patient<br/>No tool call; end this turn"]
+    STATE{"State-changing tool?<br/>Reminder or adherence"}
+    TOOL["3. Execute requested tool"]
+    PAUSE["4. Graph pauses and asks<br/>patient to reply YES or NO"]
+    CONFIRM{"Patient confirms?"}
+    EXECUTE["Run approved reminder<br/>or adherence action"]
+    CANCEL["Cancel action<br/>Do not write"]
+    RESULT["Tool result is added<br/>to conversation history"]
+
+    AGENT --> MODEL --> REQUEST
+    REQUEST -->|No| DIRECT
+    REQUEST -->|Yes| STATE
+    STATE -->|No| TOOL --> RESULT
+    STATE -->|Yes| PAUSE --> CONFIRM
+    CONFIRM -->|YES| EXECUTE --> RESULT
+    CONFIRM -->|NO| CANCEL --> RESULT
+    RESULT -->|Loop back with tool result| AGENT
+
+    linkStyle default stroke:#526579,stroke-width:1.7px

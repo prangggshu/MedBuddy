@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="940" viewBox="0 0 1000 940" role="img" aria-labelledby="title desc">
+  <title id="title">MedBuddy Prescription Image Workflow</title>
+  <desc id="desc">Seven-step process from patient prescription upload through backend validation, optional PDF rendering, vision extraction, schema validation, normalization, interaction checking, and saved template reply.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,1 L7,4 L0,7 Z" fill="#526579"/>
+    </marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #18324b; }
+      .title { font-size: 25px; font-weight: 700; }
+      .subtitle { font-size: 13px; fill: #526579; }
+      .number { font-size: 15px; font-weight: 700; fill: #ffffff; }
+      .label { font-size: 16px; font-weight: 700; }
+      .small { font-size: 13px; }
+      .tiny { font-size: 12px; }
+      .box { stroke-width: 1.5; rx: 12; }
+      .edge { stroke: #526579; stroke-width: 1.7; fill: none; marker-end: url(#arrow); }
+      .branch { stroke: #526579; stroke-width: 1.7; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1000" height="940" rx="18" fill="#ffffff"/>
+  <text x="500" y="42" text-anchor="middle" class="title">MedBuddy Prescription Image Workflow</text>
+  <text x="500" y="66" text-anchor="middle" class="subtitle">Fixed, code-defined processing path for prescription images and PDFs</text>
+
+  <circle cx="190" cy="112" r="15" fill="#388e3c"/>
+  <text x="190" y="117" text-anchor="middle" class="number">1</text>
+  <rect x="220" y="88" width="560" height="58" class="box" fill="#e8f5e9" stroke="#388e3c"/>
+  <text x="500" y="113" text-anchor="middle" class="label">Patient uploads a prescription</text>
+  <text x="500" y="134" text-anchor="middle" class="small">Image or PDF in the React chat</text>
+  <path d="M500 146 V174" class="edge"/>
+
+  <circle cx="190" cy="207" r="15" fill="#2878a5"/>
+  <text x="190" y="212" text-anchor="middle" class="number">2</text>
+  <rect x="220" y="180" width="560" height="58" class="box" fill="#e3f2fd" stroke="#2878a5"/>
+  <text x="500" y="205" text-anchor="middle" class="label">Backend validates the uploaded file</text>
+  <text x="500" y="226" text-anchor="middle" class="small">Checks supported format and upload constraints</text>
+  <path d="M500 238 V267" class="edge"/>
+
+  <path d="M500 267 L570 307 L500 347 L430 307 Z" fill="#fff8e8" stroke="#c49a58" stroke-width="1.5"/>
+  <text x="500" y="312" text-anchor="middle" class="label">PDF file?</text>
+  <path d="M430 307 H280 V370" class="branch"/>
+  <text x="345" y="296" text-anchor="middle" class="tiny">Yes</text>
+  <rect x="100" y="373" width="360" height="65" class="box" fill="#fff3e0" stroke="#d28a24"/>
+  <text x="280" y="400" text-anchor="middle" class="label">Render PDF pages</text>
+  <text x="280" y="422" text-anchor="middle" class="small">Up to the first 3 pages</text>
+  <path d="M280 438 V458 H500 V474" class="edge"/>
+
+  <path d="M570 307 H720 V458 H500 V474" class="branch"/>
+  <text x="738" y="296" text-anchor="middle" class="tiny">No — image</text>
+
+  <circle cx="190" cy="508" r="15" fill="#7952a3"/>
+  <text x="190" y="513" text-anchor="middle" class="number">3</text>
+  <rect x="220" y="480" width="560" height="58" class="box" fill="#ede7f6" stroke="#7952a3"/>
+  <text x="500" y="505" text-anchor="middle" class="label">Vision model extracts medicine fields</text>
+  <text x="500" y="526" text-anchor="middle" class="small">Name, dosage, frequency, and duration</text>
+  <path d="M500 538 V566" class="edge"/>
+
+  <circle cx="190" cy="600" r="15" fill="#2878a5"/>
+  <text x="190" y="605" text-anchor="middle" class="number">4</text>
+  <rect x="220" y="572" width="560" height="58" class="box" fill="#e3f2fd" stroke="#2878a5"/>
+  <text x="500" y="597" text-anchor="middle" class="label">Validate extraction against the schema</text>
+  <text x="500" y="618" text-anchor="middle" class="small">Structured medication output is checked before use</text>
+  <path d="M500 630 V658" class="edge"/>
+
+  <circle cx="190" cy="692" r="15" fill="#2878a5"/>
+  <text x="190" y="697" text-anchor="middle" class="number">5</text>
+  <rect x="220" y="664" width="560" height="58" class="box" fill="#e3f2fd" stroke="#2878a5"/>
+  <text x="500" y="689" text-anchor="middle" class="label">Normalize medicine names</text>
+  <text x="500" y="710" text-anchor="middle" class="small">Match known brands to generic ingredients</text>
+  <path d="M500 722 V750" class="edge"/>
+
+  <circle cx="190" cy="784" r="15" fill="#2878a5"/>
+  <text x="190" y="789" text-anchor="middle" class="number">6</text>
+  <rect x="220" y="756" width="560" height="58" class="box" fill="#e3f2fd" stroke="#2878a5"/>
+  <text x="500" y="781" text-anchor="middle" class="label">Check recognized ingredient pairs</text>
+  <text x="500" y="802" text-anchor="middle" class="small">Look up pairs in the curated interaction dataset</text>
+  <path d="M500 814 V842" class="edge"/>
+
+  <circle cx="190" cy="876" r="15" fill="#388e3c"/>
+  <text x="190" y="881" text-anchor="middle" class="number">7</text>
+  <rect x="220" y="848" width="560" height="58" class="box" fill="#e8f5e9" stroke="#388e3c"/>
+  <text x="500" y="873" text-anchor="middle" class="label">Generate and save the template reply</text>
+  <text x="500" y="894" text-anchor="middle" class="small">Save prescription, medicines, and chat response</text>
+
+  <text x="500" y="928" text-anchor="middle" class="tiny">Grounded proof-of-concept workflow — not for clinical use</text>
+</svg>

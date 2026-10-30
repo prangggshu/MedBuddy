@@ -9,7 +9,7 @@ limited, and its behavior has not been clinically validated.
 | Document | What it covers |
 |---|---|
 | [Project overview](./PROJECT_OVERVIEW.md) | Purpose, scope, features, stack, limitations, and report-ready summary |
-| [Architecture and methodology](./ARCHITECTURE.md) | Current hybrid design, Mermaid methodology diagram, data flows, and safety controls |
+| [Architecture and methodology](./ARCHITECTURE.md) | Current hybrid design, system architecture, class diagram, prescription and text-agent workflows, methodology, and safety controls |
 | [Backend and API reference](./BACKEND_DOCUMENTATION.md) | Backend modules, database, tools, HTTP endpoints, and payloads |
 | [Setup guide](./SETUP_GUIDE.md) | Local installation and running the web demo on Windows |
 | [Usage guide](./USAGE_GUIDE.md) | Patient-facing flows and how to demonstrate the application |

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="760" viewBox="0 0 1000 760" role="img" aria-labelledby="title desc">
+  <title id="title">System Architecture of MedBuddy</title>
+  <desc id="desc">Three-layer architecture showing the React chat interface, FastAPI and LangGraph application workflows, and SQLite plus curated CSV datasets.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,1 L7,4 L0,7 Z" fill="#526579"/>
+    </marker>
+    <marker id="arrowStart" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto">
+      <path d="M8,1 L1,4 L8,7 Z" fill="#526579"/>
+    </marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #18324b; }
+      .title { font-size: 25px; font-weight: 700; }
+      .layer { font-size: 16px; font-weight: 700; letter-spacing: 1px; }
+      .label { font-size: 16px; font-weight: 700; }
+      .small { font-size: 13px; }
+      .tiny { font-size: 12px; }
+      .panel { stroke-width: 2; rx: 16; }
+      .box { stroke-width: 1.5; rx: 10; }
+      .edge { stroke: #526579; stroke-width: 1.7; fill: none; marker-end: url(#arrow); }
+      .both { stroke: #526579; stroke-width: 1.7; fill: none; marker-start: url(#arrowStart); marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1000" height="760" rx="18" fill="#ffffff"/>
+  <text x="500" y="42" text-anchor="middle" class="title">System Architecture of MedBuddy</text>
+
+  <rect x="45" y="70" width="910" height="125" class="panel" fill="#f1f8f2" stroke="#78a982"/>
+  <text x="70" y="99" class="layer">USER LAYER</text>
+  <rect x="260" y="112" width="480" height="60" class="box" fill="#ffffff" stroke="#388e3c"/>
+  <text x="500" y="138" text-anchor="middle" class="label">React Chat Interface</text>
+  <text x="500" y="158" text-anchor="middle" class="small">Patient login · Messages · Prescription uploads</text>
+
+  <path d="M500 195 V224" class="both"/>
+  <text x="515" y="215" class="tiny">chat requests and replies</text>
+
+  <rect x="45" y="230" width="910" height="360" class="panel" fill="#f2f6fb" stroke="#7896b3"/>
+  <text x="70" y="260" class="layer">APPLICATION LAYER</text>
+
+  <rect x="75" y="290" width="245" height="82" class="box" fill="#ffffff" stroke="#2878a5"/>
+  <text x="197.5" y="320" text-anchor="middle" class="label">FastAPI Backend</text>
+  <text x="197.5" y="343" text-anchor="middle" class="small">HTTP API · Validation</text>
+  <text x="197.5" y="360" text-anchor="middle" class="small">Chat and upload handling</text>
+
+  <path d="M320 331 H365" class="both"/>
+
+  <rect x="370" y="290" width="235" height="82" class="box" fill="#ffffff" stroke="#7952a3"/>
+  <text x="487.5" y="320" text-anchor="middle" class="label">LangGraph Agent</text>
+  <text x="487.5" y="343" text-anchor="middle" class="small">Routes input and coordinates</text>
+  <text x="487.5" y="360" text-anchor="middle" class="small">agent and tool workflows</text>
+
+  <path d="M605 331 H650" class="edge"/>
+
+  <rect x="655" y="278" width="270" height="282" class="box" fill="#ffffff" stroke="#7952a3"/>
+  <text x="790" y="303" text-anchor="middle" class="label">Application Workflows</text>
+  <rect x="682" y="316" width="216" height="34" class="box" fill="#ede7f6" stroke="#a48ac0"/>
+  <text x="790" y="338" text-anchor="middle" class="small">Prescription extraction</text>
+  <path d="M790 352 V368" class="edge"/>
+  <rect x="682" y="370" width="216" height="34" class="box" fill="#e3f2fd" stroke="#6ea6c4"/>
+  <text x="790" y="392" text-anchor="middle" class="small">Medicine normalization</text>
+  <path d="M790 406 V422" class="edge"/>
+  <rect x="682" y="424" width="216" height="34" class="box" fill="#e3f2fd" stroke="#6ea6c4"/>
+  <text x="790" y="446" text-anchor="middle" class="small">Interaction lookup</text>
+  <path d="M790 460 V476" class="edge"/>
+  <rect x="682" y="478" width="216" height="34" class="box" fill="#e8f5e9" stroke="#78a982"/>
+  <text x="790" y="500" text-anchor="middle" class="small">Grounded reply generation</text>
+  <path d="M790 514 V536" class="edge"/>
+  <text x="790" y="553" text-anchor="middle" class="tiny">Reply returned to chat via FastAPI</text>
+  <rect x="390" y="404" width="195" height="50" rx="8" fill="#fff3e0" stroke="#d28a24"/>
+  <text x="487.5" y="426" text-anchor="middle" class="tiny">Confirmed reminder tools</text>
+  <text x="487.5" y="443" text-anchor="middle" class="tiny">Patient YES/NO confirmation</text>
+  <path d="M487.5 374 V400" class="edge"/>
+
+  <path d="M197 372 V647" class="both"/>
+  <text x="210" y="497" class="tiny">application records</text>
+  <path d="M895 560 V647" class="both"/>
+  <text x="945" y="620" text-anchor="end" class="tiny">lookup data</text>
+
+  <rect x="45" y="610" width="910" height="110" class="panel" fill="#fbf7ef" stroke="#c49a58"/>
+  <text x="70" y="640" class="layer">DATA LAYER</text>
+  <rect x="100" y="655" width="360" height="48" class="box" fill="#ffffff" stroke="#607d8b"/>
+  <text x="280" y="676" text-anchor="middle" class="label">SQLite Database</text>
+  <text x="280" y="693" text-anchor="middle" class="tiny">Patient, prescription, reminder, and chat records</text>
+  <rect x="540" y="655" width="360" height="48" class="box" fill="#ffffff" stroke="#c49a58"/>
+  <text x="720" y="676" text-anchor="middle" class="label">Curated CSV Datasets</text>
+  <text x="720" y="693" text-anchor="middle" class="tiny">Brand-to-generic mappings · Drug interactions</text>
+
+  <text x="500" y="744" text-anchor="middle" class="tiny">Academic proof-of-concept — not for clinical use</text>
+</svg>

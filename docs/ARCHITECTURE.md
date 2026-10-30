@@ -12,6 +12,59 @@ It is not a fully agentic prescription-processing system. Keeping the photo path
 makes the sequence of extraction, normalization, interaction lookup, and reply rendering
 predictable and testable.
 
+## System architecture
+
+Figure 1.1 shows MedBuddy's three layers: the React chat interface, the FastAPI and
+LangGraph application workflows, and the SQLite database with curated CSV datasets.
+The application layer routes requests through prescription processing or agent tools,
+including confirmed reminders, and returns replies to the chat.
+
+![Figure 1.1. System Architecture of MedBuddy](./diagrams/system-architecture.svg)
+
+*Figure 1.1. System Architecture of MedBuddy.*
+
+The editable Mermaid source for the figure is
+[system-architecture.mmd](./diagrams/system-architecture.mmd).
+
+## Class diagram
+
+Figure 1.2 summarizes the key application modules and their dependencies, along with
+the SQLAlchemy entities and their foreign-key relationships.
+
+![Figure 1.2. Class Diagram of MedBuddy](./diagrams/class-diagram.svg)
+
+*Figure 1.2. Class Diagram of MedBuddy.*
+
+The editable Mermaid source is [class-diagram.mmd](./diagrams/class-diagram.mmd).
+The `PrescriptionPipeline` and `DatasetLoader` are Python modules rather than
+instantiable classes; they are marked as modules in the diagram. `ChatMessage` is
+associated to a patient by phone value and has no patient foreign key.
+
+## Prescription image workflow
+
+Figure 1.3 shows the fixed image-processing path, including the PDF-only rendering
+branch before vision extraction.
+
+![Figure 1.3. MedBuddy Prescription Image Workflow](./diagrams/prescription-workflow.svg)
+
+*Figure 1.3. MedBuddy Prescription Image Workflow.*
+
+The editable Mermaid source is
+[prescription-workflow.mmd](./diagrams/prescription-workflow.mmd).
+
+## Text-agent workflow
+
+Figure 1.4 shows the agent's message/tool cycle. Read-only tool results return to the
+agent directly; reminder and adherence actions pause for explicit YES/NO confirmation
+before the action is committed or cancelled.
+
+![Figure 1.4. MedBuddy Text Agent Workflow](./diagrams/text-agent-workflow.svg)
+
+*Figure 1.4. MedBuddy Text Agent Workflow.*
+
+The editable Mermaid source is
+[text-agent-workflow.mmd](./diagrams/text-agent-workflow.mmd).
+
 ## Methodology diagram
 
 ```mermaid

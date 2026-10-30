@@ -1,0 +1,149 @@
+classDiagram
+    class Agent {
+        +LLMClient llm
+        +ToolRegistry registry
+        +handle(incoming, session, datasets, channel, clock) str
+        +agent_node(state) AgentState
+        +tool_node(state) AgentState
+        +prescription_node(state) AgentState
+    }
+
+    class PrescriptionPipeline {
+        <<module>>
+        +process_prescription(ctx) result
+        +prescription_reply(ctx) str
+        +render_reply(result) str
+    }
+
+    class ToolRegistry {
+        +list~Tool~ tools
+        +schemas() list
+        +get(name) Tool
+    }
+
+    class LLMClient {
+        +model_for(role) str
+        +complete(messages, role, tools) response
+        +text(prompt, role) str
+        +image_message(prompt, image_bytes) dict
+    }
+
+    class ToolContext {
+        +sender str
+        +session SQLAlchemy Session
+        +llm LLMClient
+        +datasets Datasets
+        +clock Clock
+        +channel MessagingChannel
+        +pending_image bytes
+    }
+
+    class Tool {
+        <<abstract>>
+        +schema() dict
+        +run(args, ctx) dict
+    }
+
+    class DatasetLoader {
+        <<module>>
+        +load_datasets(data_dir) Datasets
+    }
+
+    class Datasets {
+        +brand_to_generic dict
+        +generics set
+        +interactions dict
+        +known_names() list
+    }
+
+    class Session {
+        <<SQLAlchemy>>
+        +add(entity)
+        +flush()
+        +commit()
+        +query models
+    }
+
+    class Patient {
+        +id int
+        +wa_number str
+        +name str
+        +age int
+    }
+
+    class Prescription {
+        +id int
+        +patient_id int
+        +image_ref str
+        +raw_text str
+    }
+
+    class Medication {
+        +id int
+        +prescription_id int
+        +name str
+        +generic str
+        +dosage str
+        +frequency str
+        +duration str
+        +matched bool
+    }
+
+    class Interaction {
+        +id int
+        +patient_id int
+        +drug_a str
+        +drug_b str
+        +severity str
+    }
+
+    class Reminder {
+        +id int
+        +patient_id int
+        +medication_id int
+        +scheduled_for datetime
+        +status str
+    }
+
+    class AdherenceLog {
+        +id int
+        +patient_id int
+        +reminder_id int
+        +response str
+        +logged_at datetime
+    }
+
+    class ChatMessage {
+        +id int
+        +phone str
+        +direction str
+        +text str
+        +created_at datetime
+    }
+
+    Agent --> LLMClient : sends model requests
+    Agent --> ToolRegistry : gets schemas and tools
+    Agent --> PrescriptionPipeline : routes image messages
+    Agent ..> ToolContext : builds per inbound turn
+    PrescriptionPipeline --> ToolContext : runs with context
+    ToolRegistry o-- Tool : registers tool instances
+    Tool ..> ToolContext : run args with context
+    ToolContext --> LLMClient : llm
+    ToolContext --> Datasets : datasets
+    ToolContext --> Session : session
+    DatasetLoader ..> Datasets : loads and caches
+    Session ..> Patient : persists and queries
+    Session ..> Prescription : persists and queries
+    Session ..> Medication : persists and queries
+    Session ..> Interaction : persists and queries
+    Session ..> Reminder : persists and queries
+    Session ..> AdherenceLog : persists and queries
+    Session ..> ChatMessage : persists and queries
+
+    Patient "1" --> "0..*" Prescription : owns
+    Prescription "1" --> "0..*" Medication : contains
+    Patient "1" --> "0..*" Interaction : has flagged
+    Patient "1" --> "0..*" Reminder : schedules
+    Medication "0..1" --> "0..*" Reminder : optional medication_id
+    Patient "1" --> "0..*" AdherenceLog : records
+    Reminder "0..1" --> "0..*" AdherenceLog : optional reminder_id

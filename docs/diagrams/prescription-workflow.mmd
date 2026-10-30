@@ -1,0 +1,18 @@
+flowchart TD
+    UPLOAD["1. Patient uploads prescription<br/>Image or PDF"]
+    VALIDATE["2. Backend validates file<br/>Type and upload constraints"]
+    PDF{"PDF file?"}
+    RENDER["Render PDF pages<br/>Up to first 3 pages"]
+    VISION["3. Vision model extracts medicine fields"]
+    SCHEMA["4. Validate extracted output<br/>Against medication schema"]
+    NORMALIZE["5. Normalize medicine names<br/>Brand names → generic ingredients"]
+    CHECK["6. Check recognized ingredient pairs<br/>Against interaction dataset"]
+    REPLY["7. Generate grounded template reply"]
+    SAVE["Save prescription, medicines,<br/>and reply to the database"]
+
+    UPLOAD --> VALIDATE --> PDF
+    PDF -->|Yes| RENDER --> VISION
+    PDF -->|No — image| VISION
+    VISION --> SCHEMA --> NORMALIZE --> CHECK --> REPLY --> SAVE
+
+    linkStyle default stroke:#526579,stroke-width:1.7px
