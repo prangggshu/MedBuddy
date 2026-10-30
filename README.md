@@ -73,7 +73,3 @@ Application steps are printed in the backend terminal and written to the rotatin
 `logs/medbuddy.log` file. Request access logs are disabled to keep polling output quiet.
 
 ---
-
-## Status
-
-Proof-of-concept — KIIT University 5-credit minor project. Not for clinical use.
