@@ -7,7 +7,7 @@
 | **Institution** | Kalinga Institute of Industrial Technology (KIIT University) |
 | **Course** | Minor Project (5 credits) |
 | **Team** | Prangshu [Roll No. 23052898] · Arundhati [Roll No. 23052873] |
-| **Faculty Guide** | [Prof. Lipika Mohanty] |
+| **Faculty Guide** | Prof. Lipika Mohanty |
 
 > **Disclaimer:** MedBuddy is an academic proof-of-concept built for learning and demonstration. It is **not a certified medical device and must not be used for real clinical decision-making.** Medication and interaction information is limited to curated data, and the interface and medication-related responses display a proof-of-concept disclaimer.
 

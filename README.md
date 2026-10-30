@@ -1,14 +1,16 @@
 # MedBuddy
 
-A web-based medication adherence & drug-interaction assistant. A patient photographs
-their prescription; MedBuddy extracts the medicines, explains them in plain language, flags
-dangerous drug–drug interactions, and sends dose reminders — with **no app install**.
+A web-based medication-adherence and drug-interaction proof-of-concept. A patient uploads
+a prescription; MedBuddy extracts medicine details, checks recognized combinations
+against its curated interaction dataset, and supports confirmed reminders — with **no app
+install**.
 
 > ⚠️ **Proof-of-concept. Not a certified medical tool — not for clinical use.**
 > All drug information comes from a small, curated, static dataset.
 
-See [`CLAUDE.md`](CLAUDE.md) for the full project context and design decisions, and
-[`docs/`](docs/) for the faculty design document + architecture diagrams.
+See [`docs/README.md`](docs/README.md) for the documentation index, including project
+overview, architecture and methodology, backend/API reference, local setup, usage, and
+troubleshooting. The faculty-oriented document and diagrams are also in [`docs/`](docs/).
 
 ---
 
@@ -37,30 +39,36 @@ docs/       faculty design document + diagrams
 
 ## Quickstart
 
-```bash
-# 1. Install deps
+### Backend (PowerShell, repository root)
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-
-# 2. Configure
-cp .env.example .env      # then set GEMINI_API_KEY
-
-# 3. Run the agent locally in your terminal (optional)
-python -m scripts.cli
-
-# 4. Run the web-chat demo backend
+Copy-Item .env.example .env
+# Set GEMINI_API_KEY in .env, then:
 uvicorn medbuddy.main:app --reload --no-access-log
-
-# 5. Run the web-chat frontend in another terminal
-cd frontend
-npm i
-npm run dev
-
-# 6. Tests
-pytest
 ```
 
-The browser chat is the application interface. The backend defaults to `http://localhost:8000`
-and the Vite frontend to `http://localhost:5173`.
+### Frontend (second PowerShell terminal)
+
+```powershell
+Set-Location frontend
+npm install
+npm run dev
+```
+
+Open the Vite URL shown in the terminal, usually `http://localhost:5173`. The backend
+defaults to `http://localhost:8000`.
+
+### Tests
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest
+```
+
+For all prerequisites, settings, and common fixes, see the [setup
+guide](docs/SETUP_GUIDE.md) and [troubleshooting guide](docs/TROUBLESHOOTING.md).
 Application steps are printed in the backend terminal and written to the rotating
 `logs/medbuddy.log` file. Request access logs are disabled to keep polling output quiet.
 
