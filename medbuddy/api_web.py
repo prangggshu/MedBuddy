@@ -7,6 +7,7 @@ import threading
 import time
 import uuid
 from collections import defaultdict
+from datetime import timezone
 from pathlib import Path
 
 from fastapi import APIRouter, BackgroundTasks, File, Form, HTTPException, Query, UploadFile
@@ -39,11 +40,15 @@ def normalize_phone(value: str) -> str:
 
 
 def _message_json(row) -> dict:
+    created_at = row.created_at
+    if created_at.tzinfo is None:
+        created_at = created_at.replace(tzinfo=timezone.utc)
     return {
         "id": row.id, "phone": row.phone, "direction": row.direction, "text": row.text,
         "media_url": f"/api/media/{row.id}" if row.media_path else None,
         "media_type": row.media_type, "media_name": row.media_name, "media_size": row.media_size,
-        "created_at": row.created_at.isoformat(), "status": row.status,
+        "created_at": created_at.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "status": row.status,
     }
 
 

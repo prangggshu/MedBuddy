@@ -235,6 +235,7 @@ Recommended project evaluation measures, to be reported only when measured:
 MedBuddy is an academic proof-of-concept and is **not suitable for clinical use**. Important limitations include:
 
 - The brand/generic and interaction CSV files are small, static, curated datasets; absence of a match is not proof that a medicine or interaction does not exist.
+- The interaction dataset includes 503 additional pair risk levels from the DDInter 2.0 ATC-A download, alongside existing sourced rows. These additions provide risk categories only, not pair-specific mechanisms or management advice, and are not a comprehensive or clinically validated checker. [DDInter 2.0 download](https://ddinter2.scbdd.com/download/)
 - Prescription extraction can misread handwriting, image quality, or dosage details. The extracted result must be checked against the original prescription by a qualified professional.
 - The vision model receives prescription images through an external LLM provider. Use synthetic or anonymized images for demonstrations and testing; do not upload sensitive patient data.
 - The phone number is an identity key for the demo, not a verified login or complete security boundary.

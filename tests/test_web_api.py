@@ -16,7 +16,7 @@ from medbuddy.agent import Agent
 from medbuddy.channels import web as web_channel_module
 from medbuddy.channels.web import WebChannel
 from medbuddy.db.models import Base, Reminder
-from medbuddy.db.repo import get_or_create_patient
+from medbuddy.db.repo import get_or_create_patient, save_chat_message
 from medbuddy.scheduler.clock import FakeClock
 from tests.test_agent_orchestration import ScriptedLLM, _response
 
@@ -31,7 +31,9 @@ def web_client(monkeypatch, tmp_path):
     factory = sessionmaker(bind=engine, expire_on_commit=False)
     monkeypatch.setattr(api_web, "SessionLocal", factory)
     monkeypatch.setattr(web_channel_module, "SessionLocal", factory)
-    monkeypatch.setattr(api_web, "get_clock", lambda: FakeClock(datetime(2026, 1, 1, tzinfo=timezone.utc)))
+    fake_clock = FakeClock(datetime(2026, 1, 1, tzinfo=timezone.utc))
+    monkeypatch.setattr(api_web, "get_clock", lambda: fake_clock)
+    monkeypatch.setattr(web_channel_module, "get_clock", lambda: fake_clock)
     monkeypatch.setattr(api_web, "_UPLOAD_ROOT", tmp_path / "uploads")
     app = FastAPI()
     app.include_router(api_web.router)
@@ -59,11 +61,28 @@ def test_message_round_trip_and_after_id_polling(web_client, monkeypatch):
     assert posted.status_code == 200
     inbound = posted.json()
     assert inbound["direction"] == "in" and inbound["text"] == "Hi"
+    assert inbound["created_at"] == "2026-01-01T00:00:00Z"
     all_rows = client.get("/api/messages", params={"phone": inbound["phone"], "after_id": 0}).json()
     after_inbound = client.get("/api/messages", params={"phone": inbound["phone"], "after_id": inbound["id"]})
     assert len(after_inbound.json()) == 1, all_rows
     assert after_inbound.json()[0]["text"] == "Hello from a fake LLM."
+    assert after_inbound.json()[0]["created_at"] == "2026-01-01T00:00:00Z"
     assert client.get("/api/messages", params={"phone": inbound["phone"], "after_id": after_inbound.json()[0]["id"]}).json() == []
+
+
+def test_legacy_naive_message_timestamp_is_serialized_as_utc(web_client):
+    client, factory = web_client
+    with factory() as session:
+        save_chat_message(
+            session,
+            phone="+919876543210",
+            direction="out",
+            text="Existing message",
+            created_at=datetime(2026, 1, 1, 0, 0),
+        )
+
+    rows = client.get("/api/messages", params={"phone": "+919876543210"}).json()
+    assert rows[0]["created_at"] == "2026-01-01T00:00:00Z"
 
 
 def test_due_reminder_is_dispatched_and_pollable(web_client, monkeypatch):
