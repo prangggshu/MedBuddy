@@ -1,32 +1,9 @@
-flowchart TB
-    subgraph USER["USER LAYER"]
-        UI["React Chat Interface<br/>Login · Messages · Prescription uploads"]
-    end
+flowchart TD
+    USER["USER LAYER<br/>React Chat Interface<br/>Login · Messages · Prescription uploads"]
+    APP["APPLICATION LAYER<br/>FastAPI Backend · LangGraph Agent<br/>Extract · Normalize · Check interactions · Reply · Reminders"]
+    DATA["DATA LAYER<br/>SQLite Database · Curated CSV Datasets<br/>Patient records · Brand/generic mappings · Interactions"]
 
-    subgraph APP["APPLICATION LAYER"]
-        API["FastAPI Backend<br/>HTTP API · Validation · Chat persistence"]
-        AGENT["LangGraph Agent<br/>Routes requests · Coordinates workflows"]
-        subgraph WORKFLOWS["APPLICATION WORKFLOWS"]
-            EXTRACT["Prescription extraction"]
-            NORMALIZE["Medicine normalization"]
-            INTERACTIONS["Interaction lookup"]
-            REMINDERS["Confirmed reminders"]
-            REPLY["Grounded reply generation"]
-            EXTRACT --> NORMALIZE --> INTERACTIONS --> REPLY
-            AGENT --> EXTRACT
-            AGENT --> REMINDERS
-        end
-        API <--> AGENT
-    end
+    USER <-->|Chat requests and replies| APP
+    APP <-->|Records and reference data| DATA
 
-    subgraph DATA["DATA LAYER"]
-        DB[("SQLite Database<br/>Patients · Prescriptions · Reminders · Chat")]
-        CSV[("Curated CSV Datasets<br/>Brand-to-generic · Drug interactions")]
-    end
-
-    UI <-->|Chat requests and replies| API
-    REPLY -->|Reply via FastAPI| API
-    API <-->|Application records| DB
-    INTERACTIONS <-->|Reference data| CSV
-    NORMALIZE <-->|Reference data| CSV
     linkStyle default stroke:#526579,stroke-width:1.7px
